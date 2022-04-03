@@ -1,4 +1,4 @@
-## azure-lab-builder
+## azure-lab-jumpstart
 
 For newbies and seasoned professionals alike, building an Azure lab or "sandbox" environment can be a great way to prove out concepts, test new features, practice for Azure certifications, and showcase skills.
 
