@@ -14,8 +14,8 @@ Azure account, local Terraform installation, git
 
 Note: All modules include an optional management VM.
 
-| Name           |Description                                                                                                               |
-|----------------|--------------------------------------------------------------------------------------------------------------------------|
-| hub            | Hub network with DNS, optional VPN gateway and Firewall.  Often used with 'onprem' module.                               |
-| onprem         | Simulated on-premises network with DNS and connectivity to hub via pre-configured Site-to-Site (VPN) or peering.         |
-| landing-zone   | Foundation on which to build a new app. Includes storage account, key vault, virtual network with optional routing through hub network.|
+|Name|Description
+|-|-|
+|hub|Hub network with DNS, optional VPN gateway and Firewall.  Often used with 'onprem' module.
+|onprem|Simulated on-premises network with DNS and connectivity to hub via pre-configured Site-to-Site (VPN) or peering.
+|landing-zone| Foundation on which to build a new app. Includes storage account, key vault, virtual network with optional routing through hub network.
