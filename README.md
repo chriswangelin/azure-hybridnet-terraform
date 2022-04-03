@@ -1,28 +1,21 @@
 ## azure-lab-builder
 
-Ready-made Terraform modules to jumpstart your Azure experiments.
+For newbies and seasoned professionals alike, building an Azure lab or "sandbox" environment can be a great way to prove out concepts, test new features, practice for Azure certifications, and showcase skills.
 
-#### Who is this repo for?
-This repo caters to Azure professionals who build solutions for large enterprises that have hybrid networks.
+This repo provides ready-made Terraform modules for jumpstarting a lab.  A primary aim is to simplify the "networking piece".
 
-#### What problem does this repo aim to solve?
-It takes the headache out of creating a realistic lab or "sandbox" environment for experimenting with Azure resources. 
+## Getting started
 
-#### Why solve this problem?
-For Azure newbies and seasoned professionals alike, building a lab environment can be a great way to prove out concepts, test new features, practice for Azure certifications, and show off skills.
+### Prerequisites
 
-#### How does it solve the problem?
+Azure account, local Terraform installation, git
 
-- Hub network with pre-configured DNS server and connectivity to simluated on-prem network via Site-to-Site VPN or peering.
-- On-premises network simulator with pre-configured DNS server and Site-to-Site VPN device.
-- Landing zones with pre-configured virtual network routing through hub-based firewall. 
-- Future: Configured for monitoring with a central log analytics workspace and 
-- Future: Azure DevOps self-hosted agents on Kubernetes.
-- Future: Budget alerts and automatic teardown
+## Modules
 
+Note: All modules include an optional management VM.
 
-**CAUTION to Newbies: Azure resources cost money.  Running up a multi-thousand dollar bill in a day is very possible.**
-
-Azure professionals tend to work in large enterprises with hybrid networks.  A primary aim of this repo is hub-and-spoke model with simulated on-premises network. 
-
-
+| Name           |Description                                                                                                               |
+|----------------|--------------------------------------------------------------------------------------------------------------------------|
+| hub            | Hub network with DNS, optional VPN gateway and Firewall.  Often used with 'onprem' module.                               |
+| onprem         | Simulated on-premises network with DNS and connectivity to hub via pre-configured Site-to-Site (VPN) or peering.         |
+| landing-zone   | Foundation on which to build a new app. Includes storage account, key vault, virtual network with optional routing through hub network.|
