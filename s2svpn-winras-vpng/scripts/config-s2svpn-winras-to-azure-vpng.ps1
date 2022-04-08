@@ -1,12 +1,14 @@
 <#
 .SYNOPSIS
 
-Configures a site-to-site (S2S) VPN between Windows and Azure.
+Configures a site-to-site (S2S) VPN connection between a Windows Server host and an Azure Virtual Network Gateway.
 
 .DESCRIPTION
 
-Configures a S2S VPN on a Windows host running Remote Access Services (RAS)
-that connects to an Azure Virtual Network Gateway.
+Installs Windows Remote Access Services (RAS) on a Windows server host and configures a S2S VPN tunnel to an Azure
+virtual network gateway.  IP forwarding must be enabled on the RAS host's NIC in order to route traffic through the tunnel.
+Also, traffic bound for the the tunnel must be explicitly routed to the RAS server.  If the RAS server is on an Azure
+virtual network (as opposed to an on-prem network), an Azure route table can be used for routing to the RAS server.
 
 .PARAMETER azureVpnGatewayPublicIp
 Public IP of the Azure Virtual Network Gateway.
@@ -19,7 +21,10 @@ Shared secret used for both sides of the VPN connection.  Must be set in Azure V
 
 .EXAMPLE
 
-config-s2svpn-winras-to-azure-vpn-gateway.ps1 -remoteVpnGatewayPublicIp 20.232.47.230 -remoteVnetAddressSpace 10.0.0.0/24 -vpnSharedSecret "asdfkjb123450hsdg3q45LKGHSDFKJH"
+config-s2svpn-winras-to-azure-vpn-gateway.ps1 `
+  -azureVpnGatewayPublicIp 20.232.47.230 `
+  -azureVnetAddressSpace 10.0.0.0/24 `
+  -vpnSharedSecret "asdfkjb123450hsdg3q45LKGHSDFKJH"
 
 #>
 Param(
@@ -57,5 +62,5 @@ Add-VpnS2SInterface `
   Stop-Service -Name "RemoteAccess"  
   Start-Service -Name "RemoteAccess"
 
-  # Restarting the service automatically re-connects the VPN
+  # Alternatively, the command below may be run to start the VPN.
   #Connect-VpnS2SInterface -Name "Azure S2S VPN"
