@@ -56,9 +56,9 @@ EOF
 echo "nameserver 127.0.0.1" > /etc/resolv.conf 
 
 # Confiugure eth0 to use local unbound service for DNS lookups
-nmcli con mod "System eth0" ipv4.ignore-auto-dns true
-nmcli con mod "System eth0" ipv4.dns 127.0.0.1
-systemctl reload NetworkManager
+#nmcli con mod "System eth0" ipv4.ignore-auto-dns true
+#nmcli con mod "System eth0" ipv4.dns 127.0.0.1
+#systemctl reload NetworkManager
 
 # Enable and start unbound
 systemctl enable unbound
