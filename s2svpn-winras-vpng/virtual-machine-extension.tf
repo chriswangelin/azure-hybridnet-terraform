@@ -1,9 +1,9 @@
 resource "azurerm_virtual_machine_extension" "s2svpn_winras_vpng_vmext" {
   name                 = "s2svpn_winras_customscript"
   virtual_machine_id   = var.winra_vm_id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.10"
 
   settings = <<SETTINGS
   {
