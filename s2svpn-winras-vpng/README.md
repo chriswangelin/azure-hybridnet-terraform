@@ -36,7 +36,7 @@ PowerShell Az module commands like the ones below can be used gather information
 as input parameters to the script. The example parameters are based on the default values for the resource group in 
 the 'hub' Terraform module. Adjust the parameter values to your specific scenario.
 
-```
+``` powershell
 # Get Azure VPN gateway's public IP
 Get-AzPublicIpAddress -ResourceGroupName hub-rg | Where name -like '*vpng-pip' | Select -ExpandProperty ipaddress
 
