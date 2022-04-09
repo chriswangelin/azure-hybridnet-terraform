@@ -8,7 +8,7 @@ resource "azurerm_virtual_machine_extension" "s2svpn_winras_vpng_vmext" {
   settings = <<SETTINGS
   {
     "fileUris": ["https://raw.githubusercontent.com/chriswangelin/azure-lab-jumpstart/develop/s2svpn-winras-vpng/scripts/config-s2svpn-winras-to-azure-vpng.ps1"],
-    "commandToExecute": "config-s2svpn-winras-to-azure.ps1 -azureVpnGatewayPublicIp ${var.vpng_public_ip_address} -azureVnetAddressSpace ${var.vnet_address_space[0]} -vpnSharedSecret ${var.vpng_shared_key}"
+    "commandToExecute": "powershell.exe config-s2svpn-winras-to-azure.ps1 -azureVpnGatewayPublicIp ${var.vpng_public_ip_address} -azureVnetAddressSpace ${var.vnet_address_space[0]} -vpnSharedSecret ${var.vpng_shared_key}"
   }
 SETTINGS
 }
