@@ -11,6 +11,7 @@ resource "azurerm_network_interface" "nic_001" {
   resource_group_name  = var.resource_group_name
   location             = var.location
   enable_ip_forwarding = var.enable_ip_forwarding
+  dns_servers          = var.dns_servers
 
   ip_configuration {
     name                          = local.ipconfig_name_001

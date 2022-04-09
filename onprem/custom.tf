@@ -28,6 +28,7 @@ module "dns_vm_001" {
   admin_username       = var.dns_vm_001_admin_username
   admin_password       = var.dns_vm_001_admin_password
   enable_public_ip     = var.dns_vm_001_enable_public_ip
+  dns_servers         = var.dns_vm_001_dns_servers
 
   depends_on = [
     azurerm_resource_group.rg,

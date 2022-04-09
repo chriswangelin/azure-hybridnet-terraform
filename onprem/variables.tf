@@ -156,6 +156,12 @@ variable dns_vm_001_private_ip_address {
   default     = "172.16.254.4"
 }
 
+variable dns_vm_001_dns_servers {
+  type        = list(string)
+  description = "DNS servers IP's set for DNS server VM's primary NIC"
+  default     = [ "168.63.129.16" ]
+}
+
 variable dns_vm_001_admin_username {
   type        = string
   description = "Admin username for the DNS virtual machine."

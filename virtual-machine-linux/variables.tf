@@ -120,6 +120,12 @@ variable enable_ip_forwarding {
   default     = false
 }
 
+variable dns_servers {
+  type        = list(string)
+  description = "DNS servers set for primary NIC"
+  default     = null
+}
+
 variable shutdown_enabled {
   type        = bool
   description = "Auto-shutdown enabled"
