@@ -22,6 +22,10 @@ output mgmt_snet_address_prefixes {
   value = azurerm_subnet.mgmt_snet.address_prefixes
 }
 
+output winra_vm_id {
+  value = module.winra_vm.vm_id
+}
+
 output winra_vm_private_ip_address {
   value = module.winra_vm.private_ip_address
 }

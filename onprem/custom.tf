@@ -28,7 +28,6 @@ module "dns_vm_001" {
   admin_username       = var.dns_vm_001_admin_username
   admin_password       = var.dns_vm_001_admin_password
   enable_public_ip     = var.dns_vm_001_enable_public_ip
-  custom_data          = local.dns_vm_001_custom_data
 
   depends_on = [
     azurerm_resource_group.rg,

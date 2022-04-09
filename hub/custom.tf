@@ -28,7 +28,6 @@ module "dns_vm_001" {
   admin_username      = var.dns_vm_001_admin_username
   admin_password      = var.dns_vm_001_admin_password
   enable_public_ip    = true
-  custom_data         = local.dns_vm_001_custom_data
   private_ip_address  = var.dns_vm_001_private_ip_address
 
   depends_on = [
