@@ -49,7 +49,7 @@ resource "azurerm_subnet" "dns_snet" {
 resource "azurerm_subnet_network_security_group_association" "dns_snet_nsg_assoc" {
   count                     = var.dns_snet_allow_ip_list == null ? 0 : 1
   subnet_id                 = azurerm_subnet.dns_snet.id
-  network_security_group_id = azurerm_network_security_group.mgmt_snet_nsg.id
+  network_security_group_id = azurerm_network_security_group.dns_snet_nsg.id
 }
 
 # Management subnet
