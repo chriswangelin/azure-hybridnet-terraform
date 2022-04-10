@@ -50,7 +50,7 @@ module "winra_vm" {
 
   depends_on = [
     azurerm_resource_group.rg,
-    azurerm_subnet.mgmt_snet,
+    azurerm_subnet.winra_snet,
     azurerm_virtual_network_dns_servers.vnet_dns_servers # Wait for DNS servers to be assigned to vnet
   ]
 }
