@@ -35,13 +35,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   priority              = var.priority
   eviction_policy       = var.eviction_policy  
   admin_username        = var.admin_username
-  #admin_password        = var.admin_password
+  admin_password        = try(var.admin_password, null)
   custom_data           = try(base64encode(var.custom_data), null)
 
-  disable_password_authentication = true
+  disable_password_authentication = var.disable_password_authentication
   admin_ssh_key {
     username   = var.admin_username
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = file(var.admin_ssh_public_key_path)
   }
 
   source_image_reference {

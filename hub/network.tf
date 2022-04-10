@@ -82,3 +82,13 @@ resource "azurerm_virtual_network_peering" "peer_onprem_to_hub" {
     azurerm_virtual_network.vnet
   ]
 }
+
+resource "azurerm_virtual_network_dns_servers" "vnet_dns_servers" {
+  virtual_network_id = azurerm_virtual_network.vnet.id
+  dns_servers        = [ var.dns_vm_001_private_ip_address ]
+
+  # This must not execute until after the DNS server has been created
+  depends_on = [
+    azurerm_virtual_machine_extension.dns_vm_001_customscript_vmext
+  ]
+}

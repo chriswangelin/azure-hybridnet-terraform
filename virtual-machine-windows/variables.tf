@@ -1,9 +1,4 @@
 # Required variables
-variable snet_id {
-  type        = string
-  description = "Name of subnet to which virtual machine will be attached"
-}
-
 variable resource_group_name {
   type        = string
   description = "The name of the Resource Group in which the Windows Virtual Machine should exist."
@@ -16,142 +11,147 @@ variable location {
 
 variable name {
   type        = string
-  description = "The name of the Windows Virtual Machine."
+  description = "Virtual machine name."
 }
 
 variable admin_username {
   type        = string
-  description = "The username of the local administrator used for the Virtual Machine."
+  description = "Admin username for the virtual machine."
 }
 
 variable admin_password {
   type        = string
-  description = "The Password which should be used for the local-administrator on this Virtual Machine."
+  description = "Admin password for the DNS virtual machine."
 }
 
-# Optional variables
+variable snet_id {
+  type        = string
+  description = "Name of subnet to which virtual machine will be attached."
+}
+
 variable timezone {
   type        = string
-  description = "Specifies the Time Zone which should be used by the Virtual Machine"
+  description = "Time zone for the virtual machine."
   default     = "Eastern Standard Time"
 }
+
 variable size {
   type        = string
-  description = "The SKU which should be used for this Virtual Machine, such as Standard_F2."
+  description = "Virtual machine SKU, such as Standard_F2."
   default     = "Standard_B2s"
 }
 
 variable priority {
   type        = string
-  description = "Specifies the priority of this Virtual Machine. Possible values are Regular and Spot."
+  description = "Virtual machine priority. Possible values are Regular and Spot."
   default     = "Regular"
 }
 
 variable eviction_policy {
   type        = string
-  description = "Specifies what should happen when the Virtual Machine is evicted for price reasons when using a Spot instance."
+  description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
 #  default     = "Deallocate"
   default     = null
 }
 
 variable source_image_publisher {
   type        = string
-  description = "Specifies the publisher of the image used to create the virtual machines."
+  description = "Virtual machine source image publisher."
   default     = "MicrosoftWindowsServer"
 }
 
 variable source_image_offer {
   type        = string
-  description = "Specifies the offer of the image used to create the virtual machines."
+  description = "Virtual machine source image offer."
   default     = "WindowsServer"
 }
 
 variable source_image_sku {
   type        = string
-  description = "Specifies the SKU of the image used to create the virtual machines."
+  description = "Virtual machine source image sku."
   default     = "2019-Datacenter-smalldisk"
 }
 
 variable source_image_version {
   type        = string
-  description = "Specifies the version of the image used to create the virtual machines."
+  description = "Virtual machine source image version."
   default     = "latest"
 }
 
 variable os_disk_size_gb {
   type        = number
-  description = "The Size of the Internal OS Disk in GB, if you wish to vary from the size used in the image this Virtual Machine is sourced from."
+  description = "Virtual machine OS disk size in GB."
   default     = 30
 }
 
 variable os_disk_storage_account_type {
   type        = string
-  description = "The Type of Storage Account which should back this the Internal OS Disk. Possible values are Standard_LRS, StandardSSD_LRS, Premium_LRS, StandardSSD_ZRS and Premium_ZRS."
+  description = "Storage account type for virtual machine OS disk."
   default     = "Standard_LRS"
 }
 
 variable os_disk_caching {
   type        = string
-  description = "The Type of Caching which should be used for the Internal OS Disk. Possible values are None, ReadOnly and ReadWrite."
+  description = "Caching type for virtual machine OS disk."
   default     = "ReadWrite"
 }
 
 variable enable_public_ip {
   type        = bool
-  description = "Enable public IP address on the VM's network interface"
+  description = "Enable public IP address on virtual machine network interface."
   default     = false
 }
 
 variable private_ip_address {
   type        = string
-  description = "Static private IP address for the virtual machine"
+  description = "Static private IP address for virtual machine."
   default     = null
 }
 
 variable enable_ip_forwarding {
   type        = bool
-  description = "Enable IP forwarding - required when VM is acting as a router"
+  description = "Enable IP forwarding on virtual machine. Required when VM is acting as a router."
   default     = false
 }
 
 variable shutdown_enabled {
   type        = bool
-  description = "Auto-shutdown enabled"
+  description = "Enable auto-shutdown for virtual machine."
   default     = true
 }
 
 variable shutdown_daily_recurrence_time {
   type        = string
-  description = "Daily auto-shutdown time"
+  description = "Daily auto-shutdown time for virtual machine."
   default     = "0300"
 }
 
 variable shutdown_timezone {
   type        = string
-  description = "Daily auto-shutdown timezone"
+  description = "Daily auto-shutdown timezone for virtual machine."
   default     = "Eastern Standard Time"
 }
 
 variable shutdown_notification_enabled {
   type        = bool
-  description = "Whether to enable pre-shutdown notifications."
+  description = "Whether to enable pre-shutdown notifications for virtual machine."
   default     = false
 }
 
 variable shutdown_notification_email {
   type        = string
-  description = "E-mail address to which the notification will be sent."
+  description = "E-mail address for virtual machine shutdown notifications."
   default     = null
 }
 
 variable shutdown_notification_time_in_minutes {
   type        = number
-  description = "Time in minutes between 15 and 120 before a shutdown event at which a notification will be sent."
+  description = "Time in minutes between 15 and 120 before a virtual machine shutdown event at which a notification will be sent."
   default     = 30
 }
 
 variable public_ip_allocation_method {
   type        = string
-  description = "Defines the allocation method for this IP address. Possible values are Static or Dynamic."
+  description = "IP address allocation method for the virtual machine."
   default     = "Static"
 }

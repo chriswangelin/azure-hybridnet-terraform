@@ -43,10 +43,10 @@ firewall-cmd --zone=public --add-service dns --permanent
 firewall-cmd --reload
 
 # Disable NetworkManager control of /etc/resolv.conf
-cat > /etc/NetworkManager/conf.d/90-dns-none.conf << EOF
-[main]
-dns=none
-EOF
+#cat > /etc/NetworkManager/conf.d/90-dns-none.conf << EOF
+#[main]
+#dns=none
+#EOF
 
 # Set nameserver to local host
 #echo "nameserver 127.0.0.1" > /etc/resolv.conf 

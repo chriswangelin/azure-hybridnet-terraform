@@ -102,20 +102,6 @@ EOF
 firewall-cmd --zone=public --add-service dns --permanent
 firewall-cmd --reload
 
-# Disable NetworkManager control of /etc/resolv.conf
-#cat > /etc/NetworkManager/conf.d/90-dns-none.conf << EOF
-#[main]
-#dns=none
-#EOF
-
-# Set nameserver to local host
-#echo "nameserver 127.0.0.1" > /etc/resolv.conf 
-
-# Configure  eth0 to use local unbound service for DNS lookups
-#nmcli con mod "System eth0" ipv4.ignore-auto-dns true
-#nmcli con mod "System eth0" ipv4.dns 127.0.0.1
-#systemctl reload NetworkManager
-
 # Enable and start unbound
 systemctl enable unbound
 systemctl start unbound

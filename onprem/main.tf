@@ -18,6 +18,7 @@ provider "azurerm" {
 
 locals {
   resource_group_name    = coalesce(var.resource_group_name, "${var.resource_prefix}-rg")
+  mgmt_vm_name           = coalesce(var.winra_vm_name, "${var.resource_prefix}-mgmt-vm")
   winra_vm_name          = coalesce(var.winra_vm_name, "${var.resource_prefix}-winra-vm")
   dns_vm_001_name        = coalesce(var.dns_vm_001_name, "${var.resource_prefix}-dns-vm-001")
   vnet_name              = coalesce(var.vnet_name, "${var.resource_prefix}-vnet")
