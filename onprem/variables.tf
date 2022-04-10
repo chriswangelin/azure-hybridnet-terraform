@@ -112,7 +112,7 @@ variable mgmt_vm_name {
 variable mgmt_vm_private_ip_address {
   type        = string
   description = "Private IP address for management virtual machine."
-  default     = "10.0.255.4"
+  default     = "172.0.255.4"
 }
 
 variable mgmt_vm_enable_public_ip {
