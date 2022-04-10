@@ -75,7 +75,7 @@ resource "azurerm_virtual_network_dns_servers" "vnet_dns_servers" {
 
   # This must not execute until after the DNS server has been created
   depends_on = [
-    azurerm_virtual_machine_extension.dns_vm_001_customscript_vmext
+    azurerm_virtual_machine_extension.dns_vm_001_config_unbound_dns_customscript_vmext
   ]
 }
 
