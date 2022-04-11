@@ -1,8 +1,6 @@
-## azure-lab-jumpstart
+## azure-terraform-jumpstart
 
-For newbies and professionals alike, building an Azure lab or "sandbox" environment can be a great way to prove out concepts, test new features, practice for Azure certifications, and showcase skills.
-
-This repo provides ready-made Terraform modules for jumpstarting Azure lab projects.
+Ready-made Terraform modules for jumpstarting Azure projects.
  
 ## Prerequisites
 
