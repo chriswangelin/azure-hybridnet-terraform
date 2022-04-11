@@ -112,11 +112,10 @@ systemctl status unbound
 nohup bash -c '
 while :
 do
-  grep "nameserver.*172.16.0.254" /etc/resolv.conf
+  grep "nameserver.*172.16.254.4" /etc/resolv.conf
   if [ $? -eq 0 ]; then
     break
   else
-    echo "still waiting"
     systemctl restart NetworkManager
     sleep 3
   fi
