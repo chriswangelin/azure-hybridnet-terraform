@@ -32,9 +32,11 @@ server:
 
     local-data: "onprem-winra-vm.onprem.net.      IN A 172.16.0.4"
     local-data: "onprem-dns-vm-001.onprem.net.    IN A 172.16.254.4"
+    local-data: "onprem-mgmt-vm.onprem.net.       IN A 172.16.255.4"
 
     local-data-ptr: "172.16.0.4   onprem-winra-vm.onprem.net"
     local-data-ptr: "172.16.254.4 onprem-dns-vm-001.onprem.net"
+    local-data-ptr: "172.16.255.4 onprem-mgmt-vm.onprem.net"
 
   forward-zone:
     name: "azure.com"
