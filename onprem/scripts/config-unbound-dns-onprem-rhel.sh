@@ -109,7 +109,7 @@ systemctl enable unbound
 systemctl start unbound
 systemctl status unbound
 
-# Restarting network manager every 3 seconds until the vnet-level DNS server setting
+# Start a background job that restarts network manager every 3 seconds until the vnet-level DNS server setting
 # is picked up in resolv.conf
 nohup bash -c '
 while :
