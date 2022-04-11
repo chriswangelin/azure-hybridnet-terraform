@@ -106,3 +106,18 @@ firewall-cmd --reload
 systemctl enable unbound
 systemctl start unbound
 systemctl status unbound
+
+# Restarting network manager every 3 seconds until the vnet-level DNS server setting
+# is picked up in resolv.conf
+nohup bash -c '
+while :
+do
+  grep "nameserver.*172.16.0.254" /etc/resolv.conf
+  if [ $? -eq 0 ]; then
+    break
+  else
+    echo "still waiting"
+    systemctl restart NetworkManager
+    sleep 3
+  fi
+done' > /tmp/poll_resolv_conf.out &

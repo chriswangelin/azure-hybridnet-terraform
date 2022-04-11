@@ -1,5 +1,3 @@
-# See https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux
-# Run "base64" command on "install-docker.sh" to get encoded value for script parameter
 resource "azurerm_virtual_machine_extension" "dns_vm_001_customscript_vmext" {
   name                 = "dns_vm_001_customscript"
   virtual_machine_id   = module.dns_vm_001.vm_id
