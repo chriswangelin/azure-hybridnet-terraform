@@ -1,46 +1,45 @@
 resource "azurerm_public_ip" "pip_001" {
   count               = var.enable_public_ip ? 1 : 0
   name                = local.pip_name_001
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   location            = var.location
   allocation_method   = var.public_ip_allocation_method
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
 }
 
 resource "azurerm_network_interface" "nic_001" {
   name                 = local.nic_name_001
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = local.resource_group_name
   location             = var.location
   enable_ip_forwarding = var.enable_ip_forwarding
   dns_servers          = var.dns_servers
 
   ip_configuration {
     name                          = local.ipconfig_name_001
-    subnet_id                     = var.snet_id
+    subnet_id                     = coalesce(var.snet_id, azurerm_subnet.mgmt_snet[0].id)
     private_ip_address_allocation = var.private_ip_address == null ? "Dynamic" : "Static"
     private_ip_address            = var.private_ip_address == null ? null : var.private_ip_address   
     public_ip_address_id          = var.enable_public_ip ? azurerm_public_ip.pip_001[0].id : null
   }
-
-  depends_on = [
-    azurerm_public_ip.pip_001
-  ]
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                  = var.name
-  resource_group_name   = var.resource_group_name
+  name                  = local.name
+  resource_group_name   = local.resource_group_name
   location              = var.location
   network_interface_ids = [ azurerm_network_interface.nic_001.id ]
-  size                  = var.size
+  size                  = local.size
   priority              = var.priority
   eviction_policy       = var.eviction_policy  
-  admin_username        = var.admin_username
-  admin_password        = try(var.admin_password, null)
+  admin_username        = local.admin_username
+  admin_password        = var.admin_password
   custom_data           = try(base64encode(var.custom_data), null)
 
   disable_password_authentication = var.disable_password_authentication
   admin_ssh_key {
-    username   = var.admin_username
+    username   = local.admin_username
     public_key = file(var.admin_ssh_public_key_path)
   }
 

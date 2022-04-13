@@ -1,32 +1,52 @@
-# Required variables
-variable snet_id {
-  type        = string
-  description = "Name of subnet to which virtual machine will be attached."
-}
-
+# Resource group and location
 variable resource_group_name {
   type        = string
   description = "Name of the Resource Group in which to create the virtual machine."
+  default     = null
 }
 
 variable location {
   type        = string
   description = "The Azure location in which to create the virtual machine."
+  default     = "eastus"
 }
 
+# Virtual network
+variable snet_id {
+  type        = string
+  description = "Name of subnet to which virtual machine will be attached."
+  default     = null
+}
+
+variable vnet_address_space {
+  type        = list(string)
+  description = "Address space for the virtual network to which virtual machine NIC is attached."
+  default     = [ "10.0.1.0/24" ]
+}
+
+variable mgmt_snet_allow_ip_list {
+  type        = string
+  description = "List of IP addresses to allow inbound to the management subnet."
+  default     = null
+}
+
+# Virtual machine
 variable name {
   type        = string
-  description = "Name of the virtual machine.."
+  description = "Name of the virtual machine."
+  default     = null
 }
 
 variable admin_username {
   type        = string
   description = "Admin username for the virtual machine."
+  default     = null
 }
 
 variable admin_password {
   type        = string
   description = "Admin password for the virtual machine."
+  default     = null
 }
 
 variable admin_ssh_public_key_path {
@@ -41,50 +61,51 @@ variable disable_password_authentication {
   default     = true
 }
 
-# Optional variables
 variable timezone {
   type        = string
   description = "Time zone for the virtual machine."
   default     = "Eastern Standard Time"
 }
+
 variable size {
   type        = string
   description = "Virtual machine SKU, such as Standard_F2."
   default     = "Standard_B2s"
 }
 
+variable size_level {
+  type        = number
+  description = "Virtual machine level - 1, 2, or 3 - with 1 having the lowest hardware specs of the 3 and level 3 having the highest. See locals.tf for translation of level to size."
+  default     = null
+}
+
 variable priority {
   type        = string
   description = "Virtual machine priority. Possible values are Regular and Spot."
   default     = "Regular"
-#  default     = "Spot"
 }
 
 variable eviction_policy {
   type        = string
   description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
   default     = null
-#  default     = "Deallocate"
 }
 
 variable source_image_publisher {
   type        = string
   description = "Virtual machine source image publisher."
-#  default     = "Canonical"
   default     = "RedHat"
 }
 
 variable source_image_offer {
   type        = string
   description = "Virtual machine source image offer."
-  #default     = "UbuntuServer"
   default     = "RHEL"
 }
 
 variable source_image_sku {
   type        = string
   description = "Virtual machine source image sku."
-  #default     = "18.04-LTS"
   default     = "8_5"
 }
 
@@ -92,14 +113,12 @@ variable source_image_version {
   type        = string
   description = "Virtual machine source image version."
   default     = "latest"
-  #default    = "8.5.2022032201" # RHEL 8
 }
 
 variable os_disk_size_gb {
   type        = number
   description = "Virtual machine OS disk size in GB."
   default     = 64
-  #default     = 30
 }
 
 variable os_disk_storage_account_type {
@@ -117,7 +136,13 @@ variable os_disk_caching {
 variable enable_public_ip {
   type        = bool
   description = "Enable public IP address on virtual machine network interface."
-  default     = false
+  default     = true
+}
+
+variable public_ip_allocation_method {
+  type        = string
+  description = "IP address allocation method for the virtual machine."
+  default     = "Static"
 }
 
 variable private_ip_address {
@@ -135,6 +160,12 @@ variable enable_ip_forwarding {
 variable dns_servers {
   type        = list(string)
   description = "DNS servers set on virtual machine primary network interface."
+  default     = null
+}
+
+variable custom_data {
+  type        = string
+  description = "Custom data for the virtual machine such as a cloud-init script."
   default     = null
 }
 
@@ -174,14 +205,3 @@ variable shutdown_notification_time_in_minutes {
   default     = 30
 }
 
-variable public_ip_allocation_method {
-  type        = string
-  description = "IP address allocation method for the virtual machine."
-  default     = "Static"
-}
-
-variable custom_data {
-  type        = string
-  description = "Custom data for the virtual machine."
-  default     = null
-}
