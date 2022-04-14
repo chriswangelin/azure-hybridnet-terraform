@@ -52,6 +52,5 @@ module "winra_vm" {
 #    azurerm_resource_group.rg,
 #    azurerm_subnet.winra_snet,
     azurerm_virtual_network_dns_servers.vnet_dns_servers, # Wait for DNS servers to be assigned to vnet
-    module.mgmt_vm
   ]
 }
