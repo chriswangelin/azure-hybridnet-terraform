@@ -1,6 +1,7 @@
 resource "azurerm_virtual_network" "vnet" {
   # If no subnet id is passed in, then create a virtual network and subnet with random names
-  count               = var.snet_id == null ? 1 : 0
+  # NOTE: need to make this dependent on something other than snet_id because snet_id cannot be determined until apply time, which causes an error
+  count               = var.vnet_address_space == null ? 0 : 1
   resource_group_name = local.resource_group_name
   name                = local.vnet_name
   location            = var.location
@@ -13,7 +14,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "mgmt_snet" {
-  count                = var.snet_id == null ? 1 : 0
+  count                = var.vnet_address_space == null ? 0 : 1
   resource_group_name  = local.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet[0].name
   name                 = local.mgmt_snet_name

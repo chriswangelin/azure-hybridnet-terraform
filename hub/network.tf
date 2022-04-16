@@ -4,7 +4,6 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   address_space       = var.vnet_address_space
-  dns_servers         = [ var.dns_vm_001_private_ip_address ]
 }
 
 # Subnet: AzureFirewallSubnet must be /26
@@ -53,7 +52,7 @@ resource "azurerm_subnet" "mgmt_snet" {
 
 # Peering to on-prem
 resource "azurerm_virtual_network_peering" "peer_hub_to_onprem" {
-  count                        = var.peering_enable ? 0 : 1
+  count                        = var.peering_enable ? 1 : 0
   name                         = "peer-hub-to-onprem"
   resource_group_name          = azurerm_resource_group.rg.name
   virtual_network_name         = azurerm_virtual_network.vnet.name
@@ -68,7 +67,7 @@ resource "azurerm_virtual_network_peering" "peer_hub_to_onprem" {
 }
 
 resource "azurerm_virtual_network_peering" "peer_onprem_to_hub" {
-  count                        = var.peering_enable ? 0 : 1
+  count                        = var.peering_enable ? 1 : 0
   name                         = "peer-onprem-to-hub"
   resource_group_name          = var.onprem_vnet_resource_group_name
   virtual_network_name         = var.onprem_vnet_name
@@ -89,6 +88,6 @@ resource "azurerm_virtual_network_dns_servers" "vnet_dns_servers" {
 
   # This must not execute until after the DNS server has been created
   depends_on = [
-    azurerm_virtual_machine_extension.dns_vm_001_customscript_vmext
+    azurerm_virtual_machine_extension.dns_vm_001_config_unbound_dns_customscript_vmext
   ]
 }

@@ -21,7 +21,7 @@ variable snet_id {
 variable vnet_address_space {
   type        = list(string)
   description = "Address space for the virtual network to which virtual machine NIC is attached."
-  default     = [ "10.0.1.0/24" ]
+  default     = null
 }
 
 variable mgmt_snet_allow_ip_list {

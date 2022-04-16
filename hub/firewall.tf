@@ -12,6 +12,8 @@ resource "azurerm_firewall" "afw" {
   name                = local.afw_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
+  sku_name            = "AZFW_VNet"
+  sku_tier            = "Standard"
 
   ip_configuration {
     name                 = "afw-ipconfig"

@@ -2,9 +2,9 @@
 module "dns_vm_001" {
   source = "../virtual-machine-linux"
 
-  resource_group_name = local.resource_group_name
+  resource_group_name = azurerm_resource_group.rg.name
   name                = local.dns_vm_001_name
-  location            = var.location
+  location            = azurerm_resource_group.rg.location
   snet_id             = azurerm_subnet.dns_snet.id
   admin_username      = var.dns_vm_001_admin_username
   admin_password      = var.dns_vm_001_admin_password
