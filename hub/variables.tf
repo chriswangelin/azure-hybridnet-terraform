@@ -54,7 +54,7 @@ variable vpng_snet_address_prefixes {
 variable mgmt_snet_name {
   type        = string
   description = "Management subnet name."
-  default     = "mgmt-snet"
+  default     = null
 }
 
 variable mgmt_snet_address_prefixes {
@@ -72,7 +72,7 @@ variable mgmt_snet_nsg_name {
 variable mgmt_snet_allow_ip_list {
   type        = string
   description = "List of IP addresses to allow inbound to the management subnet."
-  default     = null
+  default     = "auto"
 }
 
 # Subnet: DNS
@@ -97,6 +97,7 @@ variable dns_snet_nsg_name {
 variable dns_snet_allow_ip_list {
   type        = string
   description = "Group of IP's to allow inbound access to the DNS subnet."
+  default     = "auto"
 }
 
 # Azure Firewall
@@ -197,6 +198,7 @@ variable mgmt_vm_enable_public_ip {
 variable mgmt_vm_admin_username {
   type        = string
   description = "Admin username for management virtual machine."
+  default     = null
 }
 
 variable mgmt_vm_admin_password {
@@ -233,6 +235,7 @@ variable dns_vm_001_enable_public_ip {
 variable dns_vm_001_admin_username {
   type        = string
   description = "Admin username for the DNS virtual machine."
+  default     = null
 }
 
 variable dns_vm_001_admin_password {

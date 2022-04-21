@@ -12,7 +12,7 @@ resource "azurerm_network_security_group" "mgmt_snet_nsg" {
 }
 
 resource "azurerm_network_security_rule" "mgmt_snet_allow_inbound_nsg_rule" {
-  count                       = var.vnet_address_space != null ? (var.mgmt_snet_allow_ip_list == null ? 0 : 1) : 0
+  count                       = var.vnet_address_space != null ? (local.mgmt_snet_allow_ip_list == null ? 0 : 1) : 0
   name                        = "allow-inbound"
   priority                    = 1000
   direction                   = "Inbound"
@@ -20,7 +20,7 @@ resource "azurerm_network_security_rule" "mgmt_snet_allow_inbound_nsg_rule" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = var.mgmt_snet_allow_ip_list
+  source_address_prefix       = local.mgmt_snet_allow_ip_list
   destination_address_prefix  = "*"
   resource_group_name         = local.resource_group_name
   network_security_group_name = azurerm_network_security_group.mgmt_snet_nsg[0].name

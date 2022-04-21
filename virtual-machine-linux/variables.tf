@@ -27,7 +27,7 @@ variable vnet_address_space {
 variable mgmt_snet_allow_ip_list {
   type        = string
   description = "List of IP addresses to allow inbound to the management subnet."
-  default     = null
+  default     = "auto"
 }
 
 # Virtual machine
@@ -40,7 +40,8 @@ variable name {
 variable admin_username {
   type        = string
   description = "Admin username for the virtual machine."
-  default     = null
+  default     = "azadmin"
+  nullable    = false
 }
 
 variable admin_password {

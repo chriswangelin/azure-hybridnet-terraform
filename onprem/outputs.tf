@@ -33,3 +33,7 @@ output winra_vm_private_ip_address {
 output winra_vm_public_ip_address {
   value = module.winra_vm.public_ip_address
 }
+
+output clientip {
+  value = chomp(data.http.clientip.body)
+}

@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "nic_001" {
 
   ip_configuration {
     name                          = local.ipconfig_name_001
-    subnet_id                     = try(var.snet_id, azurerm_subnet.mgmt_snet[0].id)
+    subnet_id                     = var.snet_id == null ? azurerm_subnet.mgmt_snet[0].id : var.snet_id
     private_ip_address_allocation = var.private_ip_address == null ? "Dynamic" : "Static"
     private_ip_address            = var.private_ip_address == null ? null : var.private_ip_address   
     public_ip_address_id          = var.enable_public_ip ? azurerm_public_ip.pip_001[0].id : null
@@ -33,13 +33,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                  = local.size
   priority              = var.priority
   eviction_policy       = var.eviction_policy  
-  admin_username        = local.admin_username
+  admin_username        = var.admin_username
   admin_password        = var.admin_password
   custom_data           = try(base64encode(var.custom_data), null)
 
   disable_password_authentication = var.disable_password_authentication
   admin_ssh_key {
-    username   = local.admin_username
+    username   = var.admin_username
     public_key = file(var.admin_ssh_public_key_path)
   }
 

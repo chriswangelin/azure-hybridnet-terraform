@@ -17,6 +17,8 @@ variable name {
 variable admin_username {
   type        = string
   description = "Admin username for the virtual machine."
+  default     = "azadmin"
+  nullable    = false
 }
 
 variable admin_password {

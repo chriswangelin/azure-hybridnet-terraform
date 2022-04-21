@@ -7,5 +7,5 @@ output private_ip_address {
 }
 
 output admin_username {
-  value = local.admin_username
+  value = var.admin_username
 }
