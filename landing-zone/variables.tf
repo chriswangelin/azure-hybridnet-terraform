@@ -11,12 +11,6 @@ variable resource_group_name {
   default     = null
 }
 
-variable spoke_number {
-  type        = string
-  description = "Suffix for the resource group name (e.g. 001)"
-  default     = null
-}
-
 variable location {
   type        = string
   description = "Location for all resources in the resource group"
@@ -33,9 +27,53 @@ variable vnet_name {
 variable vnet_address_space {
   type        = list(string)
   description = "Virtual network address space."
+  default     = null
 }
 
-# Virtual Network: Management Subnet
+variable vnet_dns_servers {
+  type        = list(string)
+  description = "Virtual network DNS servers."
+  default     = [ "10.0.254.4" ]
+}
+
+variable vnet_spoke_number {
+  type        = string
+  description = "Sets virtual network address space to 10.{vnet_spoke_number}.0.0/24 when vnet_address_space variable is not set.)"
+  default     = null
+}
+
+variable vnet_peering_enable {
+  type        = bool
+  description = "Enable virtual network peering to hub network"
+  default     = true
+
+}
+
+variable vnet_peering_use_remote_gateways {
+  type        = bool
+  default     = true
+}
+
+# Subnet: App
+variable app_snet_name {
+  type        = string
+  description = "Application subnet name"
+  default     = null
+}
+
+variable app_snet_address_prefixes {
+  type        = list(string)
+  description = "Appplication subnet address prefix"
+  default     = null
+}
+
+variable app_snet_allow_ip_list {
+  type        = string
+  description = "List of IP addresses to allow inbound to the application subnet."
+  default     = null
+}
+
+# Subnet: Management
 variable mgmt_snet_name {
   type        = string
   description = "Management subnet name"
@@ -45,12 +83,13 @@ variable mgmt_snet_name {
 variable mgmt_snet_address_prefixes {
   type        = list(string)
   description = "Subnet address prefix"
+  default     = null
 }
 
 variable mgmt_snet_allow_ip_list {
   type        = string
-  description = "List of IP addresses to allow inbound to the subnet"
-  default     = null
+  description = "List of IP addresses to allow inbound to the subnet. If 'auto', then set to client ip."
+  default     = "auto"
 }
 
 # Virtual Machine: Management
@@ -81,19 +120,31 @@ variable mgmt_vm_enable_public_ip {
 variable hub_resource_group_name {
   type        = string
   description = "Name of the resource group containing the hub network"
-  default     = null
+  default     = "hub-rg"
 }
 
 variable hub_vnet_name {
   type        = string
   description = "Name of hub virtual network"
-  default     = null
+  default     = "hub-vnet"
 }
 
 variable hub_vnet_id {
   type        = string
-  description = "ID of hub virtual network"
+  description = "Hub virtual network ID"
   default     = null
+}
+
+variable vmreg_pdnsz_resource_group_name {
+  type        = string
+  description = "Resource group containing private DNS zone in which to register virtual machines attached to the landing zone vnet"
+  default     = "hub-rg"
+}
+
+variable vmreg_pdnsz_name {
+  type        = string
+  description = "Name of private DNS zone in which to register virtual machines attached to the landing zone vnet"
+  default     = "foo.net"
 }
 
 /*

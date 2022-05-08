@@ -23,7 +23,7 @@ server:
   verbosity: 1
   log-queries: yes
     interface: 0.0.0.0
-      access-control: 10.0.0.0/16 allow
+      access-control: 10.0.0.0/8 allow
       access-control: 172.16.0.0/16 allow
       verbosity: 1
 

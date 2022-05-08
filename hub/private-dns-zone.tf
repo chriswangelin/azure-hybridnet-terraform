@@ -1,16 +1,17 @@
 #######################################################################################################################
-# hub.net 
+# custom domain - all virtual machines in the hub and spokes are registered under this domain
 #######################################################################################################################
-resource "azurerm_private_dns_zone" "hub_dot_net_pdnsz" {
-  name                = "hub.net"
+resource "azurerm_private_dns_zone" "custom_domain_pdnsz" {
+  name                = var.custom_domain_name
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-resource "azurerm_private_dns_zone_virtual_network_link" "hub_vnet_hub_dot_net_pdnsz_link" {
-  name                  = "hub-vnet-hub-dot-net-pdnsz-link"
+resource "azurerm_private_dns_zone_virtual_network_link" "vmreg_pdnsz_link" {
+  name                  = local.vmreg_pdnsz_link_name
   resource_group_name   = azurerm_resource_group.rg.name
-  private_dns_zone_name = azurerm_private_dns_zone.hub_dot_net_pdnsz.name
+  private_dns_zone_name = azurerm_private_dns_zone.custom_domain_pdnsz.name
   virtual_network_id    = azurerm_virtual_network.vnet.id
+  registration_enabled  = true
 }
 
 #######################################################################################################################
@@ -595,13 +596,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_azure_devi
 # privatelink.servicebus.windows.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_servicebus_windows_net_pdnsz" {
-  count               = var.privatelink_servicebus_windows_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_servicebus_windows_net_pdnsz ? 1 : 0
   name                = "privatelink.servicebus.windows.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_servicebus_windows_net_pdnsz_link" {
-  count                 = var.privatelink_servicebus_windows_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_servicebus_windows_net_pdnsz ? 1 : 0
   name                  = "privatelink-servicebus-windows-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_servicebus_windows_net_pdnsz[0].name
@@ -612,13 +613,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_servicebus
 # privatelink.eventgrid.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_eventgrid_azure_net_pdnsz" {
-  count               = var.privatelink_eventgrid_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_eventgrid_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.eventgrid.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_eventgrid_azure_net_pdnsz_link" {
-  count                 = var.privatelink_eventgrid_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_eventgrid_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-eventgrid-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_eventgrid_azure_net_pdnsz[0].name
@@ -629,13 +630,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_eventgrid_
 # privatelink.azurewebsites.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_azurewebsites_net_pdnsz" {
-  count               = var.privatelink_azurewebsites_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_azurewebsites_net_pdnsz ? 1 : 0
   name                = "privatelink.azurewebsites.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_azurewebsites_net_pdnsz_link" {
-  count                 = var.privatelink_azurewebsites_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_azurewebsites_net_pdnsz ? 1 : 0
   name                  = "privatelink-azurewebsites-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_azurewebsites_net_pdnsz[0].name
@@ -646,13 +647,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_azurewebsi
 # privatelink.api.azureml.ms
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_api_azureml_ms_pdnsz" {
-  count               = var.privatelink_api_azureml_ms_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_api_azureml_ms_pdnsz ? 1 : 0
   name                = "privatelink.api.azureml.ms"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_api_azureml_ms_pdnsz_link" {
-  count                 = var.privatelink_api_azureml_ms_pdnsz ? 1 : 0  
+  count                 = var.enable_privatelink_api_azureml_ms_pdnsz ? 1 : 0  
   name                  = "privatelink-api-azureml-ms-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_api_azureml_ms_pdnsz[0].name
@@ -663,13 +664,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_api_azurem
 # privatelink.notebooks.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_notebooks_azure_net_pdnsz" {
-  count               = var.privatelink_notebooks_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_notebooks_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.notebooks.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_notebooks_azure_net_pdnsz_link" {
-  count                 = var.privatelink_notebooks_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_notebooks_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-notebooks-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_notebooks_azure_net_pdnsz[0].name
@@ -680,13 +681,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_notebooks_
 # privatelink.service.signalr.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_service_signalr_net_pdnsz" {
-  count               = var.privatelink_service_signalr_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_service_signalr_net_pdnsz ? 1 : 0
   name                = "privatelink.service.signalr.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_service_signalr_net_pdnsz_link" {
-  count                 = var.privatelink_service_signalr_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_service_signalr_net_pdnsz ? 1 : 0
   name                  = "privatelink-service-signalr-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_service_signalr_net_pdnsz[0].name
@@ -697,13 +698,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_service_si
 # privatelink.monitor.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_monitor_azure_com_pdnsz" { 
-  count               = var.privatelink_monitor_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_monitor_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.monitor.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_monitor_azure_com_pdnsz_link" { 
-  count                 = var.privatelink_monitor_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_monitor_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-monitor-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_monitor_azure_com_pdnsz[0].name
@@ -714,13 +715,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_monitor_az
 # privatelink.oms.opinsights.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_oms_opinsights_azure_com_pdnsz" {
-  count               = var.privatelink_oms_opinsights_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_oms_opinsights_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.oms.opinsights.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_oms_opinsights_azure_com_pdnsz_link" {
-  count               = var.privatelink_oms_opinsights_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_oms_opinsights_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-oms-opinsights-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_oms_opinsights_azure_com_pdnsz[0].name
@@ -731,13 +732,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_oms_opinsi
 # privatelink.ods.opinsights.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_ods_opinsights_azure_com_pdnsz" {
-  count               = var.privatelink_ods_opinsights_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_ods_opinsights_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.ods.opinsights.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_ods_opinsights_azure_com_pdnsz_link" {
-  count                 = var.privatelink_ods_opinsights_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_ods_opinsights_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-ods-opinsights-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_ods_opinsights_azure_com_pdnsz[0].name
@@ -748,13 +749,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_ods_opinsi
 # privatelink.agentsvc.azure-automation.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_agentsvc_azure_automation_net_pdnsz" {
-  count               = var.privatelink_agentsvc_azure_automation_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_agentsvc_azure_automation_net_pdnsz ? 1 : 0
   name                = "privatelink.agentsvc.azure-automation.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_agentsvc_azure_automation_net_pdnsz_link" {
-  count                 = var.privatelink_agentsvc_azure_automation_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_agentsvc_azure_automation_net_pdnsz ? 1 : 0
   name                  = "privatelink.agentsvc-azure-automation-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_agentsvc_azure_automation_net_pdnsz[0].name
@@ -765,13 +766,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_agentsvc_a
 # privatelink.cognitiveservices.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_cognitiveservices_azure_com_pdnsz" {
-  count               = var.privatelink_cognitiveservices_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_cognitiveservices_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.cognitiveservices.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_cognitiveservices_azure_com_pdnsz_link" {
-  count                 = var.privatelink_cognitiveservices_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_cognitiveservices_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-cognitiveservices-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_cognitiveservices_azure_com_pdnsz[0].name
@@ -782,13 +783,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_cognitives
 # privatelink.afs.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_afs_azure_net_pdnsz" {
-  count               = var.privatelink_afs_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_afs_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.afs.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_afs_azure_net_pdnsz_link" {
-  count                 = var.privatelink_afs_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_afs_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-afs-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_afs_azure_net_pdnsz[0].name
@@ -799,13 +800,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_afs_azure_
 # privatelink.datafactory.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_datafactory_azure_net_pdnsz" {
-  count               = var.privatelink_datafactory_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_datafactory_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.datafactory.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_datafactory_azure_net_pdnsz_link" {
-  count                 = var.privatelink_datafactory_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_datafactory_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-datafactory-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_datafactory_azure_net_pdnsz[0].name
@@ -816,13 +817,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_datafactor
 # privatelink.adf.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_adf_azure_com_pdnsz" {
-  count                 = var.privatelink_adf_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_adf_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.adf.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_adf_azure_com_pdnsz_link" {
-  count                 = var.privatelink_adf_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_adf_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-adf-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_adf_azure_com_pdnsz[0].name
@@ -833,13 +834,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_adf_azure_
 # privatelink.redis.cache.windows.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_redis_cache_windows_net_pdnsz" {
-  count                = var.privatelink_redis_cache_windows_net_pdnsz ? 1 : 0
+  count                = var.enable_privatelink_redis_cache_windows_net_pdnsz ? 1 : 0
   name                = "privatelink.redis.cache.windows.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_redis_cache_windows_net_pdnsz_link" {
-  count                 = var.privatelink_redis_cache_windows_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_redis_cache_windows_net_pdnsz ? 1 : 0
   name                  = "privatelink-redis-cache-windows-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_redis_cache_windows_net_pdnsz[0].name
@@ -850,13 +851,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_redis_cach
 # privatelink.redisenterprise.cache.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_redisenterprise_cache_azure_net_pdnsz" {
-  count               = var.privatelink_redisenterprise_cache_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_redisenterprise_cache_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.redisenterprise.cache.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_redisenterprise_cache_azure_net_pdnsz_link" {
-  count                 = var.privatelink_redisenterprise_cache_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_redisenterprise_cache_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-redisenterprise-cache-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_redisenterprise_cache_azure_net_pdnsz[0].name
@@ -867,13 +868,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_redisenter
 # privatelink.purview.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_purview_azure_com_pdnsz" {
-  count               = var.privatelink_purview_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_purview_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.purview.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_purview_azure_com_pdnsz_link" {
-  count                 = var.privatelink_purview_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_purview_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-purview-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_purview_azure_com_pdnsz[0].name
@@ -884,13 +885,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_purview_az
 # privatelink.purviewstudio.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_purviewstudio_azure_com_pdnsz" {
-  count               = var.privatelink_purviewstudio_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_purviewstudio_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.purviewstudio.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_purviewstudio_azure_com_pdnsz_link" {
-  count                 = var.privatelink_purviewstudio_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_purviewstudio_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-purviewstudio-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_purviewstudio_azure_com_pdnsz[0].name
@@ -901,13 +902,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_purviewstu
 # privatelink.digitaltwins.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_digitaltwins_azure_net_pdnsz" {
-  count               = var.privatelink_digitaltwins_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_digitaltwins_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.digitaltwins.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_digitaltwins_azure_net_pdnsz_link" {
-  count               = var.privatelink_digitaltwins_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_digitaltwins_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-digitaltwins-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_digitaltwins_azure_net_pdnsz[0].name
@@ -918,13 +919,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_digitaltwi
 # privatelink.azurehdinsight.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_azurehdinsight_net_pdnsz" {
-  count               = var.privatelink_azurehdinsight_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_azurehdinsight_net_pdnsz ? 1 : 0
   name                = "privatelink.azurehdinsight.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_azurehdinsight_net_pdnsz_link" {
-  count                 = var.privatelink_azurehdinsight_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_azurehdinsight_net_pdnsz ? 1 : 0
   name                  = "privatelink-azurehdinsight-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_azurehdinsight_net_pdnsz[0].name
@@ -935,13 +936,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_azurehdins
 # privatelink.his.arc.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_his_arc_azure_com_pdnsz" {
-  count               = var.privatelink_his_arc_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_his_arc_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.his.arc.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
   
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_his_arc_azure_com_pdnsz_link" {
-  count                 = var.privatelink_his_arc_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_his_arc_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-his-arc-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_his_arc_azure_com_pdnsz[0].name
@@ -952,13 +953,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_his_arc_az
 # privatelink.guestconfiguration.azure.com
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_guestconfiguration_azure_com_pdnsz" {
-  count               = var.privatelink_guestconfiguration_azure_com_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_guestconfiguration_azure_com_pdnsz ? 1 : 0
   name                = "privatelink.guestconfiguration.azure.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
   
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_guestconfiguration_azure_com_pdnsz_link" {
-  count                 = var.privatelink_guestconfiguration_azure_com_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_guestconfiguration_azure_com_pdnsz ? 1 : 0
   name                  = "privatelink-guestconfiguration-azure-com-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_guestconfiguration_azure_com_pdnsz[0].name
@@ -969,13 +970,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_guestconfi
 # privatelink.media.azure.net
 #######################################################################################################################
 resource "azurerm_private_dns_zone" "privatelink_media_azure_net_pdnsz" {
-  count               = var.privatelink_media_azure_net_pdnsz ? 1 : 0
+  count               = var.enable_privatelink_media_azure_net_pdnsz ? 1 : 0
   name                = "privatelink.media.azure.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "privatelink_media_azure_net_pdnsz_link" {
-  count                 = var.privatelink_media_azure_net_pdnsz ? 1 : 0
+  count                 = var.enable_privatelink_media_azure_net_pdnsz ? 1 : 0
   name                  = "privatelink-media-azure-net-pdnsz-link"
   resource_group_name   = azurerm_resource_group.rg.name
   private_dns_zone_name = azurerm_private_dns_zone.privatelink_media_azure_net_pdnsz[0].name

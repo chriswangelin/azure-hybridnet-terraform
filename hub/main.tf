@@ -33,6 +33,8 @@ locals {
   vpng_pip_name           = "${local.vpng_name}-pip"
 
   lgw_name                = coalesce(var.lgw_name, "${var.resource_prefix}-lgw")
+
+  vmreg_pdnsz_link_name   = "${local.vnet_name}-vmreg-pdnsz-link"
 }
 
 data "http" "clientip" {

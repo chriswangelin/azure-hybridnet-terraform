@@ -2,7 +2,6 @@
 variable resource_group_name {
   type        = string
   description = "Name of the Resource Group in which to create the virtual machine."
-  default     = null
 }
 
 variable location {

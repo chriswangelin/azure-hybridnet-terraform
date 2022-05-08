@@ -1,3 +1,11 @@
-output admin_username {
-  value = local.mgmt_vm_admin_username
+output resource_group_name {
+  value = azurerm_resource_group.rg.name
+}
+
+output app_snet_id {
+  value = azurerm_subnet.app_snet.id
+}
+
+output mgmt_snet_id {
+  value = azurerm_subnet.mgmt_snet.id
 }

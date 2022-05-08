@@ -1,3 +1,9 @@
+variable custom_domain_name {
+  type        = string
+  description = "Custom domain for hub private DNS zone."
+  default     = "foo.net"
+}
+
 variable enable_privatelink_azure_automation_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
@@ -202,139 +208,139 @@ variable enable_privatelink_azure_devices_net_pdnsz {
   default     = false
 }
 
-variable privatelink_servicebus_windows_net_pdnsz {
+variable enable_privatelink_servicebus_windows_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_eventgrid_azure_net_pdnsz {
+variable enable_privatelink_eventgrid_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_azurewebsites_net_pdnsz {
+variable enable_privatelink_azurewebsites_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_api_azureml_ms_pdnsz {
+variable enable_privatelink_api_azureml_ms_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_notebooks_azure_net_pdnsz {
+variable enable_privatelink_notebooks_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_service_signalr_net_pdnsz {
+variable enable_privatelink_service_signalr_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_monitor_azure_com_pdnsz {
+variable enable_privatelink_monitor_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_oms_opinsights_azure_com_pdnsz {
+variable enable_privatelink_oms_opinsights_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_ods_opinsights_azure_com_pdnsz {
+variable enable_privatelink_ods_opinsights_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_agentsvc_azure_automation_net_pdnsz {
+variable enable_privatelink_agentsvc_azure_automation_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_cognitiveservices_azure_com_pdnsz {
+variable enable_privatelink_cognitiveservices_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_afs_azure_net_pdnsz {
+variable enable_privatelink_afs_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_datafactory_azure_net_pdnsz {
+variable enable_privatelink_datafactory_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_adf_azure_com_pdnsz {
+variable enable_privatelink_adf_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_redis_cache_windows_net_pdnsz {
+variable enable_privatelink_redis_cache_windows_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_redisenterprise_cache_azure_net_pdnsz {
+variable enable_privatelink_redisenterprise_cache_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_purview_azure_com_pdnsz {
+variable enable_privatelink_purview_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_purviewstudio_azure_com_pdnsz {
+variable enable_privatelink_purviewstudio_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_digitaltwins_azure_net_pdnsz {
+variable enable_privatelink_digitaltwins_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_azurehdinsight_net_pdnsz {
+variable enable_privatelink_azurehdinsight_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_his_arc_azure_com_pdnsz {
+variable enable_privatelink_his_arc_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_guestconfiguration_azure_com_pdnsz {
+variable enable_privatelink_guestconfiguration_azure_com_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
 }
 
-variable privatelink_media_azure_net_pdnsz {
+variable enable_privatelink_media_azure_net_pdnsz {
   type        = bool
   description = "Toggle creation of private DNS zone corresponding to the variable name."
   default     = false
