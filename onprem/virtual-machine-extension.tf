@@ -1,5 +1,5 @@
 # This vm extension must execute before setting the DNS servers on the onprem vnet.
-resource "azurerm_virtual_machine_extension" "dns_vm_001_config_unbound_dns_customscript_vmext" {
+resource azurerm_virtual_machine_extension dns_vm_001_config_unbound_dns_customscript_vmext {
   name                 = "dns_vm_001_config_unbound_dns_customscript"
   virtual_machine_id   = module.dns_vm_001.vm_id
   publisher            = "Microsoft.Azure.Extensions"
@@ -8,7 +8,7 @@ resource "azurerm_virtual_machine_extension" "dns_vm_001_config_unbound_dns_cust
 
   settings = <<SETTINGS
   {
-     "fileUris": ["https://raw.githubusercontent.com/chriswangelin/azure-lab-jumpstart/develop/onprem/scripts/config-unbound-dns-onprem-rhel.sh"],
+     "fileUris": ["https://raw.githubusercontent.com/chriswangelin/azure-terraform-modules/develop/onprem/scripts/config-unbound-dns-onprem-rhel.sh"],
      "commandToExecute": "bash ./config-unbound-dns-onprem-rhel.sh"
   }
 SETTINGS

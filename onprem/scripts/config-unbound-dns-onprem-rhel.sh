@@ -23,7 +23,7 @@ server:
   verbosity: 1
   log-queries: yes
     interface: 0.0.0.0
-      access-control: 10.0.0.0/16 allow
+      access-control: 10.0.0.0/8 allow
       access-control: 172.16.0.0/16 allow
       verbosity: 1
 
@@ -288,6 +288,11 @@ server:
 
   forward-zone:
     name: "media.azure.net"
+    forward-addr: 10.0.254.4
+
+  # Hub VM registration zone
+  forward-zone:
+    name: "foo.net"
     forward-addr: 10.0.254.4
  
   # Forward all other lookups to private DNS

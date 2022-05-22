@@ -1,4 +1,4 @@
-resource "azurerm_route_table" "winra_snet_rt" {
+resource azurerm_route_table onprem_to_hub_rt {
   name                          = local.route_table_name
   location                      = azurerm_resource_group.rg.location
   resource_group_name           = azurerm_resource_group.rg.name

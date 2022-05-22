@@ -1,4 +1,4 @@
-resource "azurerm_public_ip" "pip_001" {
+resource azurerm_public_ip pip_001 {
   count               = var.enable_public_ip ? 1 : 0
   name                = local.pip_name_001
   resource_group_name = var.resource_group_name
@@ -6,7 +6,7 @@ resource "azurerm_public_ip" "pip_001" {
   allocation_method   = var.public_ip_allocation_method
 }
 
-resource "azurerm_network_interface" "nic_001" {
+resource azurerm_network_interface nic_001 {
   name                 = local.nic_name_001
   resource_group_name  = var.resource_group_name
   location             = var.location
@@ -21,13 +21,13 @@ resource "azurerm_network_interface" "nic_001" {
   }
 }
 
-resource "azurerm_windows_virtual_machine" "vm" {
+resource azurerm_windows_virtual_machine vm {
   name                  = var.name
   computer_name         = var.name
   resource_group_name   = var.resource_group_name
   location              = var.location
   network_interface_ids = [ azurerm_network_interface.nic_001.id ]
-  size                  = var.size
+  size                  = local.size
   priority              = var.priority
   eviction_policy       = var.eviction_policy
   
@@ -55,7 +55,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "shutdown" {
+resource azurerm_dev_test_global_vm_shutdown_schedule shutdown {
   virtual_machine_id    = azurerm_windows_virtual_machine.vm.id
   location              = var.location
   enabled               = var.shutdown_enabled

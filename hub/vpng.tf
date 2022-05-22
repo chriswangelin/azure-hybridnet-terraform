@@ -1,4 +1,4 @@
-resource "azurerm_public_ip" "vpng_pip" {
+resource azurerm_public_ip vpng_pip {
   count               = var.vpng_enable ? 1 : 0
   name                = local.vpng_pip_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -7,8 +7,7 @@ resource "azurerm_public_ip" "vpng_pip" {
 #  sku                 = "Standard"
 }
 
-
-resource "azurerm_virtual_network_gateway" "vpng" {
+resource azurerm_virtual_network_gateway vpng {
   count               = var.vpng_enable ? 1 : 0
   name                = local.vpng_name
   resource_group_name = azurerm_resource_group.rg.name
@@ -19,7 +18,8 @@ resource "azurerm_virtual_network_gateway" "vpng" {
 
   active_active = false
   enable_bgp    = false
-  sku           = "VpnGw1"
+  sku           = "Basic"
+  #sku           = "VpnGw1"
 
   ip_configuration {
     name                          = "vnetGatewayConfig"
@@ -32,8 +32,8 @@ resource "azurerm_virtual_network_gateway" "vpng" {
   ]
 }
 
-resource "azurerm_virtual_network_gateway_connection" "onprem" {
-  count               = var.vpng_enable ? 1 : 0
+resource azurerm_virtual_network_gateway_connection onprem {
+  count               = var.vpng_enable ? var.vpng_connection_onprem_enable ? 1 : 0 : 0
   name                = local.vpng_conn_name
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name

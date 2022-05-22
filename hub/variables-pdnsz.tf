@@ -1,6 +1,6 @@
-variable custom_domain_name {
+variable vmreg_pdnsz_name {
   type        = string
-  description = "Custom domain for hub private DNS zone."
+  description = "Name of DNS zone for registering virtual machines."
   default     = "foo.net"
 }
 

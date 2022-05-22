@@ -69,14 +69,14 @@ variable timezone {
 
 variable size {
   type        = string
-  description = "Virtual machine SKU, such as Standard_F2."
-  default     = "Standard_B2s"
+  description = "Virtual machine size."
+  default     = null
 }
 
 variable size_level {
   type        = number
-  description = "Virtual machine level - 1, 2, or 3 - with 1 having the lowest hardware specs of the 3 and level 3 having the highest. See locals.tf for translation of level to size."
-  default     = null
+  description = "Virtual machine size level (1-5). See main.tf for translation of level to size."
+  default     = 1
 }
 
 variable priority {

@@ -11,7 +11,7 @@ terraform {
   }
 }
 
-provider "azurerm" {
+provider azurerm {
   skip_provider_registration = true  
   features { }
 }
@@ -34,10 +34,10 @@ locals {
   winra_vm_name            = coalesce(var.winra_vm_name, "${var.resource_prefix}-winra-vm")
   dns_vm_001_name          = coalesce(var.dns_vm_001_name, "${var.resource_prefix}-dns-vm-001")
   
-  route_table_name         = coalesce(var.route_table_name, "${var.resource_prefix}-winra-snet-rt")
+  route_table_name         = coalesce(var.route_table_name, "${var.resource_prefix}-to-hub-rt")
   local_gateway_name       = coalesce(var.local_gateway_name, "${var.resource_prefix}-lgw")  
 }
 
-data "http" "clientip" {
+data http clientip {
   url = "https://ipv4.icanhazip.com/"
 }

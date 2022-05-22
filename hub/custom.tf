@@ -5,6 +5,7 @@ module "dns_vm_001" {
   resource_group_name = azurerm_resource_group.rg.name
   name                = local.dns_vm_001_name
   location            = azurerm_resource_group.rg.location
+  size_level          = var.dns_vm_size_level
   snet_id             = azurerm_subnet.dns_snet.id
   admin_username      = var.dns_vm_001_admin_username
   admin_password      = var.dns_vm_001_admin_password
@@ -15,10 +16,10 @@ module "dns_vm_001" {
 module "mgmt_vm" {
   source = "../virtual-machine-linux"
 
-   # Management VM
   resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
   name                = local.mgmt_vm_name
+  location            = azurerm_resource_group.rg.location
+  size_level          = var.mgmt_vm_size_level
   admin_username      = var.mgmt_vm_admin_username
   admin_password      = var.mgmt_vm_admin_password
   snet_id             = azurerm_subnet.mgmt_snet.id

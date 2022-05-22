@@ -42,13 +42,6 @@ variable vnet_spoke_number {
   default     = null
 }
 
-variable vnet_peering_enable {
-  type        = bool
-  description = "Enable virtual network peering to hub network"
-  default     = true
-
-}
-
 variable vnet_peering_use_remote_gateways {
   type        = bool
   default     = true

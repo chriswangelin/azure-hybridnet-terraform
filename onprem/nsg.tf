@@ -1,7 +1,4 @@
-#
-# NSG's are in their own file because they can be applied to multple subnets and nics
-#
-resource "azurerm_network_security_group" "winra_snet_nsg" {
+resource azurerm_network_security_group winra_snet_nsg {
   name                = local.winra_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -11,7 +8,7 @@ resource "azurerm_network_security_group" "winra_snet_nsg" {
   ]
 }
 
-resource "azurerm_network_security_rule" "winra_snet_allow_inbound_nsg_rule" {
+resource azurerm_network_security_rule winra_snet_allow_inbound_nsg_rule {
   count                       = local.winra_snet_allow_ip_list == null ? 0 : 1
   name                        = "allow-inbound"
   priority                    = 1000
@@ -26,7 +23,7 @@ resource "azurerm_network_security_rule" "winra_snet_allow_inbound_nsg_rule" {
   network_security_group_name = azurerm_network_security_group.winra_snet_nsg.name
 }
 
-resource "azurerm_network_security_group" "dns_snet_nsg" {
+resource azurerm_network_security_group dns_snet_nsg {
   name                = local.dns_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -36,7 +33,7 @@ resource "azurerm_network_security_group" "dns_snet_nsg" {
   ]
 }
 
-resource "azurerm_network_security_rule" "dns_snet_allow_inbound_nsg_rule" {
+resource azurerm_network_security_rule dns_snet_allow_inbound_nsg_rule {
   count                       = local.dns_snet_allow_ip_list == null ? 0 : 1
   name                        = "allow-inbound"
   priority                    = 1000
@@ -51,7 +48,7 @@ resource "azurerm_network_security_rule" "dns_snet_allow_inbound_nsg_rule" {
   network_security_group_name = azurerm_network_security_group.dns_snet_nsg.name
 }
 
-resource "azurerm_network_security_group" "mgmt_snet_nsg" {
+resource azurerm_network_security_group mgmt_snet_nsg {
   name                = local.mgmt_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -61,7 +58,7 @@ resource "azurerm_network_security_group" "mgmt_snet_nsg" {
   ]
 }
 
-resource "azurerm_network_security_rule" "mgmt_snet_allow_inbound_nsg_rule" {
+resource azurerm_network_security_rule mgmt_snet_allow_inbound_nsg_rule {
   count                       = local.mgmt_snet_allow_ip_list == null ? 0 : 1
   name                        = "allow-inbound"
   priority                    = 1000

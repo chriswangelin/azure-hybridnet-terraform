@@ -112,6 +112,12 @@ variable mgmt_vm_name {
   default     = null
 }
 
+variable mgmt_vm_size_level {
+  type        = string
+  description = "Size level of management virtual machine."
+  default      = 1
+}
+
 variable mgmt_vm_private_ip_address {
   type        = string
   description = "Private IP address for management virtual machine."
@@ -147,6 +153,12 @@ variable winra_vm_name {
   type        = string
   description = "Name of the Windows Remote Access Services virtual machine."
   default     = null
+}
+
+variable winra_vm_size_level {
+  type        = string
+  description = "Size level of Windows Remote Access Services virtual machine."
+  default      = 4
 }
 
 variable winra_vm_private_ip_address {
@@ -186,6 +198,12 @@ variable dns_vm_001_name {
   default     = null
 }
 
+variable dns_vm_001_size_level {
+  type        = string
+  description = "Size level of DNS virtual machine."
+  default      = 3
+}
+
 variable dns_vm_001_private_ip_address {
   type        = string
   description = "Private IP address for DNS virtual machine."
@@ -195,7 +213,7 @@ variable dns_vm_001_private_ip_address {
 variable dns_vm_001_enable_public_ip {
   type        = string
   description = "Enable public IP address for DNS virtual machine."
-  default     = false
+  default     = true
 }
 
 variable dns_vm_001_admin_username {
@@ -233,5 +251,5 @@ variable local_gateway_name {
 variable remote_vnet_address_space {
   type        = string
   description = "Address space of remote vnet connected via S2S VPN."
-  default     = "10.0.0.0/24"
+  default     = "10.0.0.0/8"
 }

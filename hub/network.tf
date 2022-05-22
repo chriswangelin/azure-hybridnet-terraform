@@ -4,6 +4,13 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   address_space       = var.vnet_address_space
+
+  # The VM registration private DNS zone must exist in the hub before creating
+  # landing zones.  Specifying this dependency avoids having to specify the
+  # same dependency in each landing zone module call.
+  depends_on = [
+    azurerm_private_dns_zone.vmreg_pdnsz
+  ]
 }
 
 # Subnet: AzureFirewallSubnet must be /26

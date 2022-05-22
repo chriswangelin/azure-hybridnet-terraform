@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "sa" {
+resource azurerm_storage_account sa {
   resource_group_name       = var.resource_group_name
   location                  = var.location
   
@@ -28,7 +28,7 @@ resource "azurerm_storage_account" "sa" {
   }
 }
 
-resource "azurerm_storage_account_network_rules" "sa_netrules" {
+resource azurerm_storage_account_network_rules sa_netrules {
   storage_account_id = azurerm_storage_account.sa.id
   default_action     = "Deny"  
   bypass             = [ "None" ]

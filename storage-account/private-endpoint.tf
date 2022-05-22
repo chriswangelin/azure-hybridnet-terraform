@@ -1,4 +1,4 @@
-resource "azurerm_private_endpoint" "sa_blob_pe" {
+resource azurerm_private_endpoint sa_blob_pe {
   name                = azurerm_storage_account.sa.name
   location            = var.location
   resource_group_name = var.resource_group_name

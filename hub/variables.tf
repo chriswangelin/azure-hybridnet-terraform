@@ -17,12 +17,6 @@ variable location {
   default     = "eastus"
 }
 
-variable hub_subscription_id {
-  type        = string
-  description = "Hub subscription id."
-  default     = null
-}
-
 # Virtual network
 variable vnet_name {
   type        = string
@@ -132,6 +126,12 @@ variable vpng_shared_key {
   default     = null
 }
 
+variable vpng_connection_onprem_enable {
+  type        = bool
+  description = "Enable VPN gateway connection to simulated on-premises network."
+  default     = false
+}
+
 # Local gateway
 variable lgw_name {
   type        = string
@@ -183,6 +183,12 @@ variable mgmt_vm_name {
   default     = null
 }
 
+variable mgmt_vm_size_level {
+  type        = string
+  description = "Size level for management virtual machine"
+  default     = 1
+}
+
 variable mgmt_vm_private_ip_address {
   type        = string
   description = "Private IP address for management virtual machine."
@@ -218,6 +224,12 @@ variable dns_vm_001_name {
   type        = string
   description = "Name of the DNS virtual machine."
   default     = null
+}
+
+variable dns_vm_size_level {
+  type        = string
+  description = "Size level for DNS virtual machine"
+  default     = 4
 }
 
 variable dns_vm_001_private_ip_address {
