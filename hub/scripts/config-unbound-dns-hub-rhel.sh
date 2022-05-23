@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Update packages
-yum update -y
-yum upgrade -y
+#yum update -y
+#yum upgrade -y
 
 # Install DNS packages
 yum install unbound -y

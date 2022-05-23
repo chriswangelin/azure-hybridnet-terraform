@@ -27,8 +27,17 @@ resource azurerm_virtual_network_gateway vpng {
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = azurerm_subnet.vpng_snet.id
   }
+
+  # Errors sometimes occur when the VPN gateway is provisioned in parallel with
+  # other resources.  Adding these dependencies reduces the parallel activity.
   depends_on = [
-    azurerm_subnet.vpng_snet
+    azurerm_subnet.vpng_snet,
+    azurerm_subnet.afw_snet,
+    azurerm_subnet_network_security_group_association.dns_snet_nsg_assoc,
+    azurerm_subnet_network_security_group_association.mgmt_snet_nsg_assoc,
+    module.mgmt_vm,
+    azurerm_virtual_machine_extension.dns_vm_001_config_unbound_dns_customscript_vmext,
+    azurerm_firewall.afw
   ]
 }
 

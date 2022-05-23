@@ -1,5 +1,5 @@
 module "dns_vm_001" {
-  source = "../../../virtual-machine-linux"
+  source = "../virtual-machine-linux"
 
   resource_group_name = azurerm_resource_group.rg.name
   name                = local.dns_vm_001_name

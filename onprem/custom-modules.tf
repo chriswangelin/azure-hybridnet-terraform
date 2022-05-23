@@ -1,5 +1,5 @@
 module dns_vm_001 {
-  source = "../../../virtual-machine-linux"
+  source = "../virtual-machine-linux"
 
   resource_group_name  = azurerm_resource_group.rg.name
   name                 = local.dns_vm_001_name
@@ -13,7 +13,7 @@ module dns_vm_001 {
 }
 
 module mgmt_vm {
-  source = "../../../virtual-machine-linux"
+  source = "../virtual-machine-linux"
 
   resource_group_name  = azurerm_resource_group.rg.name
   name                 = local.mgmt_vm_name
@@ -31,7 +31,7 @@ module mgmt_vm {
 }
 
 module winra_vm {
-  source = "../../../virtual-machine-windows"
+  source = "../virtual-machine-windows"
 
   resource_group_name  = azurerm_resource_group.rg.name
   name                 = local.winra_vm_name
@@ -44,6 +44,6 @@ module winra_vm {
   enable_ip_forwarding = var.winra_vm_enable_ip_forwarding
 
   depends_on = [
-    azurerm_virtual_network_dns_servers.vnet_dns_servers, # Wait for DNS servers to be assigned to vnet
+    azurerm_virtual_network_dns_servers.vnet_dns_servers # Wait for DNS servers to be assigned to vnet
   ]
 }
