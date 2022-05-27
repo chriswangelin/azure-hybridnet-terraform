@@ -10,29 +10,35 @@ variable location {
   default     = "eastus"
 }
 
-# Virtual network
-variable snet_id {
-  type        = string
-  description = "Name of subnet to which virtual machine will be attached."
-  default     = null
-}
-
-variable vnet_address_space {
-  type        = list(string)
-  description = "Address space for the virtual network to which virtual machine NIC is attached."
-  default     = null
-}
-
-variable mgmt_snet_allow_ip_list {
-  type        = string
-  description = "List of IP addresses to allow inbound to the management subnet."
-  default     = "auto"
-}
-
 # Virtual machine
 variable name {
   type        = string
   description = "Name of the virtual machine."
+  default     = null
+}
+
+variable urn {
+  type        = string 
+  description = "Virtual machine URN"
+  default     = "RedHat:RHEL:8_6:8.6.2022052401"
+  nullable    = false
+}
+
+variable plan_publisher {
+  type        = string
+  description = "Virtual machine plan publisher."
+  default     = null
+}
+
+variable plan_product {
+  type        = string
+  description = "Virtual machine plan product."
+  default     = null
+}
+
+variable plan_name {
+  type        = string
+  description = "Virtual machine plan name."
   default     = null
 }
 
@@ -69,14 +75,9 @@ variable timezone {
 
 variable size {
   type        = string
-  description = "Virtual machine size."
-  default     = null
-}
-
-variable size_level {
-  type        = number
-  description = "Virtual machine size level (1-5). See main.tf for translation of level to size."
-  default     = 1
+  description = "Virtual machine size. (e.g. Standard_B1s, B1ms, B2s, DS1_v2, DS1_v3, etc.)"
+  default     = "Standard_B1s"
+  nullable    = false
 }
 
 variable priority {
@@ -89,30 +90,6 @@ variable eviction_policy {
   type        = string
   description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
   default     = null
-}
-
-variable source_image_publisher {
-  type        = string
-  description = "Virtual machine source image publisher."
-  default     = "RedHat"
-}
-
-variable source_image_offer {
-  type        = string
-  description = "Virtual machine source image offer."
-  default     = "RHEL"
-}
-
-variable source_image_sku {
-  type        = string
-  description = "Virtual machine source image sku."
-  default     = "8_5"
-}
-
-variable source_image_version {
-  type        = string
-  description = "Virtual machine source image version."
-  default     = "latest"
 }
 
 variable os_disk_size_gb {
@@ -131,6 +108,11 @@ variable os_disk_caching {
   type        = string
   description = "Caching type for virtual machine OS disk."
   default     = "ReadWrite"
+}
+
+variable snet_id {
+  type        = string
+  description = "Name of subnet to which virtual machine will be attached."
 }
 
 variable enable_public_ip {
@@ -204,4 +186,3 @@ variable shutdown_notification_time_in_minutes {
   description = "Time in minutes between 15 and 120 before a virtual machine shutdown event at which a notification will be sent."
   default     = 30
 }
-

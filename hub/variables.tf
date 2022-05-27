@@ -152,12 +152,6 @@ variable lgw_address_space {
 }
 
 # On-prem virtual network connectivity
-variable peering_enable {
-  type        = bool
-  description = "Create peering between on-prem and hub network and vice-versa."
-  default     = false
-}
-
 variable onprem_vnet_resource_group_name {
   type        = string
   description = "Resource group containing on-prem simulator virtual network."
@@ -183,10 +177,34 @@ variable mgmt_vm_name {
   default     = null
 }
 
-variable mgmt_vm_size_level {
+variable mgmt_vm_urn {
   type        = string
-  description = "Size level for management virtual machine"
-  default     = 1
+  description = "URN for management virtual machine"
+  default     = null
+}
+
+variable mgmt_vm_plan_publisher {
+  type        = string
+  description = "Plan publisher for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_plan_product {
+  type        = string
+  description = "Plan product for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_plan_name {
+  type        = string
+  description = "Plan name for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_size {
+  type        = string
+  description = "Size of management virtual machine."
+  default     = "Standard_B1s"
 }
 
 variable mgmt_vm_private_ip_address {
@@ -226,10 +244,34 @@ variable dns_vm_001_name {
   default     = null
 }
 
-variable dns_vm_size_level {
+variable dns_vm_001_urn {
   type        = string
-  description = "Size level for DNS virtual machine"
-  default     = 4
+  description = "URN for the DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_publisher {
+  type        = string
+  description = "Plan publisher for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_product {
+  type        = string
+  description = "Plan product for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_name {
+  type        = string
+  description = "Plan name for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_size {
+  type        = string
+  description = "Size of DNS virtual machine."
+  default     = "Standard_B1s"
 }
 
 variable dns_vm_001_private_ip_address {
@@ -247,7 +289,7 @@ variable dns_vm_001_enable_public_ip {
 variable dns_vm_001_admin_username {
   type        = string
   description = "Admin username for the DNS virtual machine."
-  default     = null
+  default     = "azadmin"
 }
 
 variable dns_vm_001_admin_password {

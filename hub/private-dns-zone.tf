@@ -70,7 +70,7 @@ resource azurerm_private_dns_zone_virtual_network_link privatelink_sql_azuresyna
 #######################################################################################################################
 resource azurerm_private_dns_zone privatelink_sqlondemand_azuresynapse_net_pdnsz {
   count               = var.enable_privatelink_sqlondemand_azuresynapse_net_pdnsz ? 1 : 0
-  name                = "privatelink.sqlondemand.azuresynapse.net"
+  name                = "privatelink.sql.azuresynapse.net"
   resource_group_name = azurerm_resource_group.rg.name
 }
 

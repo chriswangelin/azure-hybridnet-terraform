@@ -27,7 +27,7 @@ resource azurerm_linux_virtual_machine vm {
   resource_group_name   = var.resource_group_name
   location              = var.location
   network_interface_ids = [ azurerm_network_interface.nic_001.id ]
-  size                  = local.size
+  size                  = var.size
   priority              = var.priority
   eviction_policy       = var.eviction_policy  
   admin_username        = var.admin_username
@@ -41,10 +41,20 @@ resource azurerm_linux_virtual_machine vm {
   }
 
   source_image_reference {
-    publisher = var.source_image_publisher
-    offer     = var.source_image_offer
-    sku       = var.source_image_sku
-    version   = var.source_image_version
+    publisher = local.source_image_publisher
+    offer     = local.source_image_offer
+    sku       = local.source_image_sku
+    version   = local.source_image_version
+  }
+
+  dynamic "plan" {
+    for_each = var.plan_publisher != null ? [1] : []
+
+    content {
+      publisher = var.plan_publisher
+      product   = var.plan_product
+      name      = var.plan_name
+    }
   }
 
   os_disk {

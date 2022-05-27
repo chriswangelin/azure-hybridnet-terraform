@@ -1,4 +1,3 @@
-# Required variables
 variable resource_group_name {
   type        = string
   description = "The name of the Resource Group in which the Windows Virtual Machine should exist."
@@ -37,16 +36,18 @@ variable timezone {
   default     = "Eastern Standard Time"
 }
 
+variable urn {
+  type        = string
+  description = "Virtual machine URN."
+  default     = "MicrosoftWindowsServer:WindowsServer:2019-Datacenter-smalldisk:latest"
+  nullable    = false
+}
+
 variable size {
   type        = string
   description = "Virtual machine size."
-  default     = null
-}
-
-variable size_level {
-  type        = number
-  description = "Virtual machine size level (1-5). See main.tf for translation of level to size."
-  default     = 4
+  default     = "Standard_DS1_v2"
+  nullable    = false
 }
 
 variable priority {
@@ -62,28 +63,22 @@ variable eviction_policy {
   default     = null
 }
 
-variable source_image_publisher {
+variable plan_publisher {
   type        = string
-  description = "Virtual machine source image publisher."
-  default     = "MicrosoftWindowsServer"
+  description = "Virtual machine plan publisher."
+  default     = null
 }
 
-variable source_image_offer {
+variable plan_product {
   type        = string
-  description = "Virtual machine source image offer."
-  default     = "WindowsServer"
+  description = "Virtual machine plan product."
+  default     = null
 }
 
-variable source_image_sku {
+variable plan_name {
   type        = string
-  description = "Virtual machine source image sku."
-  default     = "2019-Datacenter-smalldisk"
-}
-
-variable source_image_version {
-  type        = string
-  description = "Virtual machine source image version."
-  default     = "latest"
+  description = "Virtual machine plan name."
+  default     = null
 }
 
 variable os_disk_size_gb {

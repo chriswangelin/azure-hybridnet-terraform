@@ -24,6 +24,7 @@ locals {
 
   mgmt_vm_name            = coalesce(var.mgmt_vm_name, "${var.resource_prefix}-mgmt-vm")
   dns_vm_001_name         = coalesce(var.dns_vm_001_name, "${var.resource_prefix}-dns-vm-001")
+  dns_vm_001_size         = "Standard_DS1_v2"
 
   afw_name                = coalesce(var.afw_name, "${var.resource_prefix}-afw")
   afw_pip_name            = "${local.afw_name}-pip"

@@ -18,11 +18,13 @@ locals {
   ipconfig_name_001       = "ipconfig-001"
   os_disk_name            = "${local.name}-osdisk-001"
 
-  # Translate level to size, or if level is not set, use specified size (default if not specified)
-  size = (var.size_level == 1 ? "Standard_B1s" : 
-          var.size_level == 2 ? "Standard_B1ms" : 
-          var.size_level == 3 ? "Standard_B2s" : 
-          var.size_level == 4 ? "Standard_DS1_v2" : 
-          var.size_level == 5 ? "Standard_DS2_v3" :
-          var.size)
+  # Split urn into its component pieces 
+  source_image_publisher = split(":", var.urn)[0] 
+  source_image_offer     = split(":", var.urn)[1]
+  source_image_sku       = split(":", var.urn)[2]
+  source_image_version   = split(":", var.urn)[3]
+
+  # plan_publisher         = coalesce(var.plan_publisher, local.source_image_publisher)
+  # plan_product           = coalesce(var.plan_product, local.source_image_offer)
+  # plan_name              = coalesce(var.plan_name, local.source_image_sku)
 }

@@ -112,10 +112,34 @@ variable mgmt_vm_name {
   default     = null
 }
 
-variable mgmt_vm_size_level {
+variable mgmt_vm_urn {
   type        = string
-  description = "Size level of management virtual machine."
-  default      = 1
+  description = "URN for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_plan_publisher {
+  type        = string
+  description = "Plan publisher for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_plan_product {
+  type        = string
+  description = "Plan product for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_plan_name {
+  type        = string
+  description = "Plan name for management virtual machine."
+  default     = null
+}
+
+variable mgmt_vm_size {
+  type        = string
+  description = "Size of management virtual machine."
+  default     = "Standard_B1s"
 }
 
 variable mgmt_vm_private_ip_address {
@@ -155,10 +179,34 @@ variable winra_vm_name {
   default     = null
 }
 
-variable winra_vm_size_level {
+variable winra_vm_urn {
   type        = string
-  description = "Size level of Windows Remote Access Services virtual machine."
-  default      = 4
+  description = "URN for Windows Remote Access Services virtual machine."
+  default     = null
+}
+
+variable winra_vm_plan_publisher {
+  type        = string
+  description = "Plan publisher for Windows Remote Access Services virtual machine."
+  default     = null
+}
+
+variable winra_vm_plan_product {
+  type        = string
+  description = "Plan product for Windows Remote Access Services virtual machine."
+  default     = null
+}
+
+variable winra_vm_plan_name {
+  type        = string
+  description = "Plan name for Windows Remote Access Services virtual machine."
+  default     = null
+}
+
+variable winra_vm_size {
+  type        = string
+  description = "Size of Windows Remote Access Services virtual machine."
+  default     = "Standard_DS1_v2"
 }
 
 variable winra_vm_private_ip_address {
@@ -198,10 +246,34 @@ variable dns_vm_001_name {
   default     = null
 }
 
-variable dns_vm_001_size_level {
+variable dns_vm_001_urn {
   type        = string
-  description = "Size level of DNS virtual machine."
-  default      = 3
+  description = "URN for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_publisher {
+  type        = string
+  description = "Plan publisher for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_product {
+  type        = string
+  description = "Plan product for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_plan_name {
+  type        = string
+  description = "Plan name for DNS virtual machine."
+  default     = null
+}
+
+variable dns_vm_001_size {
+  type        = string
+  description = "Size of DNS virtual machine."
+  default     = "Standard_B1s"
 }
 
 variable dns_vm_001_private_ip_address {

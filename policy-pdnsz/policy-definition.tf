@@ -1,102 +1,23 @@
 # az policy definition list --query "[?policyType == 'Custom']" -o json
 resource azurerm_policy_definition policy {
-  for_each =  toset( ["Todd", "James", "Alice", "Dottie"] )
- sqlServer
- Sql
- SqlOnDemand
- Dev
- Web
- Blob (blob, blob_secondary)
- Table (table, table_secondary)
- Queue (queue, queue_secondary)
- File (file, file_secondary)
- Web (web, web_secondary)
- Data Lake File System Gen2 (dfs, dfs_secondary)
- Sql
- MongoDB
- Cassandra
- Gremlin
- Table
- batchAccount
- postgresqlServer
- mysqlServer
- mariadbServer
- vault
- Managed HSMs
- management
- searchService
- registry
- configurationStores
- AzureBackup
- AzureSiteRecovery
- namespace
- namespace
- iotHub
- namespace
- topic
- domain
- sites
- amlworkspace
- signalR
- azuremonitor
- account
- afs
- dataFactory
- portal
- redisCache
- redisEnterprise
- Webhook
- DSCAndHybridWorker
- blob
- blob_secondary
- table
- table_secondary
- queue
- queue_secondary
- file
- file_secondary
- web
- web_secondary
- dfs
- dfs_secondary
- Sql
- MongoDB
- Cassandra
- Gremlin
- Table
- postgresqlServer
- mysqlServer
- mariadbServer
- vault
- namespace
- namespace
- iotHub
- namespace
- topic
- domain
- sites
- amlworkspace
- signalR
- afs
- dataFactory
- portal
- redisCache
-  name         = "deploy-if-not-exists-storage-account-pe-dns-record"
-  policy_type  = "Custom"
-  mode         = "Indexed"
-  display_name = "deploy-if-not-exists-storage-account-pe-dns-record"
+#  for_each =  toset( ["blob", "vault"] )
+   for_each = var.private_dns_zone_map
+
+  name                = "deploy-if-not-exists-${each.key}-pdnsz-record"
+  policy_type         = "Custom"
+  mode                = "Indexed"
+  display_name        = "deploy-if-not-exists-${each.key}-pdnsz-record"
+  management_group_id = data.azurerm_management_group.mg.id
 
   metadata = <<METADATA
     {
-      "category": "Storage"
+      "category": "Network"
     }
 
 METADATA
 
   policy_rule = <<POLICY_RULE
 {
-  "mode": "Indexed",
-  "policyRule": {
     "if": {
       "allOf": [
         {
@@ -108,7 +29,7 @@ METADATA
             "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
             "where": {
               "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
-              "equals": "blob"
+              "equals": "${each.key}"
             }
           },
           "greaterOrEquals": 1
@@ -149,7 +70,7 @@ METADATA
                   "properties": {
                     "privateDnsZoneConfigs": [
                       {
-                        "name": "storageBlob-privateDnsZone",
+                        "name": "${each.key}-privateDnsZone",
                         "properties": {
                           "privateDnsZoneId": "[parameters('privateDnsZoneId')]"
                         }
@@ -175,7 +96,6 @@ METADATA
       }
     }
   }
-}
 POLICY_RULE
 
 
@@ -192,10 +112,4 @@ POLICY_RULE
   }
 PARAMETERS
  
-}
-
-resource azurerm_management_group_policy_assignment policy_assignment {
-  name                 = "policy-assignment"
-  policy_definition_id = azurerm_policy_definition.policy.id
-  management_group_id  = data.azurerm_management_group.mg.id
 }
