@@ -3,7 +3,7 @@
 ## Overview
 Windows virtual machine module.
 
-Simplifies creating a Windows virtual machine by requiring only several input parameters: ```resource_group_name```, ```snet_id``` (subnet id), and ```admin_password```.  Default VM image is Windows Server. An alternate can be specified via ```urn``` and when needed, ```plan``` .
+Simplifies creating a Windows virtual machine by requiring only several input parameters: ```resource_group_name```, ```snet_id``` (subnet id), and ```admin_password```.  Default VM image is Windows Server. An alternate can be specified via ```urn``` and ```plan```.
 
 ## Providers
 
