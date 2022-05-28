@@ -10,5 +10,5 @@ output private_ip_address {
 
 output public_ip_address {
   description = "Virtual machine public IP address."
-  value       = azurerm_public_ip.pip_001.ip_address
+  value       = azurerm_public_ip.pip_001[0].ip_address
 }

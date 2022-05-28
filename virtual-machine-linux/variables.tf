@@ -16,7 +16,7 @@ variable location {
 
 variable name {
   type        = string
-  description = "Virtual machine name."
+  description = "Virtual machine name. Defaults to random pet if not specified."
   default     = null
 }
 
@@ -50,7 +50,7 @@ variable priority {
 variable eviction_policy {
   type        = string
   description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
-  default     = null
+  default     = "Deallocate"
 }
 
 variable os_disk_size_gb {

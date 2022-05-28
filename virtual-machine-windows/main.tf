@@ -7,7 +7,13 @@ terraform {
   }
 }
 
+resource random_pet resource_prefix { 
+  length    = 2
+  separator = ""
+}
+
 locals {
+  name              = coalesce(var.name, "${random_pet.resource_prefix.id}-vm")  
   nic_name_001      = "${var.name}-nic-001"
   pip_name_001      = "${var.name}-pip-001"
   ipconfig_name_001 = "ipconfig-001"
