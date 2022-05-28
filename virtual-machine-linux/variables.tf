@@ -5,7 +5,7 @@ variable resource_group_name {
 
 variable snet_id {
   type        = string
-  description = "Name of subnet to which virtual machine will be attached."
+  description = "Resource ID of subnet to which virtual machine will be attached."
 }
 
 variable location {
