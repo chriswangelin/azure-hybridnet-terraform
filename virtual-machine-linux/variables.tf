@@ -1,81 +1,42 @@
-# Resource group and location
 variable resource_group_name {
   type        = string
-  description = "Name of the Resource Group in which to create the virtual machine."
+  description = "Name of the resource group in which to create the virtual machine."
+}
+
+variable snet_id {
+  type        = string
+  description = "Name of subnet to which virtual machine will be attached."
 }
 
 variable location {
   type        = string
-  description = "The Azure location in which to create the virtual machine."
+  description = "Azure location in which to create the virtual machine."
   default     = "eastus"
 }
 
-# Virtual machine
 variable name {
   type        = string
-  description = "Name of the virtual machine."
+  description = "Virtual machine name."
   default     = null
 }
 
 variable urn {
   type        = string 
-  description = "Virtual machine URN"
-  default     = "RedHat:RHEL:8_6:8.6.2022052401"
+  description = "Virtual machine URN (offer:publisher:sku:version)."
+#  default     = "RedHat:RHEL:8_6:8.6.2022052401"
+  default     = "RedHat:RHEL:8_6:latest"
   nullable    = false
 }
 
-variable plan_publisher {
+variable plan {
   type        = string
-  description = "Virtual machine plan publisher."
+  description = "Virtual machine plan (publisher:product:plan)."
   default     = null
-}
-
-variable plan_product {
-  type        = string
-  description = "Virtual machine plan product."
-  default     = null
-}
-
-variable plan_name {
-  type        = string
-  description = "Virtual machine plan name."
-  default     = null
-}
-
-variable admin_username {
-  type        = string
-  description = "Admin username for the virtual machine."
-  default     = "azadmin"
-  nullable    = false
-}
-
-variable admin_password {
-  type        = string
-  description = "Admin password for the virtual machine."
-  default     = null
-}
-
-variable admin_ssh_public_key_path {
-  type        = string
-  description = "Admin user public SSH key path for the virtual machine."
-  default     = "~/.ssh/id_rsa.pub"
-}
-
-variable disable_password_authentication {
-  type        = string
-  description = "Disable password authentication."
-  default     = true
-}
-
-variable timezone {
-  type        = string
-  description = "Time zone for the virtual machine."
-  default     = "Eastern Standard Time"
 }
 
 variable size {
   type        = string
-  description = "Virtual machine size. (e.g. Standard_B1s, B1ms, B2s, DS1_v2, DS1_v3, etc.)"
+  description = "Virtual machine size."
   default     = "Standard_B1s"
   nullable    = false
 }
@@ -110,9 +71,29 @@ variable os_disk_caching {
   default     = "ReadWrite"
 }
 
-variable snet_id {
+variable admin_username {
   type        = string
-  description = "Name of subnet to which virtual machine will be attached."
+  description = "Admin username for the virtual machine."
+  default     = "azadmin"
+  nullable    = false
+}
+
+variable admin_password {
+  type        = string
+  description = "Admin password for the virtual machine.  Required if admin_ssh_public_key_path is null."
+  default     = null
+}
+
+variable admin_ssh_public_key_path {
+  type        = string
+  description = "Admin user public SSH key path for the virtual machine."
+  default     = "~/.ssh/id_rsa.pub"
+}
+
+variable disable_password_authentication {
+  type        = string
+  description = "Disable password authentication.  If admin_ssh_public_key_path is not specified, must be set to falsae and admin_password must be set."
+  default     = true
 }
 
 variable enable_public_ip {
@@ -123,7 +104,7 @@ variable enable_public_ip {
 
 variable public_ip_allocation_method {
   type        = string
-  description = "IP address allocation method for the virtual machine."
+  description = "Public IP address allocation method for the virtual machine."
   default     = "Static"
 }
 
@@ -135,7 +116,7 @@ variable private_ip_address {
 
 variable enable_ip_forwarding {
   type        = bool
-  description = "Enable IP forwarding on virtual machine. Required when VM is acting as a router."
+  description = "Enable IP forwarding on virtual machine."
   default     = false
 }
 
@@ -143,6 +124,12 @@ variable dns_servers {
   type        = list(string)
   description = "DNS servers set on virtual machine primary network interface."
   default     = null
+}
+
+variable timezone {
+  type        = string
+  description = "Time zone for the virtual machine."
+  default     = "Eastern Standard Time"
 }
 
 variable custom_data {

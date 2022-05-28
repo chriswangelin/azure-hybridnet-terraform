@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
+      version = "3.0.0"
     }
   }
 }
@@ -18,7 +19,7 @@ locals {
   source_image_sku       = split(":", var.urn)[2]
   source_image_version   = split(":", var.urn)[3]
 
-  # plan_publisher         = coalesce(var.plan_publisher, local.source_image_publisher)
-  # plan_product           = coalesce(var.plan_product, local.source_image_offer)
-  # plan_name              = coalesce(var.plan_name, local.source_image_sku)
+  plan_publisher = var.plan != null ? split(":", var.plan)[0] : null
+  plan_product   = var.plan != null ? split(":", var.plan)[1] : null
+  plan_name      = var.plan != null ? split(":", var.plan)[2] : null
 }

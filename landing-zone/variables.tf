@@ -92,10 +92,22 @@ variable mgmt_vm_name {
   default     = null
 }
 
-variable mgmt_vm_size_level {
+variable mgmt_vm_size {
   type        = string
   description = "Management virtual machine size"  
   default      = 1
+}
+
+variable mgmt_vm_urn {
+  type        = string
+  description = "URN for management virtual machine"
+  default     = null
+}
+
+variable mgmt_vm_plan {
+  type        = string
+  description = "Plan for management virtual machine."
+  default     = null
 }
 
 variable mgmt_vm_admin_username {

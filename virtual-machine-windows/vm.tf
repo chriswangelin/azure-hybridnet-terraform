@@ -48,12 +48,12 @@ resource azurerm_windows_virtual_machine vm {
   }
 
   dynamic "plan" {
-    for_each = var.plan_publisher != null ? [1] : []
+    for_each = var.plan != null ? [1] : []
 
     content {
-      publisher = var.plan_publisher
-      product   = var.plan_product
-      name      = var.plan_name
+      publisher = local.plan_publisher
+      product   = local.plan_product
+      name      = local.plan_name
     }
   }
 

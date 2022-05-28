@@ -183,21 +183,9 @@ variable mgmt_vm_urn {
   default     = null
 }
 
-variable mgmt_vm_plan_publisher {
+variable mgmt_vm_plan {
   type        = string
-  description = "Plan publisher for management virtual machine."
-  default     = null
-}
-
-variable mgmt_vm_plan_product {
-  type        = string
-  description = "Plan product for management virtual machine."
-  default     = null
-}
-
-variable mgmt_vm_plan_name {
-  type        = string
-  description = "Plan name for management virtual machine."
+  description = "Plan for management virtual machine."
   default     = null
 }
 
@@ -246,25 +234,13 @@ variable dns_vm_001_name {
 
 variable dns_vm_001_urn {
   type        = string
-  description = "URN for the DNS virtual machine."
+  description = "URN for DNS virtual machine."
   default     = null
 }
 
-variable dns_vm_001_plan_publisher {
+variable dns_vm_001_plan {
   type        = string
-  description = "Plan publisher for DNS virtual machine."
-  default     = null
-}
-
-variable dns_vm_001_plan_product {
-  type        = string
-  description = "Plan product for DNS virtual machine."
-  default     = null
-}
-
-variable dns_vm_001_plan_name {
-  type        = string
-  description = "Plan name for DNS virtual machine."
+  description = "Plan for the DNS virtual machine."
   default     = null
 }
 

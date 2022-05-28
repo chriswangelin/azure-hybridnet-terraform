@@ -118,21 +118,9 @@ variable mgmt_vm_urn {
   default     = null
 }
 
-variable mgmt_vm_plan_publisher {
+variable mgmt_vm_plan {
   type        = string
-  description = "Plan publisher for management virtual machine."
-  default     = null
-}
-
-variable mgmt_vm_plan_product {
-  type        = string
-  description = "Plan product for management virtual machine."
-  default     = null
-}
-
-variable mgmt_vm_plan_name {
-  type        = string
-  description = "Plan name for management virtual machine."
+  description = "Plan for management virtual machine."
   default     = null
 }
 
@@ -185,21 +173,9 @@ variable winra_vm_urn {
   default     = null
 }
 
-variable winra_vm_plan_publisher {
+variable winra_vm_plan {
   type        = string
-  description = "Plan publisher for Windows Remote Access Services virtual machine."
-  default     = null
-}
-
-variable winra_vm_plan_product {
-  type        = string
-  description = "Plan product for Windows Remote Access Services virtual machine."
-  default     = null
-}
-
-variable winra_vm_plan_name {
-  type        = string
-  description = "Plan name for Windows Remote Access Services virtual machine."
+  description = "Plan for Windows Remote Access Services virtual machine."
   default     = null
 }
 
@@ -252,23 +228,29 @@ variable dns_vm_001_urn {
   default     = null
 }
 
-variable dns_vm_001_plan_publisher {
+variable dns_vm_001_plan {
   type        = string
-  description = "Plan publisher for DNS virtual machine."
+  description = "Plan for DNS virutal machine."
   default     = null
 }
 
-variable dns_vm_001_plan_product {
-  type        = string
-  description = "Plan product for DNS virtual machine."
-  default     = null
-}
+# variable dns_vm_001_plan_publisher {
+#   type        = string
+#   description = "Plan publisher for DNS virtual machine."
+#   default     = null
+# }
 
-variable dns_vm_001_plan_name {
-  type        = string
-  description = "Plan name for DNS virtual machine."
-  default     = null
-}
+# variable dns_vm_001_plan_product {
+#   type        = string
+#   description = "Plan product for DNS virtual machine."
+#   default     = null
+# }
+
+# variable dns_vm_001_plan_name {
+#   type        = string
+#   description = "Plan name for DNS virtual machine."
+#   default     = null
+# }
 
 variable dns_vm_001_size {
   type        = string

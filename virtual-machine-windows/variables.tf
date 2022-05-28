@@ -43,6 +43,12 @@ variable urn {
   nullable    = false
 }
 
+variable plan {
+  type        = string
+  description = "Virtual machine plan (publisher:product:plan)."
+  default     = null
+}
+
 variable size {
   type        = string
   description = "Virtual machine size."
@@ -60,24 +66,6 @@ variable eviction_policy {
   type        = string
   description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
 #  default     = "Deallocate"
-  default     = null
-}
-
-variable plan_publisher {
-  type        = string
-  description = "Virtual machine plan publisher."
-  default     = null
-}
-
-variable plan_product {
-  type        = string
-  description = "Virtual machine plan product."
-  default     = null
-}
-
-variable plan_name {
-  type        = string
-  description = "Virtual machine plan name."
   default     = null
 }
 
