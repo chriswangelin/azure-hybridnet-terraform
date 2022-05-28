@@ -17,7 +17,7 @@ Simplifies creating a Linux virtual machine by requiring only two parameters: re
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Name of the resource group in which to create the virtual machine. | `string` | n/a | yes |
-| <a name="input_snet_id"></a> [snet\_id](#input\_snet\_id) | Name of subnet to which virtual machine will be attached. | `string` | n/a | yes |
+| <a name="input_snet_id"></a> [snet\_id](#input\_snet\_id) | Resource ID of subnet to which virtual machine will be attached. | `string` | n/a | yes |
 | <a name="input_location"></a> [location](#input\_location) | Azure location in which to create the virtual machine. | `string` | `"eastus"` | no |
 | <a name="input_name"></a> [name](#input\_name) | Virtual machine name. | `string` | `null` | no |
 | <a name="input_urn"></a> [urn](#input\_urn) | Virtual machine URN (offer:publisher:sku:version). | `string` | `"RedHat:RHEL:8_6:latest"` | no |
