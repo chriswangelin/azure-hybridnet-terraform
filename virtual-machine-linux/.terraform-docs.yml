@@ -1,0 +1,61 @@
+formatter: "markdown" # this is required
+
+version: ""
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+
+sections:
+  show:
+    - providers
+    - inputs
+    - outputs
+
+content: |-
+  {{ .Header }}
+
+  ## Overview
+  Linux virtual machine module. 
+
+  The module simplifies creating a Linux virtual machine in Azure by requiring only two parameters: resource group and subnet id. By default, the module expects a public SSH key for the admin user to be in ```~/.ssh/id_rsa.pub``` on the machine invoking the module.  As an alternative to SSH, password authentication can be set for the admin user by setting ```disable_password_authentication``` to ```false``` and ```admin_password``` to the desired password. The default virtual machine image is a Red Hat one.  An alternate image can be specified via the ```urn``` and ```plan``` parameters. 
+
+  {{ .Providers }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}  
+
+
+output:
+  file: ""
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->    
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: false
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true
