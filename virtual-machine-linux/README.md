@@ -3,7 +3,7 @@
 ## Overview
 Linux virtual machine module.
 
-The module simplifies creating a Linux virtual machine in Azure by requiring only two parameters: resource group and subnet id. By default, the module expects a public SSH key for the admin user to be in ```~/.ssh/id_rsa.pub``` on the machine invoking the module.  As an alternative to SSH, password authentication can be set for the admin user by setting ```disable_password_authentication``` to ```false``` and ```admin_password``` to the desired password. The default virtual machine image is a Red Hat one.  An alternate image can be specified via the ```urn``` and ```plan``` parameters.
+Simplifies creating a Linux virtual machine by requiring only two parameters: resource group and subnet id.  Module expects admin user's Public SSH key to be in ```~/.ssh/id_rsa.pub``` or a specified via ```admin_ssh_public_key_path```.  Alternatively,  ```disable_password_authentication``` can be set to ```false``` and ```admin_password``` to the desired admin password.  Default VM image is a Red Hat one, or an alternate one can be specified via ```urn``` and if needed, ```plan``` .
 
 ## Providers
 
