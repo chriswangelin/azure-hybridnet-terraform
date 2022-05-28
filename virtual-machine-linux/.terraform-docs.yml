@@ -21,7 +21,7 @@ content: |-
   ## Overview
   Linux virtual machine module. 
 
-  Simplifies creating a Linux virtual machine by requiring only several input parameters: ```resource_group_name``` and ```snet_id``` (subnet id).  Module expects admin user's public SSH key to be on host where Terraform is running, either in ```~/.ssh/id_rsa.pub``` (default) or a specified via ```admin_ssh_public_key_path```.  Alternatively,  ```disable_password_authentication``` can be set to ```false``` and ```admin_password``` to the desired admin password.  VM image is Red Hat (default) and can changed via ```urn``` and when needed, ```plan``` parameters.
+  Simplifies creating a Linux virtual machine by requiring only several input parameters: ```resource_group_name``` and ```snet_id``` (subnet id).  Module expects admin user's public SSH key to be on host where Terraform is running, either in ```~/.ssh/id_rsa.pub``` (default) or a specified via ```admin_ssh_public_key_path```.  Alternatively,  ```disable_password_authentication``` can be set to ```false``` and ```admin_password``` to the desired admin password.  VM image is Red Hat (default) and can be changed via ```urn``` and ```plan```.
  
   {{ .Providers }}
 
