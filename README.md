@@ -10,13 +10,13 @@ Designing a hybrid network architecture that seamlessly integrates on-premises n
 
 This repo aims to create a lab or sandbox environment for experimenting with hybrid networks in Azure. It contains Terraform modules for building a basic hub-and-spoke network with a *simulated* on-premises network.  The Architecture section explains the simulated network and details about the setup.
 
-<br>
+
 
 # A Word of Caution
 
 **RUNNING THE TERRAFORM MODULES IN THIS REPO WILL DEPLOY AZURE RESOURCES THAT COST REAL MONEY. BE ESPECIALLY MINDFUL OF THE AZURE FIREWALL RESOURCE IF IT IS ENABLED, AS IT COSTS $1.25 (USD) PER HOUR PLUS DATA TRANSFER COST AS OF WHEN THIS SENTENCE WAS TYPED. SETTING A SUBSCRIPTION LEVEL BUDGET AND EMAIL NOTIFICATION IS STRONGLY ADVISED WHEN USING THE MODULES IN THIS REPOSITORY.**
 
-<br>
+
 
 # Prerequisites
 
@@ -25,7 +25,7 @@ This repo aims to create a lab or sandbox environment for experimenting with hyb
 - [git](https://git-scm.com/downloads)
 - [terraform-docs](https://terraform-docs.io/)  (required only for contributors)
 
-<br>
+
 
 # Modules
 
@@ -40,7 +40,7 @@ Note: Many modules include a management VM for easy SSH access.
 |```virtual-machine-linux```|Simplifies creating a vnet-connected Linux virtual machine by requiring only a resource group name and subnet id as input parameters.
 |```virtual-machine-windows```|Simplifies creating a vnet-connected Windows virtual machine by requiring only a resource group name, subnet id, and admin password as input parameters.
 
-<br>
+
 
 # Architecture
 
@@ -79,7 +79,7 @@ Several subnets reside in the onprem and hub virtual networks:
 |```hub-mgmt-snet```|```10.0.255.0/24```|Hub management server subnet.
 
 ###### *Microsoft requires these names and sizes for the firewall and VPN gateway subnets.
-<br>
+
 
  For convenience, DNS subnets (both hub and onprem) follow a ```x.x.254.0/24``` pattern, so it's easy to remember that DNS servers are on the 254 subnet. Similarly the ```x.x.255.0/24``` subnets are for "management", and each has an attached management VM that's intended mostly for connectivity testing between vnets.
 
@@ -87,7 +87,7 @@ Several subnets reside in the onprem and hub virtual networks:
 
 All subnets are associated with an NSG that allows traffic from the public IP address or NAT gateway of the the client machine running the Terraform modules. 
 
-<br>
+
 
 ## Site-to-Site (S2S) VPN
 
@@ -109,13 +109,13 @@ All on-premises subnets are associated with a route table (```onprem-to-hub-rt``
 ### Azure Side
 The Azure side of the VPN connection consists of an Azure Virtual Network Gateway (```hub-vpng```), and a Local Gateway (```hub-lgw```). The local gateway is a logical representation of the on-premises VPN gateway (the Windows RAS machine).  The Windows RAS machine's public IP address and the on-premises virtual network address space is set in the the local gateway's resource configuration.  The connection from the Azure Virtual Network Gateway to the on-premises Windows machine is made by creating a VPN connection (```onprem-conn```) in the Virtual Network Gateway resource.  This connection associates the Virtual Network Gateway with the local gateway (which represents the on-premises Windows machine).
 
-<br>
+
 
 ## Private Link Services & Private Endpoints
 
 A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of Platform-as-a-Service (PaaS) resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through Azure's DNS resolver and *Private DNS Zones*, which is covered in the next section.
 
-<br>
+
 
 ## DNS
 
@@ -129,7 +129,7 @@ The DNS setup for hybrid networking in Azure can be quite elaborate.  There are 
 |Private DNS Zones*|(n/a)|(n/a)|Private DNS Zones
 
 ###### *Private DNS Zone examples: privatelink.blob.core.windows.net, privatelink.vaultcore.azure.net
-<br>
+
 
 ### DNS Software & Configuration
 
