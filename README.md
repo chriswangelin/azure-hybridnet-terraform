@@ -1,6 +1,6 @@
 # azure-hybridnet-terraform
 
-## Overview
+# Overview
 
 Do you want to level up your understanding of hybrid networking with Azure?  Have you mastered Terraform basics?
 
@@ -10,18 +10,18 @@ Designing a hybrid network architecture that seamlessly integrates on-premises n
 
 This repo aims to create a lab or sandbox environment for experimenting with hybrid networks in Azure. It contains Terraform modules for building a basic hub-and-spoke network with a *simulated* on-premises network.  The Architecture section explains the simulated network and details about the setup.
 
-## A Word of Caution
+# A Word of Caution
 
 **RUNNING THE TERRAFORM MODULES IN THIS REPO WILL DEPLOY AZURE RESOURCES THAT COST REAL MONEY. BE ESPECIALLY MINDFUL OF THE AZURE FIREWALL RESOURCE IF IT IS ENABLED, AS IT COSTS $1.25 (USD) PER HOUR PLUS DATA TRANSFER COST AS OF WHEN THIS SENTENCE WAS TYPED. SETTING A SUBSCRIPTION LEVEL BUDGET AND EMAIL NOTIFICATION IS STRONGLY ADVISED WHEN USING THE MODULES IN THIS REPOSITORY.**
 
-## Prerequisites
+# Prerequisites
 
 - [Azure account](https://docs.microsoft.com/en-us/dotnet/azure/create-azure-account) 
 - [Terraform](https://www.terraform.io/downloads)
 - [git](https://git-scm.com/downloads)
 - [terraform-docs](https://terraform-docs.io/)  (required only for contributors)
 
-## Modules
+# Modules
 
 Note: Many modules include a management VM for easy SSH access.
 
@@ -34,13 +34,13 @@ Note: Many modules include a management VM for easy SSH access.
 |```virtual-machine-linux```|Simplifies creating a vnet-connected Linux virtual machine by requiring only a resource group name and subnet id as input parameters.
 |```virtual-machine-windows```|Simplifies creating a vnet-connected Windows virtual machine by requiring only a resource group name, subnet id, and admin password as input parameters.
 
-## Architecture
+# Architecture
 
 The diagram below depicts the deployed ```hub```, ```onprem```, and ```s2s-winras-vpn``` modules. 
 
 ![Architecture Diagram](images/hub-spoke.png)
 
-### Virtual Networks
+## Virtual Networks
 
 The architecture has several virtual networks:
 
@@ -52,7 +52,7 @@ The architecture has several virtual networks:
 
  The simulated on-premises virtual network (```onprem-vnet```) uses a disinctly different IP range from the hub (```hub-vnet```) to simplify distinguishing the networks. For spoke networks, the second octet of the IP space corresponds to the landing zone spoke number "N", which can be specified as an input parameter for the ```landing-zone``` Terraform module.
 
-#### Subnets
+### Subnets
 
 Several subnets reside in the onprem and hub virtual networks:
 
@@ -75,7 +75,7 @@ Several subnets reside in the onprem and hub virtual networks:
 ###### *Microsoft requires these names and sizes for the firewall and VPN gateway subnets.
 <br>
 
-### Gateways and Site-to-Site (S2S) VPN
+## Site-to-Site (S2S) VPN
 
 The core components of the S2S VPN connection are as follows:
 
@@ -86,15 +86,18 @@ The core components of the S2S VPN connection are as follows:
 |```hub-lgw```|(system-generated)|Hub local gateway.
 |```onprem-conn```|(n/a)|Connection from hub VPN gateway to on-prem gateway.
 
+### On-premises side
+
 Unlike typical connections between Azure vnets that use network peering, the on-premises network (```onprem-vnet```) connects to the hub (```hub-vnet```) via a Site-to-Site (S2S) VPN connection, which mimcs how many enterprise data centers connect to Azure.  The on-premises side of the S2S setup uses a Windows virtual machine (```onprem-winra-vm```) that's running Remote Access and Routing Services (RAS), which is one of few software VPN's that Microsoft [officially supports](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices) for creating connections to Azure Virtual Network Gateway.  **IP forwarding MUST be enabled on the Windows machine so that it can route traffic to and from the VPN.**  The repository includes a [PowerShell script](/s2svpn-winras-vpng/scripts/config-s2svpn-winras-to-azure-vpng.ps1) for configuring the on-premises side of the VPN connecting in RAS, and the script is executed through a [Terraform module](/s2svpn-winras-vpng/virtual-machine-extension.tf) that invokes a virtual machine extension on the Windows RAS machine.
 
-The Azure side of the VPN connection consists of an Azure Virtual Network Gateway (```hub-vpng```), and a Local Gateway (```hub-lgw```). The local gateway resides is a logical representation of the on-premises VPN gateway (the Windows RAS machine).  The Windows RAS machine's public IP address and the on-premises virtual network address space must be entered into the the local gateway's resource configuration.  The connection from the Azure Virtual Network Gateway and the on-premises Windows machine is made by creating a VPN connection (```onprem-conn```) in the Virtual Network Gateway resource.  This connection associates the Virtual Network Gateway with the local gateway (which represents the on-premises Windows machine).
+### Azure Side
+The Azure side of the VPN connection consists of an Azure Virtual Network Gateway (```hub-vpng```), and a Local Gateway (```hub-lgw```). The local gateway is a logical representation of the on-premises VPN gateway (the Windows RAS machine).  The Windows RAS machine's public IP address and the on-premises virtual network address space must be entered into the the local gateway's resource configuration.  The connection from the Azure Virtual Network Gateway to the on-premises Windows machine is made by creating a VPN connection (```onprem-conn```) in the Virtual Network Gateway resource.  This connection associates the Virtual Network Gateway with the local gateway (which represents the on-premises Windows machine).
 
-### Private Link Services and Private Endpoints   
+## Private Link Services & Private Endpoints
 
-A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of PaaS resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through *Private DNS Zones*, which is covered in the next section.
+A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of Platform-as-a-Service (PaaS) resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through Azure's Public DNS server and *Private DNS Zones*, which is covered in the next section.
 
-### DNS
+## DNS
 
 The DNS setup for hybrid networking in Azure can be quite elaborate.  There are four key components:
 
@@ -103,10 +106,19 @@ The DNS setup for hybrid networking in Azure can be quite elaborate.  There are 
 |```onprem-dns-vm```|```172.16.254.4```|(system-generated)|On-premises DNS server VM
 |```hub-dns-vm```|```10.0.254.4```|(system-generated)|Private DNS Server VM
 |(n/a)|(n/a)|```168.63.129.16```|Azure Public DNS server
-|Private DNS Zones|(n/a)|(n/a)|Private DNS Zones
+|Private DNS Zones*|(n/a)|(n/a)|Private DNS Zones
 
 ###### *Private DNS Zone examples: privatelink.blob.core.windows.net, privatelink.vaultcore.azure.net
 
-In our architecture, DNS lookups for on-premises hostnames originating from on-premises hosts are resolved via the on-premises DNS server (```onprem-dns-vm```).  Lookups for Fully Qualified Domain Names (FQDN's) associated with private link-enabled Azure services originating from the on-premises network (```onprem-vnet```) are forwarded to the private DNS server in the hub network (```hub-dns-vm```), which in turn forwards the request to Azure's public DNS server (```168.63.129.16```).  The public server determines if the request is originating from a network that has a private DNS zone corresponding to the requested DNS record.  For example, if the lookup is for foo.blob.core.windows.net (storage account blob endpoint), then it looks to see if the originating network (```hub-vnet```) has a link to a private DNS zone named ```privatelink.blob.core.windows.net```. If a private DNS zone exists (which it does in our setup), then the public server attempts to find the requested DNS record in that zone and sends it in a reply to the originating DNS server (```hub-dns-vm```), which then passes it back to the on-premises DNS server (```onprem-dns-vm```).  Note that the "link" between a virtual network and a privte DNS zone is not a network link - it's just a logical association made in the vnet resource, much like assocating an NSG with a subnet.
+### DNS software
+
+Both the on-premises DNS server and the private DNS server in the hub network are run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.
+
+
+### Lookups originating from on-premises
+
+In our architecture, DNS lookups for on-premises hostnames originating from on-premises hosts are resolved via the on-premises DNS server (```onprem-dns-vm```), as would be typical in a real on-premises network.  Lookups for Fully Qualified Domain Names (FQDN's) associated with private link-enabled Azure services originating from the on-premises network (```onprem-vnet```) are forwarded to the private DNS server in the hub network (```hub-dns-vm```), which in turn forwards the request to Azure's public DNS server (```168.63.129.16```).  The public server determines if the request is originating from a network that has a private DNS zone corresponding to the requested DNS record.  For example, if the lookup is for foo.blob.core.windows.net (storage account blob endpoint), then it determines if the originating network (```hub-vnet```) has a link to a private DNS zone named ```privatelink.blob.core.windows.net```. If a private DNS zone exists (which it does in our setup), then the public server attempts to find the requested DNS record in that zone and sends it in a reply to the originating DNS server (```hub-dns-vm```), which then passes it back to the on-premises DNS server (```onprem-dns-vm```).  The "link" between a virtual network and a privte DNS zone is not a network link - it's just a logical association made in the vnet resource, much like assocating an NSG with a subnet.
+
+### Lookups originating from the hub and spokes
 
 In our setup, the hub vnet (```hub-vnet```) and all spoke vnets are configured to use our private DNS server (```hub-dns-vm```).  Lookups for Azure resources originating from hub or spoke networks follow the same logic as lookups forwarded to our private DNS server (```hub-dns-vm```) from on-premises.  The private server forwards lookups for on-premises originiating from the hub or spokes to the on-premises server (```onnprem-dns-vm```), which resolves the request and replies with the result.
