@@ -95,7 +95,7 @@ The Azure side of the VPN connection consists of an Azure Virtual Network Gatewa
 
 ## Private Link Services & Private Endpoints
 
-A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of Platform-as-a-Service (PaaS) resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through Azure's Public DNS server and *Private DNS Zones*, which is covered in the next section.
+A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of Platform-as-a-Service (PaaS) resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through Azure's DNS resolver and *Private DNS Zones*, which is covered in the next section.
 
 ## DNS
 
@@ -105,20 +105,26 @@ The DNS setup for hybrid networking in Azure can be quite elaborate.  There are 
 |-|-|-|-|
 |```onprem-dns-vm```|```172.16.254.4```|(system-generated)|On-premises DNS server VM
 |```hub-dns-vm```|```10.0.254.4```|(system-generated)|Private DNS Server VM
-|(n/a)|(n/a)|```168.63.129.16```|Azure Public DNS server
+|(n/a)|(n/a)|```168.63.129.16```|Azure DNS resolver
 |Private DNS Zones*|(n/a)|(n/a)|Private DNS Zones
 
 ###### *Private DNS Zone examples: privatelink.blob.core.windows.net, privatelink.vaultcore.azure.net
 
 ### DNS software
 
-Both the on-premises DNS server and the private DNS server in the hub network are run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.
+Both the on-premises DNS server and the private DNS server in the hub network are run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.  Both configuration scripts specify which IP ranges are allowed to query the DNS servers and configure logging to ```/var/log/unbound.log```.  The on-premises configuration script has both a local zone for on-premises virtual machines and conditional forwarders that send private link FQDN lookups to the private DNS VM in the hub network.  All other traffic is routed to the Azure DNS resolver.
 
 
 ### Lookups originating from on-premises
 
-In our architecture, DNS lookups for on-premises hostnames originating from on-premises hosts are resolved via the on-premises DNS server (```onprem-dns-vm```), as would be typical in a real on-premises network.  Lookups for Fully Qualified Domain Names (FQDN's) associated with private link-enabled Azure services originating from the on-premises network (```onprem-vnet```) are forwarded to the private DNS server in the hub network (```hub-dns-vm```), which in turn forwards the request to Azure's public DNS server (```168.63.129.16```).  The public server determines if the request is originating from a network that has a private DNS zone corresponding to the requested DNS record.  For example, if the lookup is for foo.blob.core.windows.net (storage account blob endpoint), then it determines if the originating network (```hub-vnet```) has a link to a private DNS zone named ```privatelink.blob.core.windows.net```. If a private DNS zone exists (which it does in our setup), then the public server attempts to find the requested DNS record in that zone and sends it in a reply to the originating DNS server (```hub-dns-vm```), which then passes it back to the on-premises DNS server (```onprem-dns-vm```).  The "link" between a virtual network and a privte DNS zone is not a network link - it's just a logical association made in the vnet resource, much like assocating an NSG with a subnet.
+In our architecture, DNS lookups for on-premises hostnames originating from on-premises hosts are resolved via the on-premises DNS server (```onprem-dns-vm```), as would be typical in a real on-premises network.  Lookups for Fully Qualified Domain Names (FQDN's) associated with private link-enabled Azure services originating from the on-premises network (```onprem-vnet```) are forwarded to the private DNS server in the hub network (```hub-dns-vm```), which in turn forwards the request to Azure's DNS resolver (```168.63.129.16```).  The resolver determines if the request is originating from a network that has a private DNS zone corresponding to the requested DNS record.  For example, if the lookup is for foo.blob.core.windows.net (storage account blob endpoint), then it determines if the originating network (```hub-vnet```) has a link to a private DNS zone named ```privatelink.blob.core.windows.net```. If a private DNS zone exists (which it does in our setup), then the resolver attempts to find the requested DNS record in that zone and sends it in a reply to the originating DNS server (```hub-dns-vm```), which then passes it back to the on-premises DNS server (```onprem-dns-vm```).  The "link" between a virtual network and a privte DNS zone is not a network link - it's just a logical association made in the vnet resource, much like assocating an NSG with a subnet.
 
 ### Lookups originating from the hub and spokes
 
-In our setup, the hub vnet (```hub-vnet```) and all spoke vnets are configured to use our private DNS server (```hub-dns-vm```).  Lookups for Azure resources originating from hub or spoke networks follow the same logic as lookups forwarded to our private DNS server (```hub-dns-vm```) from on-premises.  The private server forwards lookups for on-premises originiating from the hub or spokes to the on-premises server (```onnprem-dns-vm```), which resolves the request and replies with the result.
+In our setup, the hub vnet (```hub-vnet```) and all spoke vnets are configured to use our private DNS server (```hub-dns-vm```) for lookups.  Lookups for Azure resources originating from hub or spoke networks follow the same logic as lookups forwarded to our private DNS server (```hub-dns-vm```) from on-premises.  The private server forwards lookups for on-premises originiating from the hub or spokes to the on-premises server (```onnprem-dns-vm```), which resolves the request.
+
+## Routing
+
+The on-premises network contains a route table (```onprem-to-hub-rt```) that routes traffic bound for the hub-and-spoke to the Windows RAS machine.  The destination route is 10.0.0.0/8 because it includes both the addresses in the hub (10.0.0.0/16) and the spokes (10.N.0.0/16, 0 < N <= 255).  Without this route table, traffic would be routed to the Internet, which is the default route for all traffic not destined for the virtual network.
+
+More to come...
