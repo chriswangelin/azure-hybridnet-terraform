@@ -44,8 +44,8 @@ The diagram below depicts the deployed ```hub```, ```onprem```, and ```s2s-winra
 
 The architecture has several virtual networks. The simulated on-premises virtual network (```onprem-vnet```) uses a disinctly different IP range from the hub (```hub-vnet```) to simplify distinguishing the networks. For spoke networks, the second octet of the IP space corresponds to the landing zone spoke number "N", which can be specified as an input parameter for the ```landing-zone``` Terraform module.
 
-|Virtual network name|Address Space|Description
-|-|-|-|
+| Virtual network name | Address Space| Description |
+| -------------------- | -------------| ----------- |
 |```onprem-vnet```|172.16.0.0/16|Simulated on-premises network.  
 |```hub-vnet```|10.0.0.0/16|Hub virtual network.
 |```lzN-vnet```|10.N.0.0/16|Landing zone spoke virtual networks. (N = spoke number)
