@@ -7,4 +7,4 @@ resource "azurerm_local_network_gateway" "lgw" {
   address_space       = var.lgw_address_space
 }
 
-### Need to add local gateway connection here
+### Local gateway connection is defined in vpng.tf

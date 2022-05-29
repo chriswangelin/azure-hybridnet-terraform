@@ -44,11 +44,11 @@ The diagram below depicts the deployed ```hub```, ```onprem```, and ```s2s-winra
 
 The architecture has several virtual networks. The simulated on-premises virtual network (```onprem-vnet```) uses a disinctly different IP range from the hub (```hub-vnet```) to simplify distinguishing the networks. For spoke networks, the second octet of the IP space corresponds to the landing zone spoke number "N", which can be specified as an input parameter for the ```landing-zone``` Terraform module.
 
-| Virtual network name | Address Space| Description |
-| -------------------- | -------------| ----------- |
-|```onprem-vnet```|172.16.0.0/16|Simulated on-premises network.  
-|```hub-vnet```|10.0.0.0/16|Hub virtual network.
-|```lzN-vnet```|10.N.0.0/16|Landing zone spoke virtual networks. (N = spoke number)
+| Virtual network | Address Space| Description |
+| --------------- | -------------| ----------- |
+|```onprem-vnet```|```172.16.0.0/16```|Simulated on-premises network.  
+|```hub-vnet```|```10.0.0.0/16```|Hub virtual network.
+|```lzN-vnet```|```10.N.0.0/16```|Landing zone spoke virtual networks. (N = spoke number)
 
 #### Subnets
 
@@ -56,23 +56,32 @@ The architecture has several virtual networks. The simulated on-premises virtual
 
 |Subnet (onprem-vnet)|Address Prefix|Description|
 |-|-|-|
-|```onprem-winra-snet```|172.16.0.0/24|On-premises Windows Remote Access & Routing Services subnet.
-|```onprem-dns-snet```|172.16.254.0/24|On-premises DNS server subnet.
-|```onprem-mgmt-snet```|172.16.255.0/24|On-premises management server subnet.
+|```onprem-winra-snet```|```172.16.0.0/24```|On-premises Windows Remote Access & Routing Services subnet.
+|```onprem-dns-snet```|```172.16.254.0/24```|On-premises DNS server subnet.
+|```onprem-mgmt-snet```|```172.16.255.0/24```|On-premises management server subnet.
 
 |Subnet (hub-vnet)|Address Prefix|Description|
 |-|-|-|
-|```AzureFirewallSubnet```*|10.0.0.0/26|Azure Firewall subnet.
-|```GatewaySubnet```*|10.0.0.64/27|Azure VPN Gateway subnet.
-|```hub-dns-snet```|10.0.254.0/24|Hub DNS server subnet.
-|```hub-mgmt-snet```|10.0.255.0/24|Hub management server subnet.
+|```AzureFirewallSubnet```*|```10.0.0.0/26```*|Azure Firewall subnet.
+|```GatewaySubnet```*|```10.0.0.64/27```*|Azure VPN Gateway subnet.
+|```hub-dns-snet```|```10.0.254.0/24```|Hub DNS server subnet.
+|```hub-mgmt-snet```|```10.0.255.0/24```|Hub management server subnet.
 
 ###### *Microsoft requires these names and sizes for the firewall and VPN gateway subnets.
 <br>
 
-### Gateways & Site-to-Site (S2S) VPN
+### Gateways and Site-to-Site (S2S) VPN
 
-The simulated on-premises network (```onprem-vnet```) is just another Azure virtual network.  Unlike typical connections between Azure vnets that use network peering, the on-premises network connects to the hub (```hub-vnet```) via a Site-to-Site (S2S) VPN connection, which mimcs how many enterprise data centers connect to Azure.  Our S2S setup uses Windows Remote Access and Routing Services (RAS) on Windows Server, which is one of few software VPN's that Microsoft [officially supports](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices) for creating connections to Azure VPN Gateway.  **IP forwarding MUST be enabled on the Windows machine so that it can route traffic to and from the VPN.**
+The simulated on-premises network (```onprem-vnet```) is just another Azure virtual network.  Unlike typical connections between Azure vnets that use network peering, the on-premises network connects to the hub (```hub-vnet```) via a Site-to-Site (S2S) VPN connection, which mimcs how many enterprise data centers connect to Azure.  The S2S setup uses Windows Remote Access and Routing Services (RAS) on Windows Server, which is one of few software VPN's that Microsoft [officially supports](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices) for creating connections to Azure VPN Gateway.  **IP forwarding MUST be enabled on the Windows machine so that it can route traffic to and from the VPN.**
+
+|Resource|Resource Type|Private IP Address|Description
+|-|-|-|-|
+|```onprem-winra-vm```|Windows Virtual Machine|```172.16.0.4```|On-premises S2S VPN gateway.
+|```hub-vpng```|Virtual Network Gateway|(system-generated)|Hub VPN Gateway.
+|```hub-lgw```|Local Gateway|(system-generated)|Hub local Gateway.
+|```onprem-conn```|VPN Gateway Connection|(n/a)|Connection from hub to on-prem gateway.
+
+The local gateway resides in the hub resource group and is a logical representation of the on-premises VPN gateway (the Windows RAS machine).  The Windows RAS machine's public IP address and the on-premises virtual network address space must be entered into the the local gateway's resource configuration.
 
 ### Private Link Services and Private Endpoints   
 
@@ -82,12 +91,12 @@ A *private link-enabled* Azure service is one that supports *private endpoints* 
 
 The DNS setup for hybrid networking in Azure can be quite elaborate.  There are four key components:
 
-|Component|Name|IP Address
-|-|-|-|
-|On-premises DNS server VM|```onprem-dns-vm```|```172.16.254.4```
-|Private DNS Server VM|```hub-dns-vm```|```10.0.254.4```
-|Azure Public DNS server|(n/a)|```168.63.129.16```
-|Private DNS Zones|Various*|(n/a)
+|Resource|Private IP Address|Public IP Address|Description
+|-|-|-|-|
+|```onprem-dns-vm```|```172.16.254.4```|(system-generated)|On-premises DNS server VM
+|```hub-dns-vm```|```10.0.254.4```|(system-generated)|Private DNS Server VM
+|(n/a)|(n/a)|```168.63.129.16```|Azure Public DNS server
+|Private DNS Zones|(n/a)|(n/a)|Private DNS Zones
 
 ###### *Private DNS Zone examples: privatelink.blob.core.windows.net, privatelink.vaultcore.azure.net
 
