@@ -25,7 +25,7 @@ This repo aims to create a lab or sandbox environment for experimenting with hyb
 
 Note: Many modules include a management VM for easy SSH access.
 
-|Name|Description
+|<div style="width:290px">Name</div>|Description
 |-|-|
 |```hub```|Hub network, private DNS zones, DNS forwarder VM, optional VPN gateway, and optional Firewall *(coming soon)*.  Integrates with ```onprem``` module.
 |```landing-zone```|Foundation on which to deploy an application workload. Includes resource group, spoke vnet, subnets configured with NSG's, and management VM.
