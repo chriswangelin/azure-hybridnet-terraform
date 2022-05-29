@@ -3,10 +3,10 @@ resource azurerm_policy_definition policy {
 #  for_each =  toset( ["blob", "vault"] )
    for_each = var.private_dns_zone_map
 
-  name                = "deploy-if-not-exists-${each.key}-pdnsz-record"
+  name                = "${each.key}"
   policy_type         = "Custom"
   mode                = "Indexed"
-  display_name        = "deploy-if-not-exists-${each.key}-pdnsz-record"
+  display_name        = "${each.key}"
   management_group_id = data.azurerm_management_group.mg.id
 
   metadata = <<METADATA
@@ -29,7 +29,7 @@ METADATA
             "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
             "where": {
               "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
-              "equals": "${each.key}"
+              "equals": "${each.value[0]}"
             }
           },
           "greaterOrEquals": 1
@@ -70,7 +70,7 @@ METADATA
                   "properties": {
                     "privateDnsZoneConfigs": [
                       {
-                        "name": "${each.key}-privateDnsZone",
+                        "name": "${each.value[0]}-privateDnsZone",
                         "properties": {
                           "privateDnsZoneId": "[parameters('privateDnsZoneId')]"
                         }
