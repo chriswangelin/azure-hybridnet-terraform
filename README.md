@@ -4,15 +4,19 @@
 
 Do you want to level up your understanding of hybrid networking with Azure?  Have you mastered Terraform basics?
 
-**If you answered "yes", then this repo is for you.**
+**If you answered "yes" and "yes", then this repo is for you.**
 
 Designing a hybrid network architecture that seamlessly integrates on-premises networks with Azure can be a big obstacle for enterprises moving to the cloud.  Even after a working architecture is in place, software engineers and IT professionals who aren't steeped in Azure networking can struggle to understand fundamental concepts.  Add to that, even those who are passionate about learning usually don't have a data center in their home basements or hardware-based VPN appliances sitting under their desks.  So, experimenting with the on-premises components of the hybrid network can be a little tricky.
 
 This repo aims to create a lab or sandbox environment for experimenting with hybrid networks in Azure. It contains Terraform modules for building a basic hub-and-spoke network with a *simulated* on-premises network.  The Architecture section explains the simulated network and details about the setup.
 
+<br>
+
 # A Word of Caution
 
 **RUNNING THE TERRAFORM MODULES IN THIS REPO WILL DEPLOY AZURE RESOURCES THAT COST REAL MONEY. BE ESPECIALLY MINDFUL OF THE AZURE FIREWALL RESOURCE IF IT IS ENABLED, AS IT COSTS $1.25 (USD) PER HOUR PLUS DATA TRANSFER COST AS OF WHEN THIS SENTENCE WAS TYPED. SETTING A SUBSCRIPTION LEVEL BUDGET AND EMAIL NOTIFICATION IS STRONGLY ADVISED WHEN USING THE MODULES IN THIS REPOSITORY.**
+
+<br>
 
 # Prerequisites
 
@@ -20,6 +24,8 @@ This repo aims to create a lab or sandbox environment for experimenting with hyb
 - [Terraform](https://www.terraform.io/downloads)
 - [git](https://git-scm.com/downloads)
 - [terraform-docs](https://terraform-docs.io/)  (required only for contributors)
+
+<br>
 
 # Modules
 
@@ -33,6 +39,8 @@ Note: Many modules include a management VM for easy SSH access.
 |```s2s-winras-vpn```|Virtual machine extension intended for Windows Remote Access Services VM in ```onprem``` module. Executes PowerShell script that configures S2S VPN connection to Azure VPN gateway in ```hub``` module.
 |```virtual-machine-linux```|Simplifies creating a vnet-connected Linux virtual machine by requiring only a resource group name and subnet id as input parameters.
 |```virtual-machine-windows```|Simplifies creating a vnet-connected Windows virtual machine by requiring only a resource group name, subnet id, and admin password as input parameters.
+
+<br>
 
 # Architecture
 
@@ -52,6 +60,7 @@ The architecture has several virtual networks:
 
  The simulated on-premises virtual network (```onprem-vnet```) uses a disinctly different IP range from the hub (```hub-vnet```) to simplify distinguishing the networks. For spoke networks, the second octet of the IP space corresponds to the landing zone spoke number "N", which can be specified as an input parameter for the [```landing-zone```](/landing-zone/) Terraform module.
 
+
 ### Subnets
 
 Several subnets reside in the onprem and hub virtual networks:
@@ -69,10 +78,15 @@ Several subnets reside in the onprem and hub virtual networks:
 |```hub-dns-snet```|```10.0.254.0/24```|Hub DNS server subnet.
 |```hub-mgmt-snet```|```10.0.255.0/24```|Hub management server subnet.
 
+###### *Microsoft requires these names and sizes for the firewall and VPN gateway subnets.
+<br>
+
  For convenience, DNS subnets (both hub and onprem) follow a ```x.x.254.0/24``` pattern, so it's easy to remember that DNS servers are on the 254 subnet. Similarly the ```x.x.255.0/24``` subnets are for "management", and each has an attached management VM that's intended mostly for connectivity testing between vnets.
 
+### Network Security Groups (NSG's)
 
-###### *Microsoft requires these names and sizes for the firewall and VPN gateway subnets.
+All subnets are associated with an NSG that allows traffic from the public IP address or NAT gateway of the the client machine running the Terraform modules. 
+
 <br>
 
 ## Site-to-Site (S2S) VPN
@@ -90,12 +104,18 @@ The core components of the S2S VPN connection are as follows:
 
 Unlike typical connections between Azure vnets that use network peering, the on-premises network (```onprem-vnet```) connects to the hub (```hub-vnet```) via a Site-to-Site (S2S) VPN connection, which mimcs how many enterprise data centers connect to Azure.  The on-premises side of the S2S setup uses a Windows virtual machine (```onprem-winra-vm```) that's running Remote Access and Routing Services (RAS), which is one of few software VPN's that Microsoft [officially supports](https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpn-devices) for creating connections to Azure Virtual Network Gateway.  **IP forwarding is enabled on the Windows machine so that it can route traffic to and from the VPN.**  The repository includes a [PowerShell script](/s2svpn-winras-vpng/scripts/config-s2svpn-winras-to-azure-vpng.ps1) for configuring the on-premises side of the VPN connecting in RAS, and the script is executed through a [Terraform module](/s2svpn-winras-vpng/virtual-machine-extension.tf) that invokes a virtual machine extension on the Windows RAS machine.
 
+All on-premises subnets are associated with a route table (```onprem-to-hub-rt```) that routes traffic bound for the hub-and-spoke to the Windows RAS machine.  The destination route is 10.0.0.0/8 because it includes both the addresses in the hub (10.0.0.0/16) and the spokes (10.N.0.0/16, 0 < N <= 255).  Without this route table, traffic intended for the hub would be routed to the Internet, which is the default route for all traffic not destined for the virtual network.
+
 ### Azure Side
 The Azure side of the VPN connection consists of an Azure Virtual Network Gateway (```hub-vpng```), and a Local Gateway (```hub-lgw```). The local gateway is a logical representation of the on-premises VPN gateway (the Windows RAS machine).  The Windows RAS machine's public IP address and the on-premises virtual network address space is set in the the local gateway's resource configuration.  The connection from the Azure Virtual Network Gateway to the on-premises Windows machine is made by creating a VPN connection (```onprem-conn```) in the Virtual Network Gateway resource.  This connection associates the Virtual Network Gateway with the local gateway (which represents the on-premises Windows machine).
+
+<br>
 
 ## Private Link Services & Private Endpoints
 
 A *private link-enabled* Azure service is one that supports *private endpoints* - a mechanism for assigning private IP addresses to specific types of Platform-as-a-Service (PaaS) resources, such as a storage accounts or key vaults.  The private IP's, however,  are *endpoints*, meaning that they only permit inbound traffic.  As a side note, Network Security Groups (NSG's) have historically not applied to private endpoints, but a [public preview feature](https://azure.microsoft.com/en-us/updates/public-preview-of-private-link-network-security-group-support/) now supports this functionality.  DNS resolution for private endpoints happens through Azure's DNS resolver and *Private DNS Zones*, which is covered in the next section.
+
+<br>
 
 ## DNS
 
@@ -109,8 +129,9 @@ The DNS setup for hybrid networking in Azure can be quite elaborate.  There are 
 |Private DNS Zones*|(n/a)|(n/a)|Private DNS Zones
 
 ###### *Private DNS Zone examples: privatelink.blob.core.windows.net, privatelink.vaultcore.azure.net
+<br>
 
-### DNS configuration
+### DNS Software & Configuration
 
 Both the on-premises DNS server and the private DNS server in the hub network are run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.  Both configuration scripts specify which IP ranges are allowed to query the DNS servers and configure logging to ```/var/log/unbound.log```.  The on-premises configuration script has both a local zone for on-premises virtual machines and conditional forwarders that send private link FQDN lookups to the private DNS VM in the hub network.  All other traffic is routed to the Azure DNS resolver.
 
@@ -127,12 +148,8 @@ In our setup, the hub vnet (```hub-vnet```) and all spoke vnets are configured t
 
 For specific types of PaaS services, a *deploy if not exists* policy has been configured in Azure Policy to automatically create private DNS zone records when a private endpoint for the service is deployed.  These policies are created in the [policy-pdnsz](/policy-pdnsz) module.
 
-## Routing
-
-The on-premises network contains a route table (```onprem-to-hub-rt```) that routes traffic bound for the hub-and-spoke to the Windows RAS machine.  The destination route is 10.0.0.0/8 because it includes both the addresses in the hub (10.0.0.0/16) and the spokes (10.N.0.0/16, 0 < N <= 255).  Without this route table, traffic would be routed to the Internet, which is the default route for all traffic not destined for the virtual network.
-
 ## Other Resources
 
-All virtual networks, including the on-premises one contain a low-powered management VM for connectivity testing.  These VM's can be configured with or without a public IP address.
+All virtual networks, including the on-premises one contain a low-powered management VM for connectivity testing.  These VM's can be configured with or without a public IP address.  Login via SSH key is configured by default. 
 
 More to come...
