@@ -133,7 +133,7 @@ The DNS setup for hybrid networking in Azure can be quite elaborate.  There are 
 
 ### DNS Software & Configuration
 
-Both the on-premises DNS server and the private DNS server in the hub network are run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.  Both configuration scripts specify which IP ranges are allowed to query the DNS servers and configure logging to ```/var/log/unbound.log```.  The on-premises configuration script has both a local zone for on-premises virtual machines and conditional forwarders that send private link FQDN lookups to the private DNS VM in the hub network.  All other traffic is routed to the Azure DNS resolver.
+Both the on-premises DNS server and the private DNS server in the hub network run the Unbound DNS server software.  A [virtual machine extension](/onprem/virtual-machine-extension.tf) in the [onprem](/onprem/) module and [another](/hub/scripts/config-unbound-dns-hub-rhel.sh) in the [hub](/hub/) module execute a bash script that deploys and configures Unbound on the DNS hosts.  Both configuration scripts specify which IP ranges are allowed to query the DNS servers and configure logging to ```/var/log/unbound.log```.  The on-premises configuration script has both a local zone for on-premises virtual machines and conditional forwarders that send private link FQDN lookups to the private DNS VM in the hub network.  All other traffic is routed to the Azure DNS resolver.
 
 
 ### Lookups originating from on-premises
