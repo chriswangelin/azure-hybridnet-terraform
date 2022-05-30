@@ -33,7 +33,7 @@ variable private_dns_zone_map {
     dine-automation-wh-pdns  = [ "WebHook", "privatelink.azure-automation.net" ]
     dine-automation-dsc-pdns = [ "DSCAndHybridWorker",  "privatelink.azure-automation.net" ]
 
-    dine-sqldb-sqlsvr-pdns   = [ "sqlServer", "privatelink.database.windows.net" ]
+    dine-sqldb-pdns          = [ "sqlServer", "privatelink.database.windows.net" ]
     dine-synapse-sql-pdns    = [ "Sql", "privatelink.sql.azuresynapse.net" ]
     dine-synapse-sqlod-pdns  = [ "SqlOnDemand", "privatelink.sql.azuresynapse.net" ]
     dine-synapse-dev-pdns    = [ "Dev", "privatelink.dev.azuresynapse.net" ]
@@ -60,52 +60,73 @@ variable private_dns_zone_map {
 
     # Batch regions may be added (privatelink.{region}.batch.azure.com).  
     # Corresponding conditional forwarders must be added to onprem DNS
-    dine-batch-acct-eus-pdns = [ "batchAccount",	"privatelink.eastus.batch.azure.com" ]
+    dine-batchacct-eus-pdns  = [ "batchAccount",	"privatelink.eastus.batch.azure.com" ]
 
-    dine-postgres-pgsvr-pdns = [ "postgresqlServer",	"privatelink.postgres.database.azure.com" ]
-    dine-mysql-mysqlsvr-pdns = [ "mysqlServer",	"privatelink.mysql.database.azure.com" ]
-    dine-mariadb-mdbsvr-pdns = [ "mariadbServer",	"privatelink.mariadb.database.azure.com" ]
+    dine-postgres-pdns       = [ "postgresqlServer",	"privatelink.postgres.database.azure.com" ]
+    dine-mysql-pdns          = [ "mysqlServer",	"privatelink.mysql.database.azure.com" ]
+    dine-mariadb-pdns        = [ "mariadbServer",	"privatelink.mariadb.database.azure.com" ]
 
     dine-keyvault-vault-pdns = [ "vault", "privatelink.vaultcore.azure.net" ]
     dine-keyvault-mghsm-pdns = [ "managedHSMs", "privatelink.managedhsm.azure.net" ]
 
     # AKS regions may be added (privatelink.{region}.azmk8s.io)
     # Corresponding conditional forwarders must be added to onprem DNS
-    dine-aks-mgmt-eus-pdns   = [ "management",	"privatelink.eastus.azmk8s.io" ]
+    dine-aks-eus-pdns        = [ "management",	"privatelink.eastus.azmk8s.io" ]
 
-    dine-search-srchsvc-pdns = [ "searchService",	"privatelink.search.windows.net" ]
-    dine-contreg-reg-pdns    = [ "registry","privatelink.azurecr.io" ]
-    dine-appcfg-stores-pdns  = [ "configurationStores", "privatelink.azconfig.io" ]
+    dine-search-pdns         = [ "searchService",	"privatelink.search.windows.net" ]
+    dine-containerreg-pdns   = [ "registry","privatelink.azurecr.io" ]
+    dine-appconfig-pdns      = [ "configurationStores", "privatelink.azconfig.io" ]
     
     # Azure Backup regions may be added (privatelink.{region}.backup.windowsazure.com)
     # Corresponding conditional forwarders must be added to onprem DNS
-    dine-azbkp-bkp-eus-pdns  = [ "AzureBackup",	"privatelink.eastus.backup.windowsazure.com"	]
+    dine-backup-eus-pdns     = [ "AzureBackup",	"privatelink.eastus.backup.windowsazure.com"	]
+    dine-sitereco-eus-pdns   = [ "AzureSiteRecovery", "privatelink.siterecovery.windowsazure.com" ]
+
+    dine-eventhub-pdns       = [ "namespace",	"privatelink.servicebus.windows.net" ]
+    dine-servicebus-pdns     = [ "namespace",	"privatelink.servicebus.windows.net" ]
+    dine-iothub-azdvc-pdns   = [ "iotHub", "privatelink.azure-devices.net" ]
+    dine-iothub-svcbus-pdns  = [ "iothub",	"privatelink.servicebus.windows.net" ]
+    dine-relay-pdns          = [ "namespace", "privatelink.servicebus.windows.net" ]
+
+    dine-evtgrid-topic-pdns  = [ "topic", "privatelink.eventgrid.azure.net" ]
+    dine-evtgrid-domain-pdns = [ "domain", "privatelink.eventgrid.azure.net" ]
+
+    dine-webapps-pdns        = [ "sites", "privatelink.azurewebsites.net" ]
+    dine-machlearn-api-pdns  = [ "amlworkspace", "privatelink.api.azureml.ms" ]
+    dine-machlearn-note-pdns = [ "amlworkspace", "privatelink.notebooks.azure.net" ]
+
+    dine-signalr-pdns        = [ "signalR", "privatelink.service.signalr.net" ]
 
     dine-monitor-mon-pdns    = [ "azuremonitor", "privatelink.monitor.azure.com" ]
     dine-monitor-oms-pdns    = [ "azuremonitor", "privatelink.oms.opinsights.azure.com" ]
     dine-monitor-ods-pdns    = [ "azuremonitor", "privatelink.ods.opinsights.azure.com" ]
     dine-monitor-agt-pdns    = [ "azuremonitor", "privatelink.agentsvc.azure-automation.net" ]
     dine-monitor-blob-pdns   = [ "azuremonitor", "privatelink.blob.core.windows.net" ]
+
+    dine-cognitivesvcs-pdns  = [ "account", "privatelink.cognitiveservices.azure.com" ]
+    dine-filesync-pdns       = [ "afs", "privatelink.afs.azure.net" ]
+
+    dine-adf-datafact-pdns   = [ "dataFactory", "privatelink.datafactory.azure.net" ]
+    dine-adf-portal-pdns     = [ "portal", "privatelink.adf.azure.com	adf.azure.com" ]
+
+    dine-redis-cache-pdns    = [ "redisCache", "privatelink.redis.cache.windows.net" ]
+    dine-redis-enter-pdns    = [ "redisEnterprise", "privatelink.redisenterprise.cache.azure.net" ]
+
+    dine-purview-acct-pdns   = [ "account", "privatelink.purview.azure.com" ]
+    dine-purview-portal-pdns = [ "portal", "privatelink.purviewstudio.azure.com" ]
+
+    dine-digitaltwins-pdns   = [ "digitalTwinsInstances", "privatelink.digitaltwins.azure.net" ]
+    dine-hdinsight-pdns      = [ "privatelink.azurehdinsight.net", "azurehdinsight.net" ]
+
+    dine-arc-his-pdns        = [ "hybridcompute", "privatelink.his.arc.azure.com" ]
+    dine-arc-guest-pdns      = [ "hybridcompute", "privatelink.guestconfiguration.azure.com" ]
+
+    dine-media-keydeliv-pdns = [ "keydelivery", "privatelink.media.azure.net" ]
+    dine-media-liveevt-pdns  = [ "liveevent", "privatelink.media.azure.net" ]
+    dine-media-stream-pdns   = [ "streamingendpoint", "privatelink.media.azure.net" ]
+
+    # Azure Data Explorer regions may be added (privatelink.{region}.kusto.windows.net)
+    # Corresponding conditional forwarders must be added to onprem DNS
+    dine-dataexp-eus-pdns    = [ "kusto", "privatelink.eastus.kusto.windows.net" ]
   }
 }
-
-# Azure Site Recovery (Microsoft.RecoveryServices/vaults) / AzureSiteRecovery	privatelink.siterecovery.windowsazure.com	{region}.hypervrecoverymanager.windowsazure.com
-# Azure Event Hubs (Microsoft.EventHub/namespaces) / namespace	privatelink.servicebus.windows.net	servicebus.windows.net
-# Azure Service Bus (Microsoft.ServiceBus/namespaces) / namespace	privatelink.servicebus.windows.net	servicebus.windows.net
-# Azure IoT Hub (Microsoft.Devices/IotHubs) / iotHub	privatelink.azure-devices.net
-# privatelink.servicebus.windows.net1	azure-devices.net
-# servicebus.windows.net
-# Azure Relay (Microsoft.Relay/namespaces) / namespace	privatelink.servicebus.windows.net	servicebus.windows.net
-# Azure Event Grid (Microsoft.EventGrid/topics) / topic	privatelink.eventgrid.azure.net	eventgrid.azure.net
-# Azure Event Grid (Microsoft.EventGrid/domains) / domain	privatelink.eventgrid.azure.net	eventgrid.azure.net
-# Azure Web Apps (Microsoft.Web/sites) / sites	privatelink.azurewebsites.net	azurewebsites.net
-# Azure Machine Learning (Microsoft.MachineLearningServices/workspaces) / amlworkspace	privatelink.api.azureml.ms
-# privatelink.notebooks.azure.net	api.azureml.ms
-# notebooks.azure.net
-# instances.azureml.ms
-# aznbcontent.net
-# SignalR (Microsoft.SignalRService/SignalR) / signalR	privatelink.service.signalr.net	service.signalr.net
-
-
-# Cognitive Services (Microsoft.CognitiveServices/accounts) / account	privatelink.cognitiveservices.azure.com	cognitiveservices.azure.com
-# Azure File Sync (Microsoft.StorageSync/storageSyncServices) / afs	privatelink.afs.azure.net	afs.azure.net
