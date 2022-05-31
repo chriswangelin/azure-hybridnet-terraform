@@ -28,7 +28,7 @@ resource azurerm_subscription_policy_assignment policy_assignment {
   display_name         = "${each.key}" # (optional) can be > 24 characters
   location             = "eastus"
   policy_definition_id = azurerm_policy_definition.policy["${each.key}"].id
-  subscription_id      = coalesce(var.policy_subscription_id, data.azurerm_subscription.current.id)
+  subscription_id      = local.policy_subscriotion_id
   
   identity {
     type         = "UserAssigned"
