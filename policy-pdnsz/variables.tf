@@ -1,8 +1,3 @@
-variable pdnsz_subscription_id {
-  type        = string
-  description = "Subscription containing the private DNS zones to which the policies will add records." 
-}
-
 variable resource_group_name {
   type        = string
   description = "Resource group under which the policy assignment managed user identity will be created."
@@ -15,10 +10,22 @@ variable location {
   default     = "eastus"
 }
 
+variable policy_subscription_id {
+  type        = string
+  description = "Subscription that will own the policies."
+  default     = null
+}
+
+variable pdnsz_subscription_id {
+  type        = string
+  description = "Subscription containing the private DNS zones to which the policies will add records." 
+  default     = null
+}
+
 variable policy_management_group_name {
   type        = string
-  description = "Management group to which the policies will be assigned."
-  default     = "Tenant Root Group"
+  description = "Name of management group to which the policies will be assigned."
+  default     = null
 }
 
 variable policy_assignment_identity_name {
@@ -26,6 +33,8 @@ variable policy_assignment_identity_name {
   description = "Managed identity that will execute resource changes triggered by policies."
   default     = "policy-assignment-identity"
 }
+
+
 
 variable private_dns_zone_map {
   type = map(list(string))
@@ -107,7 +116,7 @@ variable private_dns_zone_map {
     dine-filesync-pdns       = [ "afs", "privatelink.afs.azure.net" ]
 
     dine-adf-datafact-pdns   = [ "dataFactory", "privatelink.datafactory.azure.net" ]
-    dine-adf-portal-pdns     = [ "portal", "privatelink.adf.azure.com	adf.azure.com" ]
+    dine-adf-portal-pdns     = [ "portal", "privatelink.adf.azure.com" ]
 
     dine-redis-cache-pdns    = [ "redisCache", "privatelink.redis.cache.windows.net" ]
     dine-redis-enter-pdns    = [ "redisEnterprise", "privatelink.redisenterprise.cache.azure.net" ]

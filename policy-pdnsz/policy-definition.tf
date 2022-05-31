@@ -1,13 +1,12 @@
 # az policy definition list --query "[?policyType == 'Custom']" -o json
 resource azurerm_policy_definition policy {
-#  for_each =  toset( ["blob", "vault"] )
-   for_each = var.private_dns_zone_map
+  for_each = var.private_dns_zone_map
 
   name                = "${each.key}"
   policy_type         = "Custom"
   mode                = "Indexed"
   display_name        = "${each.key}"
-  management_group_id = data.azurerm_management_group.mg.id
+  management_group_id = try(data.azurerm_management_group.mg[0].id, null)
 
   metadata = <<METADATA
     {
