@@ -1,5 +1,5 @@
 resource azurerm_network_security_group winra_snet_nsg {
-  name                = local.winra_snet_nsg_name
+  name                = var.winra_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -24,7 +24,7 @@ resource azurerm_network_security_rule winra_snet_allow_inbound_nsg_rule {
 }
 
 resource azurerm_network_security_group dns_snet_nsg {
-  name                = local.dns_snet_nsg_name
+  name                = var.dns_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 
@@ -49,7 +49,7 @@ resource azurerm_network_security_rule dns_snet_allow_inbound_nsg_rule {
 }
 
 resource azurerm_network_security_group mgmt_snet_nsg {
-  name                = local.mgmt_snet_nsg_name
+  name                = var.mgmt_snet_nsg_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
 

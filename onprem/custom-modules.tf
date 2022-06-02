@@ -2,7 +2,7 @@ module dns_vm_001 {
   source = "../virtual-machine-linux"
 
   resource_group_name  = azurerm_resource_group.rg.name
-  name                 = local.dns_vm_001_name
+  name                 = var.dns_vm_001_name
   location             = var.location
   urn                  = var.dns_vm_001_urn
   plan                 = var.dns_vm_001_plan
@@ -18,7 +18,7 @@ module mgmt_vm {
   source = "../virtual-machine-linux"
 
   resource_group_name  = azurerm_resource_group.rg.name
-  name                 = local.mgmt_vm_name
+  name                 = var.mgmt_vm_name
   location             = var.location
   urn                  = var.mgmt_vm_urn
   plan                 = var.mgmt_vm_plan
@@ -38,7 +38,7 @@ module winra_vm {
   source = "../virtual-machine-windows"
 
   resource_group_name  = azurerm_resource_group.rg.name
-  name                 = local.winra_vm_name
+  name                 = var.winra_vm_name
   location             = var.location
   urn                  = var.winra_vm_urn
   plan                 = var.winra_vm_plan

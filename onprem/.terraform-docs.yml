@@ -1,0 +1,65 @@
+formatter: "markdown" # this is required
+
+version: ""
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+
+sections:
+  show:
+    - providers
+    - inputs
+    - outputs
+
+content: |-
+  {{ .Header }}
+
+  ## Overview
+  On-premises network simulator module. Intended to integrate with  ```hub``` and ```winra-s2svpn``` modules.
+
+  Includes:
+  - Resource group and virtual network with separate subnets for Site-to-Site (S2S) VPN, DNS, and management.
+  - Windows Server VM ready for S2S VPN Remote Access Services to be installed and configured for S2S VPN connection to Azure hub vnet.
+  - Unbound DNS server VM configured to conditionally forward private link DNS lookups to private DNS server in hub vnet.
+  - Management VM for connectivity testing.
+  - Route table to route all on-premises traffic bound for the hub and spokes to the Azure VPN gateway.
+  
+  {{ .Providers }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}  
+
+output:
+  file: ""
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->    
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: false
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true

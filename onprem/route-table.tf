@@ -1,8 +1,7 @@
 resource azurerm_route_table onprem_to_hub_rt {
-  name                          = local.route_table_name
+  name                          = var.route_table_name
   location                      = azurerm_resource_group.rg.location
   resource_group_name           = azurerm_resource_group.rg.name
-  #disable_bgp_route_propagation = false
 
   route {
     name                   = "to-hub"
@@ -11,4 +10,3 @@ resource azurerm_route_table onprem_to_hub_rt {
     next_hop_in_ip_address = module.winra_vm.private_ip_address
   }
 }
-

@@ -1,6 +1,6 @@
 # On-premises virtual network
 resource azurerm_virtual_network vnet {
-  name                = local.vnet_name
+  name                = var.vnet_name
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   address_space       = var.vnet_address_space
@@ -8,7 +8,7 @@ resource azurerm_virtual_network vnet {
 
 # Windows RAS subnet
 resource azurerm_subnet winra_snet {
-  name                  = local.winra_snet_name
+  name                  = var.winra_snet_name
   virtual_network_name  = azurerm_virtual_network.vnet.name
   resource_group_name   = azurerm_resource_group.rg.name
   address_prefixes      = var.winra_snet_address_prefixes
@@ -30,7 +30,7 @@ resource azurerm_subnet_route_table_association winra_snet_onprem_to_hub_rt_asso
 
 # DNS subnet
 resource azurerm_subnet dns_snet {
-  name                  = local.dns_snet_name
+  name                  = var.dns_snet_name
   virtual_network_name  = azurerm_virtual_network.vnet.name
   resource_group_name   = azurerm_resource_group.rg.name
   address_prefixes      = var.dns_snet_address_prefixes
@@ -52,7 +52,7 @@ resource azurerm_subnet_route_table_association dns_snet_onprem_to_hub_rt_assoc 
 
 # Management subnet
 resource azurerm_subnet mgmt_snet {
-  name                  = local.mgmt_snet_name
+  name                  = var.mgmt_snet_name
   virtual_network_name  = azurerm_virtual_network.vnet.name
   resource_group_name   = azurerm_resource_group.rg.name
   address_prefixes      = var.mgmt_snet_address_prefixes

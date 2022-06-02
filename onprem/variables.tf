@@ -1,14 +1,8 @@
 # General variables
-variable resource_prefix {
-  type        = string
-  description = "Prefix for resources in the resource group."
-  default     = "onprem"
-}
-
 variable resource_group_name {
   type        = string
   description = "Name of the resource group in which to create the resources."
-  default     = null
+  default     = "onprem-rg"
 }
 
 variable location {
@@ -21,7 +15,7 @@ variable location {
 variable vnet_name {
   type        = string
   description = "Name of the virtual network to which resources will be attached."
-  default     = null
+  default     = "onprem-vnet"
 }
 
 variable vnet_address_space {
@@ -34,7 +28,7 @@ variable vnet_address_space {
 variable winra_snet_name {
   type        = string
   description = "Windows Remote Access Services (RAS) subnet name."
-  default     = null
+  default     = "onprem-winra-snet"
 }
 
 variable winra_snet_address_prefixes {
@@ -46,20 +40,20 @@ variable winra_snet_address_prefixes {
 variable winra_snet_nsg_name {
   type        = string
   description = "Windows Remote Access Services (RAS) subnet network security group name."
-  default     = null
+  default     = "onprem-winra-snet-nsg"
 }
 
 variable winra_snet_allow_ip_list {
   type        = string
-  description = "Group of IP's to allow inbound access to the Windows Remote Access Services (RAS) subnet."
-  default     = "auto"
+  description = "Group of IP's to allow inbound access to the Windows Remote Access Services (RAS) subnet. Default of 'clientip' sets allow list to client IP."
+  default     = "clientip"
 }
 
 # Subnet: DNS
 variable dns_snet_name {
   type        = string
   description = "DNS subnet name."
-  default     = null
+  default     = "onprem-dns-snet"
 }
 
 variable dns_snet_address_prefixes {
@@ -71,20 +65,20 @@ variable dns_snet_address_prefixes {
 variable dns_snet_nsg_name {
   type        = string
   description = "DNS subnet network security group name."
-  default     = null
+  default     = "onprem-dns-snet-nsg"
 }
 
 variable dns_snet_allow_ip_list {
   type        = string
-  description = "Group of IP's to allow inbound access to the DNS subnet."
-  default     = "auto"
+  description = "Group of IP's to allow inbound access to the DNS subnet. Default of 'clientip' sets allow list to client IP." 
+  default     = "clientip"
 }
 
 # Subnet: Management
 variable mgmt_snet_name {
   type        = string
   description = "Management subnet name."
-  default     = null
+  default     = "onprem-mgmt-snet"
 }
 
 variable mgmt_snet_address_prefixes {
@@ -96,26 +90,26 @@ variable mgmt_snet_address_prefixes {
 variable mgmt_snet_nsg_name {
   type        = string
   description = "Management subnet Network security group name."
-  default     = null
+  default     = "onprem-mgmt-snet-nsg"
 }
 
 variable mgmt_snet_allow_ip_list {
   type        = string
-  description = "Group of IP's to allow inbound access to the management subnet.  Typically, this would be an on-premises NAT gateway or router."
-  default     = "auto"
+  description = "Group of IP's to allow inbound access to the management subnet.  Typically, this would be an on-premises NAT gateway or router. Default of 'clientip' sets allow list to client IP."
+  default     = "clientip"
 }
 
 # Virtual machine: Management
 variable mgmt_vm_name {
   type        = string
   description = "Name of management virtual machine name."
-  default     = null
+  default     = "onprem-mgmt-vm"
 }
 
 variable mgmt_vm_urn {
   type        = string
   description = "URN for management virtual machine."
-  default     = null
+  default     = "RedHat:RHEL:8_6:latest"
 }
 
 variable mgmt_vm_plan {
@@ -145,7 +139,7 @@ variable mgmt_vm_enable_public_ip {
 variable mgmt_vm_admin_username {
   type        = string
   description = "Admin username for the management virtual machine."
-  default     = null
+  default     = "azadmin"
 }
 
 variable mgmt_vm_admin_password {
@@ -157,20 +151,20 @@ variable mgmt_vm_admin_password {
 variable mgmt_vm_admin_public_ssh_key_path {
   type        = string
   description = "Admin user public SSH key path for the management virtual machine."
-  default     = null
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 # Virtual Machine: Windows Remote Access (RAS)
 variable winra_vm_name {
   type        = string
   description = "Name of the Windows Remote Access Services virtual machine."
-  default     = null
+  default     = "onprem-winra-vm"
 }
 
 variable winra_vm_urn {
   type        = string
   description = "URN for Windows Remote Access Services virtual machine."
-  default     = null
+  default     = "RedHat:RHEL:8_6:latest"
 }
 
 variable winra_vm_plan {
@@ -206,7 +200,7 @@ variable winra_vm_enable_ip_forwarding {
 variable winra_vm_admin_username {
   type        = string
   description = "Admin username for the Windows Remote Access Services virtual machine."
-  default     = null
+  default     = "azadmin"
 }
 
 variable winra_vm_admin_password {
@@ -219,13 +213,13 @@ variable winra_vm_admin_password {
 variable dns_vm_001_name {
   type        = string
   description = "Name of the Windows Remote Access Services virtual machine."
-  default     = null
+  default     = "onprem-dns-vm-001"
 }
 
 variable dns_vm_001_urn {
   type        = string
   description = "URN for DNS virtual machine."
-  default     = null
+  default     = "RedHat:RHEL:8_6:latest"
 }
 
 variable dns_vm_001_plan {
@@ -233,24 +227,6 @@ variable dns_vm_001_plan {
   description = "Plan for DNS virutal machine."
   default     = null
 }
-
-# variable dns_vm_001_plan_publisher {
-#   type        = string
-#   description = "Plan publisher for DNS virtual machine."
-#   default     = null
-# }
-
-# variable dns_vm_001_plan_product {
-#   type        = string
-#   description = "Plan product for DNS virtual machine."
-#   default     = null
-# }
-
-# variable dns_vm_001_plan_name {
-#   type        = string
-#   description = "Plan name for DNS virtual machine."
-#   default     = null
-# }
 
 variable dns_vm_001_size {
   type        = string
@@ -273,7 +249,7 @@ variable dns_vm_001_enable_public_ip {
 variable dns_vm_001_admin_username {
   type        = string
   description = "Admin username for DNS virtual machine."
-  default     = null
+  default     = "azadmin"
 }
 
 variable dns_vm_001_admin_password {
@@ -285,21 +261,21 @@ variable dns_vm_001_admin_password {
 variable dns_vm_001_admin_public_ssh_key_path {
   type        = string
   description = "Admin user public SSH key path for DNS virtual machine."
-  default     = null
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 # Route table
 variable route_table_name {
   type        = string
   description = "Route table name."
-  default     = null
+  default     = "onprem-to-hub-rt"
 }
 
 # Local gateway
 variable local_gateway_name {
   type        = string
   description = "Local gateway name."
-  default     = null
+  default     = "onprem-lgw"
 }
 
 variable remote_vnet_address_space {
