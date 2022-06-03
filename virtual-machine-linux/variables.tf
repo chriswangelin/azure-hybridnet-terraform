@@ -90,12 +90,6 @@ variable admin_ssh_public_key_path {
   default     = "~/.ssh/id_rsa.pub"
 }
 
-variable disable_password_authentication {
-  type        = string
-  description = "Disable password authentication.  If admin_ssh_public_key_path is not specified, must be set to falsae and admin_password must be set."
-  default     = true
-}
-
 variable enable_public_ip {
   type        = bool
   description = "Enable public IP address on virtual machine network interface."

@@ -4,7 +4,7 @@
 On-premises network simulator module. Intended to integrate with  ```hub``` and ```winra-s2svpn``` modules.
 
 Includes:
-- Resource group and virtual network with separate subnets for Site-to-Site (S2S) VPN, DNS, and management.
+- Resource group and virtual network with separate subnets for S2S VPN, DNS, and management.
 - Windows Server VM ready for Remote Access Services to be installed and configured for S2S VPN connection to Azure hub vnet.
 - Unbound DNS server VM configured to conditionally forward private link DNS lookups to private DNS server in hub vnet.
 - Management VM for connectivity testing.
@@ -15,7 +15,7 @@ Includes:
 | Name | Version |
 |------|---------|
 | <a name="provider_http"></a> [http](#provider\_http) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.0.0 |
 
 ## Inputs
 
@@ -72,11 +72,6 @@ Includes:
 
 | Name | Description |
 |------|-------------|
-| <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | n/a |
-| <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | n/a |
-| <a name="output_mgmt_snet_id"></a> [mgmt\_snet\_id](#output\_mgmt\_snet\_id) | n/a |
-| <a name="output_mgmt_snet_address_prefixes"></a> [mgmt\_snet\_address\_prefixes](#output\_mgmt\_snet\_address\_prefixes) | n/a |
-| <a name="output_winra_vm_id"></a> [winra\_vm\_id](#output\_winra\_vm\_id) | n/a |
-| <a name="output_winra_vm_private_ip_address"></a> [winra\_vm\_private\_ip\_address](#output\_winra\_vm\_private\_ip\_address) | n/a |
-| <a name="output_winra_vm_public_ip_address"></a> [winra\_vm\_public\_ip\_address](#output\_winra\_vm\_public\_ip\_address) | n/a |
-| <a name="output_clientip"></a> [clientip](#output\_clientip) | n/a |
+| <a name="output_vnet_address_space"></a> [vnet\_address\_space](#output\_vnet\_address\_space) | Virtual network address space. |
+| <a name="output_winra_vm_id"></a> [winra\_vm\_id](#output\_winra\_vm\_id) | Resource ID of the Windows Remote Access (RAS) virtual machine. |
+| <a name="output_winra_vm_public_ip_address"></a> [winra\_vm\_public\_ip\_address](#output\_winra\_vm\_public\_ip\_address) | Public IP address of the Windows Remote Access (RAS) virtual machine. |

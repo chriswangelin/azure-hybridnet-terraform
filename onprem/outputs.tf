@@ -1,31 +1,14 @@
-output vnet_id {
-  value = azurerm_virtual_network.vnet.id
-}
-
-output vnet_name {
-  value = azurerm_virtual_network.vnet.name
-}
-
-output mgmt_snet_id {
-  value = azurerm_subnet.mgmt_snet.id
-}
-
-output mgmt_snet_address_prefixes {
-  value = azurerm_subnet.mgmt_snet.address_prefixes
+output vnet_address_space {
+  value       = azurerm_virtual_network.vnet.address_space
+  description = "Virtual network address space."
 }
 
 output winra_vm_id {
-  value = module.winra_vm.vm_id
-}
-
-output winra_vm_private_ip_address {
-  value = module.winra_vm.private_ip_address
+  value       = module.winra_vm.id
+  description = "Resource ID of the Windows Remote Access (RAS) virtual machine."
 }
 
 output winra_vm_public_ip_address {
-  value = module.winra_vm.public_ip_address
-}
-
-output clientip {
-  value = chomp(data.http.clientip.body)
+  value       = module.winra_vm.public_ip_address
+  description = "Public IP address of the Windows Remote Access (RAS) virtual machine."
 }

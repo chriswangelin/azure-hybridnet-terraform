@@ -23,18 +23,18 @@ resource azurerm_network_interface nic_001 {
 }
 
 resource azurerm_linux_virtual_machine vm {
-  name                  = local.name
-  resource_group_name   = var.resource_group_name
-  location              = var.location
-  network_interface_ids = [ azurerm_network_interface.nic_001.id ]
-  size                  = var.size
-  priority              = var.priority
-  eviction_policy       = var.eviction_policy  
-  admin_username        = var.admin_username
-  admin_password        = var.admin_password
-  custom_data           = try(base64encode(var.custom_data), null)
+  name                            = local.name
+  resource_group_name             = var.resource_group_name
+  location                        = var.location
+  network_interface_ids           = [ azurerm_network_interface.nic_001.id ]
+  size                            = var.size
+  priority                        = var.priority
+  eviction_policy                 = var.eviction_policy  
+  admin_username                  = var.admin_username
+  admin_password                  = var.admin_password
+  disable_password_authentication = var.admin_password == null ? true : false
+  custom_data                     = try(base64encode(var.custom_data), null)
 
-  disable_password_authentication = var.disable_password_authentication
   admin_ssh_key {
     username   = var.admin_username
     public_key = file(var.admin_ssh_public_key_path)
