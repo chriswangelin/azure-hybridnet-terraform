@@ -10,7 +10,7 @@ Simplifies creating a Windows virtual machine by requiring only several input pa
 | Name | Version |
 |------|---------|
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.0.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.0.0, < 4.0.0 |
 
 ## Inputs
 
@@ -25,7 +25,6 @@ Simplifies creating a Windows virtual machine by requiring only several input pa
 | <a name="input_plan"></a> [plan](#input\_plan) | Virtual machine plan (publisher:product:plan). | `string` | `null` | no |
 | <a name="input_size"></a> [size](#input\_size) | Virtual machine size. | `string` | `"Standard_DS1_v2"` | no |
 | <a name="input_priority"></a> [priority](#input\_priority) | Virtual machine priority. Possible values are Regular and Spot. | `string` | `"Regular"` | no |
-| <a name="input_eviction_policy"></a> [eviction\_policy](#input\_eviction\_policy) | Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted. | `string` | `"Deallocate"` | no |
 | <a name="input_os_disk_size_gb"></a> [os\_disk\_size\_gb](#input\_os\_disk\_size\_gb) | Virtual machine OS disk size in GB. | `number` | `30` | no |
 | <a name="input_os_disk_storage_account_type"></a> [os\_disk\_storage\_account\_type](#input\_os\_disk\_storage\_account\_type) | Storage account type for virtual machine OS disk. | `string` | `"Standard_LRS"` | no |
 | <a name="input_os_disk_caching"></a> [os\_disk\_caching](#input\_os\_disk\_caching) | Caching type for virtual machine OS disk. | `string` | `"ReadWrite"` | no |

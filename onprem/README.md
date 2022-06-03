@@ -15,7 +15,7 @@ Includes:
 | Name | Version |
 |------|---------|
 | <a name="provider_http"></a> [http](#provider\_http) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.0.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.0.0, < 4.0.0 |
 
 ## Inputs
 
@@ -47,7 +47,7 @@ Includes:
 | <a name="input_mgmt_vm_admin_password"></a> [mgmt\_vm\_admin\_password](#input\_mgmt\_vm\_admin\_password) | Admin password for the management virtual machine. | `string` | `null` | no |
 | <a name="input_mgmt_vm_admin_public_ssh_key_path"></a> [mgmt\_vm\_admin\_public\_ssh\_key\_path](#input\_mgmt\_vm\_admin\_public\_ssh\_key\_path) | Admin user public SSH key path for the management virtual machine. | `string` | `"~/.ssh/id_rsa.pub"` | no |
 | <a name="input_winra_vm_name"></a> [winra\_vm\_name](#input\_winra\_vm\_name) | Name of the Windows Remote Access Services virtual machine. | `string` | `"onprem-winra-vm"` | no |
-| <a name="input_winra_vm_urn"></a> [winra\_vm\_urn](#input\_winra\_vm\_urn) | URN for Windows Remote Access Services virtual machine. | `string` | `"RedHat:RHEL:8_6:latest"` | no |
+| <a name="input_winra_vm_urn"></a> [winra\_vm\_urn](#input\_winra\_vm\_urn) | URN for Windows Remote Access Services virtual machine. | `string` | `"MicrosoftWindowsServer:WindowsServer:2019-Datacenter-smalldisk:latest"` | no |
 | <a name="input_winra_vm_plan"></a> [winra\_vm\_plan](#input\_winra\_vm\_plan) | Plan for Windows Remote Access Services virtual machine. | `string` | `null` | no |
 | <a name="input_winra_vm_size"></a> [winra\_vm\_size](#input\_winra\_vm\_size) | Size of Windows Remote Access Services virtual machine. | `string` | `"Standard_DS1_v2"` | no |
 | <a name="input_winra_vm_private_ip_address"></a> [winra\_vm\_private\_ip\_address](#input\_winra\_vm\_private\_ip\_address) | Private IP address for the Windows Remote Acess Services virtual machine. | `string` | `"172.16.0.4"` | no |

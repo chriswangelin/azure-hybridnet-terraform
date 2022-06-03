@@ -4,7 +4,7 @@ output vnet_address_space {
 }
 
 output winra_vm_id {
-  value       = module.winra_vm.id
+  value       = module.winra_vm.vm_id
   description = "Resource ID of the Windows Remote Access (RAS) virtual machine."
 }
 

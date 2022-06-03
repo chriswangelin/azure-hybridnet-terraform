@@ -47,12 +47,6 @@ variable priority {
   default     = "Regular"
 }
 
-variable eviction_policy {
-  type        = string
-  description = "Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted."
-  default     = "Deallocate"
-}
-
 variable os_disk_size_gb {
   type        = number
   description = "Virtual machine OS disk size in GB."

@@ -164,7 +164,7 @@ variable winra_vm_name {
 variable winra_vm_urn {
   type        = string
   description = "URN for Windows Remote Access Services virtual machine."
-  default     = "RedHat:RHEL:8_6:latest"
+  default     = "MicrosoftWindowsServer:WindowsServer:2019-Datacenter-smalldisk:latest"
 }
 
 variable winra_vm_plan {

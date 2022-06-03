@@ -29,7 +29,7 @@ resource azurerm_linux_virtual_machine vm {
   network_interface_ids           = [ azurerm_network_interface.nic_001.id ]
   size                            = var.size
   priority                        = var.priority
-  eviction_policy                 = var.eviction_policy  
+  eviction_policy                 = var.priority == "Spot" ? "Dellocate" : null
   admin_username                  = var.admin_username
   admin_password                  = var.admin_password
   disable_password_authentication = var.admin_password == null ? true : false

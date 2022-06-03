@@ -10,7 +10,7 @@ Simplifies creating a Linux virtual machine by requiring only several input para
 | Name | Version |
 |------|---------|
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~>3.0.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.0.0, < 4.0.0 |
 
 ## Inputs
 
@@ -24,14 +24,12 @@ Simplifies creating a Linux virtual machine by requiring only several input para
 | <a name="input_plan"></a> [plan](#input\_plan) | Virtual machine plan (publisher:product:plan). | `string` | `null` | no |
 | <a name="input_size"></a> [size](#input\_size) | Virtual machine size. | `string` | `"Standard_B1s"` | no |
 | <a name="input_priority"></a> [priority](#input\_priority) | Virtual machine priority. Possible values are Regular and Spot. | `string` | `"Regular"` | no |
-| <a name="input_eviction_policy"></a> [eviction\_policy](#input\_eviction\_policy) | Virtual Machine eviction policy.  Specifies what happens when a Spot instance is evicted. | `string` | `"Deallocate"` | no |
 | <a name="input_os_disk_size_gb"></a> [os\_disk\_size\_gb](#input\_os\_disk\_size\_gb) | Virtual machine OS disk size in GB. | `number` | `64` | no |
 | <a name="input_os_disk_storage_account_type"></a> [os\_disk\_storage\_account\_type](#input\_os\_disk\_storage\_account\_type) | Storage account type for virtual machine OS disk. | `string` | `"Standard_LRS"` | no |
 | <a name="input_os_disk_caching"></a> [os\_disk\_caching](#input\_os\_disk\_caching) | Caching type for virtual machine OS disk. | `string` | `"ReadWrite"` | no |
 | <a name="input_admin_username"></a> [admin\_username](#input\_admin\_username) | Admin username for the virtual machine. | `string` | `"azadmin"` | no |
 | <a name="input_admin_password"></a> [admin\_password](#input\_admin\_password) | Admin password for the virtual machine.  Required if admin\_ssh\_public\_key\_path is null. | `string` | `null` | no |
 | <a name="input_admin_ssh_public_key_path"></a> [admin\_ssh\_public\_key\_path](#input\_admin\_ssh\_public\_key\_path) | Admin user public SSH key path for the virtual machine. | `string` | `"~/.ssh/id_rsa.pub"` | no |
-| <a name="input_disable_password_authentication"></a> [disable\_password\_authentication](#input\_disable\_password\_authentication) | Disable password authentication.  If admin\_ssh\_public\_key\_path is not specified, must be set to falsae and admin\_password must be set. | `string` | `true` | no |
 | <a name="input_enable_public_ip"></a> [enable\_public\_ip](#input\_enable\_public\_ip) | Enable public IP address on virtual machine network interface. | `bool` | `true` | no |
 | <a name="input_public_ip_allocation_method"></a> [public\_ip\_allocation\_method](#input\_public\_ip\_allocation\_method) | Public IP address allocation method for the virtual machine. | `string` | `"Static"` | no |
 | <a name="input_private_ip_address"></a> [private\_ip\_address](#input\_private\_ip\_address) | Static private IP address for virtual machine. | `string` | `null` | no |
