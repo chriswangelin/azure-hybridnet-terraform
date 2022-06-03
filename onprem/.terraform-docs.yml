@@ -23,7 +23,7 @@ content: |-
 
   Includes:
   - Resource group and virtual network with separate subnets for Site-to-Site (S2S) VPN, DNS, and management.
-  - Windows Server VM ready for S2S VPN Remote Access Services to be installed and configured for S2S VPN connection to Azure hub vnet.
+  - Windows Server VM ready for Remote Access Services to be installed and configured for S2S VPN connection to Azure hub vnet.
   - Unbound DNS server VM configured to conditionally forward private link DNS lookups to private DNS server in hub vnet.
   - Management VM for connectivity testing.
   - Route table to route all on-premises traffic bound for the hub and spokes to the Azure VPN gateway.
