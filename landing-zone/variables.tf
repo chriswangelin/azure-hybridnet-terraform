@@ -152,49 +152,4 @@ variable vmreg_pdnsz_name {
   default     = "foo.net"
 }
 
-/*
-variable resource_group {
-  default = {
-    name     = null
-    location = null
-  }
-}
-
-variable vnet {
-  type = object ({
-    name                          = string
-    address_space                 = list(string)
-    mgmt_subnet_name              = string
-    mgmt_subnet_address_prefixes  = string
-    mgmt_subnet_nsg_allow_ip_list = list(string)
-  })
-  description = "Virtual network configuration"
-}
-
-# Virtual machine
-variable vm {
-  type = object({
-    name                   = string
-    size                   = string
-    priority               = string
-    eviction_policy        = string
-    source_image_publisher = string 
-    source_image_offer     = string
-    source_image_sku       = string
-    source_image_version   = string
-    admin_username         = string
-  })
-  description = "Virtual machine configuration"
-  default = {
-    size                   = "Standard_D2s_v3"
-    priority               = "Spot"
-    eviction_policy        = "Deallocate"
-    source_image_publisher = "Canonical"
-    source_image_offer     = "UbuntuServer"
-    source_image_sku       = "18.04-LTS"
-    source_image_version   = "latest"
-  }
-}
-*/
-
 

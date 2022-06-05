@@ -205,8 +205,7 @@ variable winra_vm_admin_username {
 
 variable winra_vm_admin_password {
   type        = string
-  description = "Admin password or the Windows Remote Access Services virtual machine."
-  default     = null
+  description = "(Required) Admin password or the Windows Remote Access Services virtual machine."
 }
 
 # Virtual machine: DNS 001
