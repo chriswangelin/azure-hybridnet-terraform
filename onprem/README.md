@@ -1,11 +1,11 @@
 
 
 ## Overview
-On-premises network simulator module.
+On-premises module.  Contains on-premises simulator virtual network and related network
 
+- Top-level [README](../README.md) explains the resources in detail and how they fit into a [larger architecture](../images/hub-spoke.png).
 - Intended to integrate with  [hub](../hub/README.md) and [s2svpn-winra-vpng](../s2svpn-winra-vpng/README.md) modules.
 - Creates and deploys its resources to the resource group ```onprem-rg```.
-- Top-level [README](../README.md) explains the resources in detail and how they fit into a [larger architecture](../images/hub-spoke.png).
 - ```winra_vm_admin_password``` is the only required input parameter.
 
 ## Providers

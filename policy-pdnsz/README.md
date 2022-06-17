@@ -1,7 +1,7 @@
 
 
 ## Overview
-Azure Policy definitions and assignments to automatically deploy private DNS zone records for private endpoints.
+Azure Policy definitions and assignments to automatically deploy private DNS zone records for newly created private endpoints.
 
 By default, expects private DNS zones to reside the current subscription and creates policies in current subscription.
 Policies may be created in a specific subscription or management group by setting the ```policy_subscription_id``` or ```policy_management_group_name```, respectively.

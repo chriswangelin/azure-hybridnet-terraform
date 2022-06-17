@@ -1,14 +1,8 @@
 # General variables
-variable resource_prefix {
-  type        = string
-  description = "Prefix for resources in the hub resource group."
-  default     = "hub"
-}
-
 variable resource_group_name {
   type        = string
   description = "Resource group name."
-  default     = null
+  default     = "hub-rg"
 }
 
 variable location {
@@ -21,7 +15,7 @@ variable location {
 variable vnet_name {
   type        = string
   description = "Virtual network name."
-  default     = null
+  default     = "hub-vnet"
 }
 
 variable vnet_address_space {
@@ -48,7 +42,7 @@ variable vpng_snet_address_prefixes {
 variable mgmt_snet_name {
   type        = string
   description = "Management subnet name."
-  default     = null
+  default     = "hub-mgmt-snet"
 }
 
 variable mgmt_snet_address_prefixes {
@@ -60,20 +54,20 @@ variable mgmt_snet_address_prefixes {
 variable mgmt_snet_nsg_name {
   type        = string
   description = "Management subnet network security group name."
-  default     = null
+  default     = "hub-mgmt-snet-nsg"
 }
 
 variable mgmt_snet_allow_ip_list {
   type        = string
-  description = "List of IP addresses to allow inbound to the management subnet."
-  default     = "auto"
+  description = "List of IP addresses to allow inbound to the management subnet. Default of 'clientip' sets allow list to client IP."
+  default     = "clientip"
 }
 
 # Subnet: DNS
 variable dns_snet_name {
   type        = string
   description = "DNS subnet name."
-  default     = null
+  default     = "hub-dns-snet"
 }
 
 variable dns_snet_address_prefixes {
@@ -85,13 +79,13 @@ variable dns_snet_address_prefixes {
 variable dns_snet_nsg_name {
   type        = string
   description = "DNS subnet network security group name."
-  default     = null
+  default     = "hub-dns-snet-nsg"
 }
 
 variable dns_snet_allow_ip_list {
   type        = string
-  description = "Group of IP's to allow inbound access to the DNS subnet."
-  default     = "auto"
+  description = "Group of IP's to allow inbound access to the DNS subnet. Default of 'clientip' sets allow list to client IP."
+  default     = "clientip"
 }
 
 # Azure Firewall
@@ -104,7 +98,7 @@ variable afw_enable {
 variable afw_name {
   type        = string
   description = "Azure Firewall name."
-  default     = null
+  default     = "hub-afw"
 }
 
 # Virtual network gateway (VPN gateway)
@@ -117,7 +111,7 @@ variable vpng_enable {
 variable vpng_name {
   type        = string
   description = "VPN Gateway name."
-  default     = null
+  default     = "hub-vpng"
 }
 
 variable vpng_shared_key {
@@ -136,12 +130,12 @@ variable vpng_connection_onprem_enable {
 variable lgw_name {
   type        = string
   description = "Local network gateway name."
-  default     = null
+  default     = "hub-lgw"
 }
 
 variable lgw_gateway_address {
   type        = string
-  description = "Local network gateway address."
+  description = "Local network gateway address. (Public IP address of remote VPN device.)"
   default     = null
 }
 
@@ -155,18 +149,18 @@ variable lgw_address_space {
 variable onprem_vnet_resource_group_name {
   type        = string
   description = "Resource group containing on-prem simulator virtual network."
-  default     = null
+  default     = "onprem-rg"
 }
 
 variable onprem_vnet_name {
   type        = string
-  description = "On-prem simulator virtual network name."
-  default     = null
+  description = "On-premises simulator virtual network name."
+  default     = "onprem-vnet"
 }
 
 variable onprem_vnet_id {
   type        = string
-  description = "On-prem simulator virtual network ID."
+  description = "On-premises simulator virtual network ID."
   default     = null
 }
 
@@ -174,13 +168,13 @@ variable onprem_vnet_id {
 variable mgmt_vm_name {
   type        = string
   description = "Name of management virtual machine."
-  default     = null
+  default     = "hub-mgmt-vm"
 }
 
 variable mgmt_vm_urn {
   type        = string
   description = "URN for management virtual machine"
-  default     = null
+  default     = "RedHat:RHEL:8_6:latest"
 }
 
 variable mgmt_vm_plan {
@@ -210,7 +204,7 @@ variable mgmt_vm_enable_public_ip {
 variable mgmt_vm_admin_username {
   type        = string
   description = "Admin username for management virtual machine."
-  default     = null
+  default     = "azadmin"
 }
 
 variable mgmt_vm_admin_password {
@@ -222,20 +216,20 @@ variable mgmt_vm_admin_password {
 variable mgmt_vm_admin_public_ssh_key_path {
   type        = string
   description = "Admin user public SSH key path for management virtual machine."
-  default     = null
+  default     = "~/.ssh/id_rsa.pub"
 }
 
 # Virtual machine: DNS 001
 variable dns_vm_001_name {
   type        = string
   description = "Name of the DNS virtual machine."
-  default     = null
+  default     = "hub-dns-vm-001"
 }
 
 variable dns_vm_001_urn {
   type        = string
   description = "URN for DNS virtual machine."
-  default     = null
+  default     = "RedHat:RHEL:8_6:latest"
 }
 
 variable dns_vm_001_plan {
@@ -277,5 +271,5 @@ variable dns_vm_001_admin_password {
 variable dns_vm_001_admin_public_ssh_key_path {
   type        = string
   description = "Admin user public SSH key path for the DNS virtual machine."
-  default     = null
+  default     = "~/.ssh/id_rsa.pub"
 }

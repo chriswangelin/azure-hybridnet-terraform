@@ -18,51 +18,50 @@ Hub module. Contains hub network and related resources.
 
 | Name | Description | Default |
 |------|-------------|---------|
-| <a name="input_resource_prefix"></a> [resource\_prefix](#input\_resource\_prefix) | Prefix for resources in the hub resource group. | `"hub"` |
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `null` |
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name. | `"hub-rg"` |
 | <a name="input_location"></a> [location](#input\_location) | Region of hub resources. | `"eastus"` |
-| <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | Virtual network name. | `null` |
+| <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | Virtual network name. | `"hub-vnet"` |
 | <a name="input_vnet_address_space"></a> [vnet\_address\_space](#input\_vnet\_address\_space) | Virtual network address space. | <pre>[<br>  "10.0.0.0/16"<br>]</pre> |
 | <a name="input_afw_snet_address_prefixes"></a> [afw\_snet\_address\_prefixes](#input\_afw\_snet\_address\_prefixes) | Firewall subnet address prefix. | <pre>[<br>  "10.0.0.0/26"<br>]</pre> |
 | <a name="input_vpng_snet_address_prefixes"></a> [vpng\_snet\_address\_prefixes](#input\_vpng\_snet\_address\_prefixes) | Gateway subnet address prefix. | <pre>[<br>  "10.0.0.64/27"<br>]</pre> |
-| <a name="input_mgmt_snet_name"></a> [mgmt\_snet\_name](#input\_mgmt\_snet\_name) | Management subnet name. | `null` |
+| <a name="input_mgmt_snet_name"></a> [mgmt\_snet\_name](#input\_mgmt\_snet\_name) | Management subnet name. | `"hub-mgmt-snet"` |
 | <a name="input_mgmt_snet_address_prefixes"></a> [mgmt\_snet\_address\_prefixes](#input\_mgmt\_snet\_address\_prefixes) | Management subnet address prefix. | <pre>[<br>  "10.0.255.0/24"<br>]</pre> |
-| <a name="input_mgmt_snet_nsg_name"></a> [mgmt\_snet\_nsg\_name](#input\_mgmt\_snet\_nsg\_name) | Management subnet network security group name. | `null` |
-| <a name="input_mgmt_snet_allow_ip_list"></a> [mgmt\_snet\_allow\_ip\_list](#input\_mgmt\_snet\_allow\_ip\_list) | List of IP addresses to allow inbound to the management subnet. | `"auto"` |
-| <a name="input_dns_snet_name"></a> [dns\_snet\_name](#input\_dns\_snet\_name) | DNS subnet name. | `null` |
+| <a name="input_mgmt_snet_nsg_name"></a> [mgmt\_snet\_nsg\_name](#input\_mgmt\_snet\_nsg\_name) | Management subnet network security group name. | `"hub-mgmt-snet-nsg"` |
+| <a name="input_mgmt_snet_allow_ip_list"></a> [mgmt\_snet\_allow\_ip\_list](#input\_mgmt\_snet\_allow\_ip\_list) | List of IP addresses to allow inbound to the management subnet. Default of 'clientip' sets allow list to client IP. | `"clientip"` |
+| <a name="input_dns_snet_name"></a> [dns\_snet\_name](#input\_dns\_snet\_name) | DNS subnet name. | `"hub-dns-snet"` |
 | <a name="input_dns_snet_address_prefixes"></a> [dns\_snet\_address\_prefixes](#input\_dns\_snet\_address\_prefixes) | DNS subnet address prefixes. | <pre>[<br>  "10.0.254.0/24"<br>]</pre> |
-| <a name="input_dns_snet_nsg_name"></a> [dns\_snet\_nsg\_name](#input\_dns\_snet\_nsg\_name) | DNS subnet network security group name. | `null` |
-| <a name="input_dns_snet_allow_ip_list"></a> [dns\_snet\_allow\_ip\_list](#input\_dns\_snet\_allow\_ip\_list) | Group of IP's to allow inbound access to the DNS subnet. | `"auto"` |
+| <a name="input_dns_snet_nsg_name"></a> [dns\_snet\_nsg\_name](#input\_dns\_snet\_nsg\_name) | DNS subnet network security group name. | `"hub-dns-snet-nsg"` |
+| <a name="input_dns_snet_allow_ip_list"></a> [dns\_snet\_allow\_ip\_list](#input\_dns\_snet\_allow\_ip\_list) | Group of IP's to allow inbound access to the DNS subnet. Default of 'clientip' sets allow list to client IP. | `"clientip"` |
 | <a name="input_afw_enable"></a> [afw\_enable](#input\_afw\_enable) | Enable Azure firewall. | `false` |
-| <a name="input_afw_name"></a> [afw\_name](#input\_afw\_name) | Azure Firewall name. | `null` |
+| <a name="input_afw_name"></a> [afw\_name](#input\_afw\_name) | Azure Firewall name. | `"hub-afw"` |
 | <a name="input_vpng_enable"></a> [vpng\_enable](#input\_vpng\_enable) | Enable VPN gateway. | `false` |
-| <a name="input_vpng_name"></a> [vpng\_name](#input\_vpng\_name) | VPN Gateway name. | `null` |
+| <a name="input_vpng_name"></a> [vpng\_name](#input\_vpng\_name) | VPN Gateway name. | `"hub-vpng"` |
 | <a name="input_vpng_shared_key"></a> [vpng\_shared\_key](#input\_vpng\_shared\_key) | VPN Gateway shared key. | `null` |
 | <a name="input_vpng_connection_onprem_enable"></a> [vpng\_connection\_onprem\_enable](#input\_vpng\_connection\_onprem\_enable) | Enable VPN gateway connection to simulated on-premises network. | `false` |
-| <a name="input_lgw_name"></a> [lgw\_name](#input\_lgw\_name) | Local network gateway name. | `null` |
-| <a name="input_lgw_gateway_address"></a> [lgw\_gateway\_address](#input\_lgw\_gateway\_address) | Local network gateway address. | `null` |
+| <a name="input_lgw_name"></a> [lgw\_name](#input\_lgw\_name) | Local network gateway name. | `"hub-lgw"` |
+| <a name="input_lgw_gateway_address"></a> [lgw\_gateway\_address](#input\_lgw\_gateway\_address) | Local network gateway address. (Public IP address of remote VPN device.) | `null` |
 | <a name="input_lgw_address_space"></a> [lgw\_address\_space](#input\_lgw\_address\_space) | Local network gateway address space. | <pre>[<br>  "172.16.0.0/16"<br>]</pre> |
-| <a name="input_onprem_vnet_resource_group_name"></a> [onprem\_vnet\_resource\_group\_name](#input\_onprem\_vnet\_resource\_group\_name) | Resource group containing on-prem simulator virtual network. | `null` |
-| <a name="input_onprem_vnet_name"></a> [onprem\_vnet\_name](#input\_onprem\_vnet\_name) | On-prem simulator virtual network name. | `null` |
-| <a name="input_onprem_vnet_id"></a> [onprem\_vnet\_id](#input\_onprem\_vnet\_id) | On-prem simulator virtual network ID. | `null` |
-| <a name="input_mgmt_vm_name"></a> [mgmt\_vm\_name](#input\_mgmt\_vm\_name) | Name of management virtual machine. | `null` |
-| <a name="input_mgmt_vm_urn"></a> [mgmt\_vm\_urn](#input\_mgmt\_vm\_urn) | URN for management virtual machine | `null` |
+| <a name="input_onprem_vnet_resource_group_name"></a> [onprem\_vnet\_resource\_group\_name](#input\_onprem\_vnet\_resource\_group\_name) | Resource group containing on-prem simulator virtual network. | `"onprem-rg"` |
+| <a name="input_onprem_vnet_name"></a> [onprem\_vnet\_name](#input\_onprem\_vnet\_name) | On-premises simulator virtual network name. | `"onprem-vnet"` |
+| <a name="input_onprem_vnet_id"></a> [onprem\_vnet\_id](#input\_onprem\_vnet\_id) | On-premises simulator virtual network ID. | `null` |
+| <a name="input_mgmt_vm_name"></a> [mgmt\_vm\_name](#input\_mgmt\_vm\_name) | Name of management virtual machine. | `"hub-mgmt-vm"` |
+| <a name="input_mgmt_vm_urn"></a> [mgmt\_vm\_urn](#input\_mgmt\_vm\_urn) | URN for management virtual machine | `"RedHat:RHEL:8_6:latest"` |
 | <a name="input_mgmt_vm_plan"></a> [mgmt\_vm\_plan](#input\_mgmt\_vm\_plan) | Plan for management virtual machine. | `null` |
 | <a name="input_mgmt_vm_size"></a> [mgmt\_vm\_size](#input\_mgmt\_vm\_size) | Size of management virtual machine. | `"Standard_B1s"` |
 | <a name="input_mgmt_vm_private_ip_address"></a> [mgmt\_vm\_private\_ip\_address](#input\_mgmt\_vm\_private\_ip\_address) | Private IP address for management virtual machine. | `"10.0.255.4"` |
 | <a name="input_mgmt_vm_enable_public_ip"></a> [mgmt\_vm\_enable\_public\_ip](#input\_mgmt\_vm\_enable\_public\_ip) | Enable public IP address for management virtual machine. | `true` |
-| <a name="input_mgmt_vm_admin_username"></a> [mgmt\_vm\_admin\_username](#input\_mgmt\_vm\_admin\_username) | Admin username for management virtual machine. | `null` |
+| <a name="input_mgmt_vm_admin_username"></a> [mgmt\_vm\_admin\_username](#input\_mgmt\_vm\_admin\_username) | Admin username for management virtual machine. | `"azadmin"` |
 | <a name="input_mgmt_vm_admin_password"></a> [mgmt\_vm\_admin\_password](#input\_mgmt\_vm\_admin\_password) | Admin password for management virtual machine. | `null` |
-| <a name="input_mgmt_vm_admin_public_ssh_key_path"></a> [mgmt\_vm\_admin\_public\_ssh\_key\_path](#input\_mgmt\_vm\_admin\_public\_ssh\_key\_path) | Admin user public SSH key path for management virtual machine. | `null` |
-| <a name="input_dns_vm_001_name"></a> [dns\_vm\_001\_name](#input\_dns\_vm\_001\_name) | Name of the DNS virtual machine. | `null` |
-| <a name="input_dns_vm_001_urn"></a> [dns\_vm\_001\_urn](#input\_dns\_vm\_001\_urn) | URN for DNS virtual machine. | `null` |
+| <a name="input_mgmt_vm_admin_public_ssh_key_path"></a> [mgmt\_vm\_admin\_public\_ssh\_key\_path](#input\_mgmt\_vm\_admin\_public\_ssh\_key\_path) | Admin user public SSH key path for management virtual machine. | `"~/.ssh/id_rsa.pub"` |
+| <a name="input_dns_vm_001_name"></a> [dns\_vm\_001\_name](#input\_dns\_vm\_001\_name) | Name of the DNS virtual machine. | `"hub-dns-vm-001"` |
+| <a name="input_dns_vm_001_urn"></a> [dns\_vm\_001\_urn](#input\_dns\_vm\_001\_urn) | URN for DNS virtual machine. | `"RedHat:RHEL:8_6:latest"` |
 | <a name="input_dns_vm_001_plan"></a> [dns\_vm\_001\_plan](#input\_dns\_vm\_001\_plan) | Plan for the DNS virtual machine. | `null` |
 | <a name="input_dns_vm_001_size"></a> [dns\_vm\_001\_size](#input\_dns\_vm\_001\_size) | Size of DNS virtual machine. | `"Standard_B1s"` |
 | <a name="input_dns_vm_001_private_ip_address"></a> [dns\_vm\_001\_private\_ip\_address](#input\_dns\_vm\_001\_private\_ip\_address) | Private IP address for the DNS virtual machine. | `"10.0.254.4"` |
 | <a name="input_dns_vm_001_enable_public_ip"></a> [dns\_vm\_001\_enable\_public\_ip](#input\_dns\_vm\_001\_enable\_public\_ip) | Enable public IP address for the DNS virtual machine. | `false` |
 | <a name="input_dns_vm_001_admin_username"></a> [dns\_vm\_001\_admin\_username](#input\_dns\_vm\_001\_admin\_username) | Admin username for the DNS virtual machine. | `"azadmin"` |
 | <a name="input_dns_vm_001_admin_password"></a> [dns\_vm\_001\_admin\_password](#input\_dns\_vm\_001\_admin\_password) | Admin password or the DNS virtual machine. | `null` |
-| <a name="input_dns_vm_001_admin_public_ssh_key_path"></a> [dns\_vm\_001\_admin\_public\_ssh\_key\_path](#input\_dns\_vm\_001\_admin\_public\_ssh\_key\_path) | Admin user public SSH key path for the DNS virtual machine. | `null` |
+| <a name="input_dns_vm_001_admin_public_ssh_key_path"></a> [dns\_vm\_001\_admin\_public\_ssh\_key\_path](#input\_dns\_vm\_001\_admin\_public\_ssh\_key\_path) | Admin user public SSH key path for the DNS virtual machine. | `"~/.ssh/id_rsa.pub"` |
 | <a name="input_vmreg_pdnsz_name"></a> [vmreg\_pdnsz\_name](#input\_vmreg\_pdnsz\_name) | Name of DNS zone for registering virtual machines. | `"foo.net"` |
 | <a name="input_enable_privatelink_azure_automation_net_pdnsz"></a> [enable\_privatelink\_azure\_automation\_net\_pdnsz](#input\_enable\_privatelink\_azure\_automation\_net\_pdnsz) | Toggle creation of private DNS zone corresponding to the variable name. | `false` |
 | <a name="input_enable_privatelink_database_windows_net_pdnsz"></a> [enable\_privatelink\_database\_windows\_net\_pdnsz](#input\_enable\_privatelink\_database\_windows\_net\_pdnsz) | Toggle creation of private DNS zone corresponding to the variable name. | `false` |
@@ -126,10 +125,7 @@ Hub module. Contains hub network and related resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | n/a |
 | <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | n/a |
-| <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | n/a |
-| <a name="output_mgmt_snet_id"></a> [mgmt\_snet\_id](#output\_mgmt\_snet\_id) | n/a |
 | <a name="output_vpng_public_ip_address"></a> [vpng\_public\_ip\_address](#output\_vpng\_public\_ip\_address) | n/a |
 | <a name="output_vnet_address_space"></a> [vnet\_address\_space](#output\_vnet\_address\_space) | n/a |
 | <a name="output_vmreg_pdnsz_name"></a> [vmreg\_pdnsz\_name](#output\_vmreg\_pdnsz\_name) | n/a |

@@ -1,17 +1,5 @@
-output resource_group_name {
-  value = azurerm_resource_group.rg.name
-}
-
 output vnet_id {
   value = azurerm_virtual_network.vnet.id
-}
-
-output vnet_name {
-  value = azurerm_virtual_network.vnet.name
-}
-
-output mgmt_snet_id {
-  value = azurerm_subnet.mgmt_snet.id
 }
 
 output vpng_public_ip_address {
