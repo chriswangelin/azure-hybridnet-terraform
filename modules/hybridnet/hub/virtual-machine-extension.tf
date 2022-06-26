@@ -7,8 +7,8 @@ resource azurerm_virtual_machine_extension dns_vm_001_config_unbound_dns_customs
 
   settings = <<SETTINGS
   {
-     "fileUris": ["https://raw.githubusercontent.com/chriswangelin/azure-terraform-modules/develop/modules/hybridnet/hub/scripts/config-unbound-dns-hub-rhel.sh"],
-     "commandToExecute": "bash ./config-unbound-dns-hub-rhel.sh"
+     "fileUris": ["https://raw.githubusercontent.com/chriswangelin/azure-terraform-modules/develop/modules/hybridnet/hub/scripts/config-unbound-dns-hub-rhel-centos.sh"],
+     "commandToExecute": "bash ./config-unbound-dns-hub-rhel-centos.sh"
   }
 SETTINGS
 }
