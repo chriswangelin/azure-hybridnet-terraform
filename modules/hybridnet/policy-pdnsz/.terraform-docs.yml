@@ -1,0 +1,64 @@
+formatter: "markdown" # this is required
+
+version: ""
+
+header-from: main.tf
+footer-from: ""
+
+recursive:
+  enabled: false
+  path: modules
+
+sections:
+  show:
+    - providers
+    - inputs
+    - outputs
+
+content: |-
+  {{ .Header }}
+
+  ## Overview
+  Azure Policy definitions and assignments to automatically deploy private DNS zone records for private endpoints.
+  
+  By default, expects private DNS zones to reside the current subscription and creates policies in current subscription.
+  Policies may be created in a specific subscription or management group by setting the ```policy_subscription_id``` or ```policy_management_group_name```, respectively.
+  A specific subscription in which to locate the private DNS zones may also be specified via ```pdnsz_subscription_id```.
+  By default, this module aims to create policies for all sub resources listed on this page: https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns
+  A subset of these policies can be created by specifying a subset of the polices in ```private_dns_zone_map```.
+ 
+  {{ .Providers }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}  
+
+output:
+  file: ""
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->    
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: false
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true
