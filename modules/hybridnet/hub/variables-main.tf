@@ -180,7 +180,7 @@ variable mgmt_vm_name {
 variable mgmt_vm_urn {
   type        = string
   description = "URN for management virtual machine"
-  default     = "RedHat:RHEL:8_6:latest"
+  default     = "OpenLogic:CentOS:7_9:7.9.2022020700"
 }
 
 variable mgmt_vm_plan {
@@ -235,7 +235,7 @@ variable dns_vm_001_name {
 variable dns_vm_001_urn {
   type        = string
   description = "URN for DNS virtual machine."
-  default     = "RedHat:RHEL:8_6:latest"
+  default     = "OpenLogic:CentOS:7_9:7.9.2022020700"
 }
 
 variable dns_vm_001_plan {
