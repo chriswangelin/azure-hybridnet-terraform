@@ -32,3 +32,8 @@ locals {
 data "http" "clientip" {
   url = "https://ipv4.icanhazip.com/"
 }
+
+resource azurerm_resource_group rg {
+  name      = local.resource_group_name
+  location  = var.location
+}
