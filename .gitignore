@@ -1,9 +1,8 @@
-# Local .terraform directories
+# Terraform-related
 **/.terraform/*
-
-# .tfstate files
 *.tfstate
 *.tfstate.*
+.terraform.lock.hcl
 
 # Crash log files
 crash.log
@@ -32,4 +31,3 @@ override.tf.json
 workspace.*
 *.code-workspace
 
-.terraform.lock.hcl
