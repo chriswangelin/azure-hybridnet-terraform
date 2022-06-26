@@ -32,5 +32,4 @@ override.tf.json
 workspace.*
 *.code-workspace
 
-policy-pdnsz/xxx
-policy-pdnsz/.terraform.lock.hcl
+.terraform.lock.hcl
