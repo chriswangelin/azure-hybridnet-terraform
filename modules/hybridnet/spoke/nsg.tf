@@ -11,7 +11,7 @@ resource azurerm_subnet_network_security_group_association app_snet_nsg_assoc {
 }
 
 resource azurerm_network_security_rule app_snet_allow_inbound_nsg_rule {
-  count                       = local.app_snet_allow_ip_list != null ? 1 : 0
+  count                       = var.app_snet_allow_ip_list != null ? 1 : 0
   name                        = "allow-inbound"
   priority                    = 1000
   direction                   = "Inbound"
@@ -37,7 +37,7 @@ resource azurerm_subnet_network_security_group_association mgmt_snet_nsg_assoc {
 }
 
 resource azurerm_network_security_rule mgmt_snet_allow_inbound_nsg_rule {
-  count                       = local.mgmt_snet_allow_ip_list != null ? 1 : 0
+  count                       = var.mgmt_snet_allow_ip_list != null ? 1 : 0
   name                        = "allow-inbound"
   priority                    = 1000
   direction                   = "Inbound"

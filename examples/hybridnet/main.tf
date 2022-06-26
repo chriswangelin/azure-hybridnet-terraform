@@ -14,7 +14,7 @@ provider azurerm {
 module onprem {
   source = "../../modules/hybridnet/onprem"
 
-  winra_vm_admin_password   = var.winra_vm_admin_password
+  winra_vm_admin_password = var.winra_vm_admin_password
 }
 
 module hub {
@@ -40,12 +40,20 @@ module hub {
 }
 
  module s2svpn_onprem_to_hub {
-   source                    = "../../modules/hybridnet/s2svpn-winras-vpng"
+   source = "../../modules/hybridnet/s2svpn-winras-vpng"
 
-   vpng_public_ip_address    = module.hub.vpng_public_ip_address
-   vpng_shared_key           = var.vpng_shared_key
-   winra_vm_id               = module.onprem.winra_vm_id
+   vpng_public_ip_address = module.hub.vpng_public_ip_address
+   vpng_shared_key        = var.vpng_shared_key
+   winra_vm_id            = module.onprem.winra_vm_id
+
    depends_on = [
      module.hub
    ]
+ }
+
+ module spoke1 {
+   source = "../../modules/hybridnet/spoke"
+
+   vnet_spoke_number = 1
+   hub_vnet_id       = module.hub.vnet_id
  }
