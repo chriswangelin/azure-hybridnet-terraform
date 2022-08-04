@@ -9,7 +9,6 @@ output private_ip_address {
 }
 
 output public_ip_address {
-  count       = var.enable_public_ip ? 1 : 0
   description = "Virtual machine public IP address."
-  value       = azurerm_public_ip.pip_001[0].ip_address
+  value       = var.enable_public_ip ? azurerm_public_ip.pip_001[0].ip_address : null
 }
