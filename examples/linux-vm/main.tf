@@ -35,6 +35,9 @@ module linux_vm {
 
   resource_group_name = azurerm_resource_group.rg.name
   snet_id             = azurerm_subnet.snet.id
+
+  # Uncomment to enable public IP
+  #enable_public_ip    = false
 }
 
 output linux_vm_public_ip_address {
