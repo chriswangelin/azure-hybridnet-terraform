@@ -1,7 +1,6 @@
 # Terraform-related
 **/.terraform/*
-*.tfstate
-*.tfstate.*
+*.tfstate*
 .terraform.lock.hcl
 
 # Crash log files
