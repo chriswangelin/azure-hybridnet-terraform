@@ -14,10 +14,10 @@ resource random_pet resource_prefix {
 
 locals {
   name              = coalesce(var.name, "${random_pet.resource_prefix.id}-vm")  
-  nic_name_001      = "${var.name}-nic-001"
-  pip_name_001      = "${var.name}-pip-001"
+  nic_name_001      = "${local.name}-nic-001"
+  pip_name_001      = "${local.name}-pip-001"
   ipconfig_name_001 = "ipconfig-001"
-  os_disk_name      = "${var.name}-osdisk-001"
+  os_disk_name      = "${local.name}-osdisk-001"
 
   # Split urn into its component pieces 
   source_image_publisher = split(":", var.urn)[0] 
