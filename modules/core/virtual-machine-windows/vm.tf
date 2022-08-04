@@ -22,8 +22,8 @@ resource azurerm_network_interface nic_001 {
 }
 
 resource azurerm_windows_virtual_machine vm {
-  name                  = var.name
-  computer_name         = var.name
+  name                  = local.name
+  computer_name         = local.name
   resource_group_name   = var.resource_group_name
   location              = var.location
   network_interface_ids = [ azurerm_network_interface.nic_001.id ]
