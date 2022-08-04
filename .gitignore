@@ -31,3 +31,5 @@ override.tf.json
 workspace.*
 *.code-workspace
 
+# commitizen config
+.cz.toml
