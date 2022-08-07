@@ -30,6 +30,6 @@ resource azurerm_storage_account sa {
 
 resource azurerm_storage_account_network_rules sa_netrules {
   storage_account_id = azurerm_storage_account.sa.id
-  default_action     = "Deny"  
+  default_action     = var.storage_account_network_rules_default_action
   bypass             = [ "None" ]
 }
