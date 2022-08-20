@@ -279,3 +279,73 @@ variable dns_vm_001_admin_public_ssh_key_path {
   description = "Admin user public SSH key path for the DNS virtual machine."
   default     = "~/.ssh/id_rsa.pub"
 }
+
+# Private DNS zones
+variable vmreg_pdnsz_name {
+  type        = string
+  description = "Name of DNS zone for registering virtual machines."
+  default     = "foo.net"
+}
+
+variable pdnsz_list {
+  type = list(string)
+  default = [
+    "privatelink.azure-automation.net",
+    "privatelink.database.windows.net",
+    "privatelink.sql.azuresynapse.net",
+    "privatelink.sql.azuresynapse.net",
+    "privatelink.dev.azuresynapse.net",
+    "privatelink.azuresynapse.net",
+    "privatelink.blob.core.windows.net",
+    "privatelink.table.core.windows.net",
+    "privatelink.queue.core.windows.net",
+    "privatelink.file.core.windows.net",
+    "privatelink.web.core.windows.net",
+    "privatelink.dfs.core.windows.net",
+    "privatelink.documents.azure.com",
+    "privatelink.mongo.cosmos.azure.com",
+    "privatelink.cassandra.cosmos.azure.com",
+    "privatelink.gremlin.cosmos.azure.com",
+    "privatelink.table.cosmos.azure.com",
+    "privatelink.centralus.batch.azure.com",
+    "privatelink.eastus.batch.azure.com",
+    "privatelink.westus.batch.azure.com",
+    "privatelink.postgres.database.azure.com",
+    "privatelink.mysql.database.azure.com",
+    "privatelink.mariadb.database.azure.com",
+    "privatelink.vaultcore.azure.net",
+    "privatelink.managedhsm.azure.net",
+    "privatelink.eastus.azmk8s.io",
+    "privatelink.search.windows.net",
+    "privatelink.azurecr.io",
+    "privatelink.azconfig.io",
+    "privatelink.centralus.backup.windowsazure.com",
+    "privatelink.eastus.backup.windowsazure.com",
+    "privatelink.hypervrecoverymanager.windowsazure.com",
+    "privatelink.siterecovery.windowsazure.com",
+    "privatelink.azure-devices.net",
+    "privatelink.servicebus.windows.net",
+    "privatelink.eventgrid.azure.net",
+    "privatelink.azurewebsites.net",
+    "privatelink.api.azureml.ms",
+    "privatelink.notebooks.azure.net",
+    "privatelink.service.signalr.net",
+    "privatelink.monitor.azure.com",
+    "privatelink.oms.opinsights.azure.com",
+    "privatelink.ods.opinsights.azure.com",
+    "privatelink.agentsvc.azure-automation.net",
+    "privatelink.cognitiveservices.azure.com",
+    "privatelink.afs.azure.net",
+    "privatelink.datafactory.azure.net",
+    "privatelink.adf.azure.com",
+    "privatelink.redis.cache.windows.net",
+    "privatelink.redisenterprise.cache.azure.net",
+    "privatelink.purview.azure.com",
+    "privatelink.purviewstudio.azure.com",
+    "privatelink.digitaltwins.azure.net",
+    "privatelink.azurehdinsight.net",
+    "privatelink.his.arc.azure.com",
+    "privatelink.guestconfiguration.azure.com",
+    "privatelink.media.azure.net"
+  ]
+}
