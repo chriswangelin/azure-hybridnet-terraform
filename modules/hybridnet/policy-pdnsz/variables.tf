@@ -48,7 +48,7 @@ variable private_dns_zone_map {
     dine-synapse-dev-pdns    = [ "Dev", "privatelink.dev.azuresynapse.net" ]
     dine-synapse-web-pdns    = [ "Web", "privatelink.azuresynapse.net" ]
 
-    dine-storoge-blob-pdns   = [ "blob", "privatelink.blob.core.windows.net" ]
+    dine-storage-blob-pdns   = [ "blob", "privatelink.blob.core.windows.net" ]
     dine-storage-blobs-pdns  = [ "blob_secondary", "privatelink.blob.core.windows.net" ]
     dine-storage-table-pdns  = [ "table", "privatelink.table.core.windows.net" ]
     dine-storage-tables-pdns = [ "table_secondary", "privatelink.table.core.windows.net" ]
